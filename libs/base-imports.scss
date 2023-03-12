@@ -1,0 +1,21 @@
+@import '../libs/bootstrap/css/bootstrap.min.css';
+@import '../libs/fontawesome/css/all.min.css';
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.content {
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.row {
+    width: 100%;
+}
