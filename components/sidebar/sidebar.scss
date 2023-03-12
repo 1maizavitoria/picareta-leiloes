@@ -1,0 +1,44 @@
+@import './../../libs/base-imports.scss';
+
+.sidebar {
+    height: 100%;
+    width: 315px;
+    display: flex;
+    justify-content: center;
+    background-color: #3065AC;
+}
+
+.buttonsSidebar {
+    display: flex;
+    flex-direction: column;
+    gap: calc(100% / 30);
+    margin-top: calc(100% / 20);
+}
+
+.buttonSidebar {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttonSidebar:hover {
+    transform: scale(1.25);
+    transition: transform 0.5s ease;
+}
+
+.buttonSidebar p {
+    color: white;
+    font-size: 20px;
+    font-family: sans-serif;
+    margin-bottom: 15px !important;
+}
+
+.hrSidebar {
+    background-color: rgb(255, 255, 255) !important;
+    height: 2px !important;
+    width: 250px !important;
+    opacity: 1 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}

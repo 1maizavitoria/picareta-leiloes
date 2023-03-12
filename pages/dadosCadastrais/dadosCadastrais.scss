@@ -1,0 +1,35 @@
+@import './../../libs/base-imports.scss';
+
+.content {
+    display: flex;
+    height: 100%;
+    flex-grow: 1 !important;
+}
+
+.left {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+}
+
+input[type="date"]::before {
+	color: #999999;
+	content: attr(placeholder);
+}
+input[type="date"] {
+	color: #ffffff;
+}
+input[type="date"]:focus,
+input[type="date"]:valid {
+	color: #666666;
+}
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+	content: "" !important;
+}

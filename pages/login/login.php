@@ -27,11 +27,11 @@
                 <input type="password" class="form-control" placeholder="🔑" required>
             </div>
             
-            <div class="col-12 col-lg-3 d-flex justify-content-center mb-3 mt-2">
+            <div class="col-12 col-lg-3 d-flex justify-content-center mb-3 mt-2" onclick="window.location.href='./../../pages/dadosCadastrais/dadosCadastrais.php'">
                 <button type="submit" value="entrar" class="btn btn-outline-info col-4">Entrar</button>
             </div>
 
-            <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <div class="col-12 col-lg-3 d-flex justify-content-center" onclick="window.location.href='./../../pages/dadosCadastrais/dadosCadastrais.php'">
                 <button type="submit" value="cadastrar" class="btn btn-outline-success col-4">Cadastrar</button>
             </div>
         </form>
