@@ -70,10 +70,13 @@
         <tbody>";
 
         foreach ($dados as $dado) {
-            echo "<tr class='text-center'>";
-
+            $contador = 0;
+            echo "<tr class='text-center' onclick=\"window.open('https://www.google.com?id=" . $dado[0] . "')\">";
             foreach ($dado as $col) {
-                echo "<td>" . $col . "</td>";
+                if ($contador > 0) {
+                    echo "<td>" . $col . "</td>";
+                }   
+                $contador++;
             }
 
             echo "</tr>";
@@ -130,7 +133,7 @@
         for ($i = $minimoPaginas; $i < $maximoPaginas; $i ++) {
             echo "
             <li class='page-item " . ($paginaAtual == $i ? "active" : null) . "'>
-                <a class='page-link' href='" . montarParametrosPaginacao($i) ."'>" . $i + 1 . "</a>
+                <a class='page-link' href='" .  ($paginaAtual == $i ? '#' : montarParametrosPaginacao($i)) . "'>" . $i + 1 . "</a>
             </li>";
         }
     }
