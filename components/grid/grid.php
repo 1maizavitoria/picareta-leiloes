@@ -125,8 +125,9 @@
         $minimoPaginas = $paginaAtual <= 2 ? 0 : $paginaAtual - 2;
         $maximoPaginas = $paginaAtual <= 2 ? 5 : $paginaAtual + 3;
         $maximoPaginas = $maximoPaginas >= $paginaMaxima ? $paginaMaxima : $maximoPaginas;
-        if ($maximoPaginas > $paginaMaxima && $minimoPaginas != 0 )
+        if ($maximoPaginas >= $paginaMaxima && $minimoPaginas != 0 ){
             $minimoPaginas = $paginaMaxima - 5;
+        }
 
         for ($i = $minimoPaginas; $i < $maximoPaginas; $i ++) {
             echo "
