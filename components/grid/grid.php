@@ -27,11 +27,11 @@
             $dados = array_filter($dados, function($carro) use ($busca) {
                 return strpos(strtolower(implode(" ", $carro)), strtolower($busca)) !== false;
             });
-          }
+        }
 
         $paginaMaxima = ceil(count($dados) / $resultadosPorPagina);
 
-        $dados = array_slice($dados, $paginaAtual * 10, $resultadosPorPagina);
+        $dados = array_slice($dados, $paginaAtual * $resultadosPorPagina, $resultadosPorPagina);
 
         echo "<div class='grid row'>";
 
@@ -46,9 +46,9 @@
 
         if (empty($dados)) {
             echo "<div class='alert alert-danger' role='alert'>Nenhum resultado encontrado.</div>";
-        }
-
-        criarPaginacao();
+        } else {
+            criarPaginacao();
+        }	
 
         echo "</div>";
     }
