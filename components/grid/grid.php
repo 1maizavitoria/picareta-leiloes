@@ -9,8 +9,6 @@
 </head>
 <body>
 
-    
-
     <?php
     global $urlAtual;
     global $paginaAtual;
@@ -161,7 +159,7 @@
         <form action='?id=0' class='formPesquisa' method='GET'>
             <div class='float-end'>
                 <div class='input-group d-flex'>
-                    <input type='text' name='busca' id='busca' class='input-group-text' placeholder='Informe a busca...' change='this.form.submit()'  value='" . (isset($_GET["busca"]) ? $_GET["busca"] : '') . "' " . (isset($_GET["busca"]) ? 'autofocus' : null) . ">
+                    <input type='text' name='busca' id='busca' class='input-group-text' placeholder='Informe a busca...' change='this.form.submit()'  value='" . (isset($_GET["busca"]) ? $_GET["busca"] : '') . "'>
                     <button type='submit' class='btn btn-primary search-icon' aria-label='Pesquisar'>
                         <i class='fas fa-search'></i>
                     </button>
@@ -219,7 +217,6 @@
         echo $output;
     }
     ?>
-
     
 </body>
 </html>
