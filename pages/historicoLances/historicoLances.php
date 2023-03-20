@@ -27,7 +27,7 @@
                 <h2>Histórico de lances</h2>
             </div>
 
-            <div class="col-12 px-5 d-flex justify-content-center">
+            <div class="col-12 px-5 mt-5 d-flex justify-content-center">
                 <?php 
                     include './../../components/grid/grid.php';
                     $produtos = array(

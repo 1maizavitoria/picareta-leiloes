@@ -122,14 +122,23 @@
         global $paginaAtual;
         global $paginaMaxima;
 
-        $minimoPaginas = $paginaAtual <= 2 ? 0 : $paginaAtual - 2;
-        $maximoPaginas = $paginaAtual <= 2 ? 5 : $paginaAtual + 3;
-        $maximoPaginas = $maximoPaginas >= $paginaMaxima ? $paginaMaxima : $maximoPaginas;
-        if ($maximoPaginas >= $paginaMaxima && $minimoPaginas != 0 ){
-            $minimoPaginas = $paginaMaxima - 5;
-        }
+        $botoesNaFrente = $paginaAtual <= 2 ? 5 : $paginaAtual + 3;
+        $botoesNaFrente = $botoesNaFrente >= $paginaMaxima ? $paginaMaxima : $botoesNaFrente;
 
-        for ($i = $minimoPaginas; $i < $maximoPaginas; $i ++) {
+        if ($paginaAtual <= 2) {
+            $botoesAtras = 0;
+            $botoesNaFrente = 5;
+        } else if ($botoesNaFrente == $paginaMaxima){
+            $botoesAtras = $paginaMaxima - 5;
+        } else if ($botoesNaFrente > $paginaMaxima && $botoesAtras != 0 ){
+            $botoesAtras = $paginaMaxima - 5;
+        } else {
+            $botoesAtras = $paginaAtual - 2;
+            $botoesNaFrente = $paginaAtual + 3;
+        }
+        
+
+        for ($i = $botoesAtras; $i < $botoesNaFrente; $i ++) {
             echo "
             <li class='page-item " . ($paginaAtual == $i ? "active" : null) . "'>
                 <a class='page-link' href='" .  ($paginaAtual == $i ? '#' : montarParametrosPaginacao($i)) . "'>" . $i + 1 . "</a>
