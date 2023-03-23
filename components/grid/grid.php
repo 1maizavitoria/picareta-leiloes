@@ -33,7 +33,7 @@
 
         $dados = array_slice($dados, $paginaAtual * $resultadosPorPagina, $resultadosPorPagina);
 
-        echo "<div class='grid row'>";
+        echo "<div class='grid row table-responsive'>";
 
         criarCampoBusca();
         
