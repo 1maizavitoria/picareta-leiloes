@@ -143,7 +143,7 @@
                 
                     $titulos = array('Marca', 'Modelo do veículo', 'Cor', 'Ano do veículo', 'Valor do lance', 'Financeira Responsável', 'Data lance', 'Data resultado');
                 
-                    gerarGrid($titulos, $produtos, 11);
+                    gerarGrid($titulos, $produtos, 10);
                 ?>
             </div>
 
@@ -151,9 +151,7 @@
 
     </div>
 
-    <?php
-    include './../../components/footer/footer.html';
-    ?>
+    <?php include './../../components/footer/footer.html'; ?>
     
 </body>
 </html>
