@@ -1,8 +1,8 @@
-export { validateInput, formatCPF, formatRG, formatCEP, formatPhone, checkAllFields };
+export { validateInput, formatCPF, formatRG, formatCEP, formatPhone, formatLicensePlate, formatMoney, checkAllFields };
 
 function validateInput(input) {
     let regex;
-    let validField = true;
+    let validField = false;
     let invalidDiv = document.getElementById(`invalid-message-${input.id}`);
 
     switch (input.id) {
@@ -22,15 +22,12 @@ function validateInput(input) {
             regex = /^\([1-9]{2}\)\s?[9][6-9]\d{3}\-\d{4}$/;
             break;
         case "birthDate":
-            regex = /^\d{4}-\d{2}-\d{2}$/;
             validField = (new Date().getFullYear() - new Date(input.value).getFullYear()) >= 18;
             break;
         case "maritalStatus":
-            regex = /^[1-5]$/;
             validField = input.value != "";
             break;
         case "gender":
-            regex = /^[1-2]$/;
             validField = input.value != "";
             break;
         case "address":
@@ -51,9 +48,54 @@ function validateInput(input) {
         case "cep":
             regex = /^\d{5}-\d{3}$/;
             break;
+        case "brand":
+            validField = input.value != "";
+            break;
+        case "year":
+            validField = input.value >= 1900 && input.value <= new Date().getFullYear() + 1;
+            break;
+        case "model":
+            validField = input.value != "";
+            break;
+        case "color":
+            validField = input.value != "";
+            break;
+        case "licensePlate":
+            regex = /^[A-Z]{3}\-\d{4}$/;
+            break;
+        case "chassis":
+            regex = /^[a-zA-Z0-9]{17}$/;
+            break;
+        case "odometer":
+            regex = /^\d{1,7}$/;
+            break;
+        case "steering":
+            validField = input.value != "";
+            break;
+        case "fuel":
+            validField = input.value != "";
+            break;
+        case "transmission":
+            validField = input.value != "";
+            break;
+        case "expenses":
+            regex = /^R\$\d{1,}(\.\d{3})*,\d{2}$/;
+        case "auctionDate":
+            validField = new Date(input.value) >= new Date();
+            break;
+        case "licensePlateSelect":
+            validField = input.value != "";
+            break;
+        case "auctionDateSelect":
+            validField = input.value != "";
+            break;
+        case "financial":
+            validField = input.value != "";
+            break;
+
     }
 
-    if (!regex.test(input.value) || !validField) {
+    if (!regex?.test(input.value) && !validField) {
         invalidDiv.hidden = false;
         input.classList.add("is-invalid");
         input.classList.remove("is-valid")
@@ -118,6 +160,25 @@ function formatPhone(phone) {
     });
     
     return formattedPhone;
+}
+
+function formatLicensePlate(plate) {
+    const cleanedPlate = plate.replace(/\W/g, '').toUpperCase();
+
+    let formattedPlate = cleanedPlate.replace(/^([A-Z]{3})(\d{0,4})$/, function(match, plate1, plate2) {
+      let formatted = plate1;
+      if (plate2) formatted += '-' + plate2;
+      return formatted;
+    });
+    
+    return formattedPlate;
+}
+
+function formatMoney(money) {
+    let formattedMoney = money.replace(/\D/g, "");
+    
+    formattedMoney = formattedMoney.replace(/(\d{1,2})$/, ",$1");
+    return "R$" + formattedMoney;
 }
 
 function checkAllFields(id) {

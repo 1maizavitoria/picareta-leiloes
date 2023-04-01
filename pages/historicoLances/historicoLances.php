@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="historicoLances.scss">
-    <title>Dados cadastrais</title>
+    <title>Histórico de Lances</title>
 </head>
 <body>
 
@@ -143,7 +143,10 @@
                 
                     $titulos = array('Marca', 'Modelo do veículo', 'Cor', 'Ano do veículo', 'Valor do lance', 'Financeira Responsável', 'Data lance', 'Data resultado');
                 
-                    gerarGrid($titulos, $produtos, 10);
+                    $editavel = false;
+                    $urlClick = "https://www.google.com?id=";
+
+                    gerarGrid($titulos, $produtos, 10, $editavel,  $urlClick);
                 ?>
             </div>
 

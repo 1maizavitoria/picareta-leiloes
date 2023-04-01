@@ -17,7 +17,7 @@
 
     $paginaAtual = isset($_GET['id']) ? $_GET['id'] : 0;
 
-    function gerarGrid($listaNomes, $dados, $resultadosPorPagina) {
+    function gerarGrid($listaNomes, $dados, $resultadosPorPagina, $editavel, $urlClick) {
         global $paginaAtual;
         global $paginaMaxima;
 
@@ -36,12 +36,12 @@
         echo "<div class='grid row'>";
         echo "<div class='col-12'>";
 
-        criarCampoBusca();
+        criarCampoBusca($editavel, $urlClick);
         
         echo "<table class='table table-hover table-responsive table-light table-striped mb-0'>";
 
-        criarTableHeader($listaNomes);
-        criarTableBody($dados);
+        criarTableHeader($listaNomes, $editavel);
+        criarTableBody($dados, $editavel, $urlClick);
       
         echo "</table>";
 
@@ -55,35 +55,50 @@
         echo "</div>";
     }
 
-    function criarTableHeader($listaNomes) {
+    function criarTableHeader($listaNomes, $editavel) {
         echo "<thead>";
         echo "<tr class='text-center'>";
         foreach ($listaNomes as $nome) {
             echo "<th scope='col'>$nome</th>";
         }
+        if ($editavel)
+            criarHeaderEditavel();
         echo "</tr>";
         echo "</thead>";
     }
 
-    function criarTableBody($dados) {
+    function criarTableBody($dados, $editavel, $urlClick) {
         echo "
         <tbody>";
 
         foreach ($dados as $dado) {
             $contador = 0;
-            echo "<tr class='text-center' onclick=\"window.open('https://www.google.com?id=" . $dado[0] . "')\">";
+            if ($urlClick)
+                echo "<tr class='text-center' onclick=\"window.open('$urlClick" . $dado[0] . "')\">";
+            else
+                echo "<tr class='text-center'>";
             foreach ($dado as $col) {
                 if ($contador > 0) {
                     echo "<td>" . $col . "</td>";
                 }   
                 $contador++;
             }
+            if ($editavel)
+                criarEdicao();
 
             echo "</tr>";
         }
 
         echo "
         </tbody>";
+    }
+
+    function criarHeaderEditavel() {
+        echo "<th scope='col'>Editar</th>";
+    }
+
+    function criarEdicao() {
+        echo "<td><i class='fa-solid fa-pen-to-square'></i></td>";
     }
 
     function criarPaginacao() {
@@ -129,7 +144,7 @@
 
         if ($paginaAtual <= 2) {
             $botoesAtras = 0;
-            $botoesNaFrente = 5;
+            $botoesNaFrente = $paginaMaxima <= 5 ? $paginaMaxima : 5;
         } else if ($botoesNaFrente == $paginaMaxima){
             $botoesAtras = $paginaMaxima - 5;
         } else if ($botoesNaFrente > $paginaMaxima && $botoesAtras != 0 ){
@@ -138,7 +153,6 @@
             $botoesAtras = $paginaAtual - 2;
             $botoesNaFrente = $paginaAtual + 3;
         }
-        
 
         for ($i = $botoesAtras; $i < $botoesNaFrente; $i ++) {
             echo "
@@ -166,10 +180,18 @@
         </li>";
     }
 
-    function criarCampoBusca() {
+    function criarCampoBusca($editavel, $urlClick) {
+        console_log($urlClick);
         echo "
-        <form action='?id=0' class='formPesquisa' method='GET'>
-            <div class='float-end'>
+        <form action='?id=0' class='formPesquisa' method='GET'>";
+            if ($editavel)
+                echo "
+                <div class='float-start'>
+                    <button type='button' class='btn btn-success col-12' onclick=\"window.open('$urlClick')\">Novo</button>
+                </div>
+                ";
+
+            echo " <div class='float-end'>
                 <div class='input-group d-flex'>
                     <input type='text' name='busca' id='busca' class='input-group-text' placeholder='Informe a busca...' change='this.form.submit()'  value='" . (isset($_GET["busca"]) ? $_GET["busca"] : '') . "'>
                     <button type='submit' class='btn btn-primary search-icon' aria-label='Pesquisar'>
