@@ -2,10 +2,21 @@
 
 .sidebar {
     height: 100%;
-    width: 315px;
+    width: 275px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: #3065AC;
+}
+
+.closed {
+    width: 80px;
+    transition: width 0.5s ease;
+}
+
+.opened {
+    width: 275px;
+    transition: width 0.5s ease;
 }
 
 .buttonsSidebar {
@@ -29,7 +40,6 @@
 
 .buttonSidebar p {
     color: white;
-    font-size: 20px;
     font-family: sans-serif;
     margin-bottom: 15px !important;
 }
@@ -42,3 +52,4 @@
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
+

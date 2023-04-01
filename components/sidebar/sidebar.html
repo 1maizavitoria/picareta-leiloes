@@ -5,11 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./../../components/sidebar/sidebar.scss">
+    <script src="./../../components/sidebar/sidebar.js"></script>
     <title>Sidebar</title>
 </head>
 <body>
 
-    <div class="sidebar col-10 col-lg-12">
+    <div class="sidebar opened" id="sidebar">
 
         <div class="buttonsSidebar">
 
@@ -22,6 +23,10 @@
                 <hr class="hrSidebar">
             </div>
 
+        </div>
+
+        <div>
+            <button class="btn btn-secondary col-12" onclick="toggleSidebar()"><i class="fa-solid fa-arrow-right-arrow-left"></i></i></button>
         </div>
 
     </div>
