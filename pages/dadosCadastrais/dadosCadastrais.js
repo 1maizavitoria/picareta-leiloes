@@ -1,33 +1,39 @@
-function nameValidation(input) {
-    const regex = /[a-zA-ZáàâãäéèêëíìïîóòôõöùüúûçñÁÀÂÃÉÈÊÍÌÏÓÒÔÕÖÚÙÛÇÑ]+(?:\s+[a-zA-ZáàâãäéèêëíìïîóòôõöùüúûçñÁÀÂÃÉÈÊÍÌÏÓÒÔÕÖÚÙÛÇÑ]+)+/;
-    const invalidMessage = document.getElementById("invalid-message-name");
-    validateInput(input, regex, invalidMessage);
+import { validateInput, formatCPF, formatRG, formatCEP, formatPhone, checkAllFields } from '../../libs/helper.js';
+
+window.validateInput = validateInput;
+window.checkAllFields = checkAllFields;
+
+document.addEventListener('DOMContentLoaded', function() {
+    listenCPF();
+    listenRG();
+    listenCEP();
+    listenPhone();
+});
+
+function listenCPF() {
+    const cpfInput = document.getElementById('cpf');
+    cpfInput.addEventListener('input', function() {
+        cpfInput.value = formatCPF(cpfInput.value);
+    });
 }
 
-function emailValidation(input) {
-    const regex = /^\S+@\S+\.\S+$/; // procurar regEx melhor
-    const invalidMessage = document.getElementById("invalid-message-email");
-    validateInput(input, regex, invalidMessage);
+function listenRG() {
+    const rgInput = document.getElementById('rg');
+    rgInput.addEventListener('input', function() {
+        rgInput.value = formatRG(rgInput.value);
+    });
 }
 
-function phoneValidation(input) {
-    const regex = /^[1-9]{2}\s?9[\d]{4}[\d]{4}$/;
-    const invalidMessage = document.getElementById("invalid-message-phone");
-    validateInput(input, regex, invalidMessage);
+function listenCEP() {
+    const cepInput = document.getElementById('cep');
+    cepInput.addEventListener('input', function() {
+        cepInput.value = formatCEP(cepInput.value);
+    });
 }
 
-function validateInput(input, regex, invalidMessage) {
-
-    if (!regex.test(input.value)) {
-    //red border
-        input.style.border = "solid #e74c3c";
-        input.value = null;
-        invalidMessage.style.color = "#e74c3c";
-        invalidMessage.hidden = false;
-
-    } else {
-    //green border
-        input.style.borderColor = "#2ecc71";
-        invalidMessage.hidden = true;
-    }
+function listenPhone() {
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function() {
+        phoneInput.value = formatPhone(phoneInput.value);
+    });
 }
