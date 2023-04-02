@@ -26,14 +26,28 @@
             <div class="col-7 col-lg-3 mb-5">
                 <input type="password" class="form-control" placeholder="🔑" required>
             </div>
-            
-            <div class="col-12 col-lg-3 d-flex justify-content-center mb-3 mt-2" onclick="window.location.href='./../../pages/dadosCadastrais/dadosCadastrais.php'">
-                <button type="submit" value="entrar" class="btn btn-outline-info col-4">Entrar</button>
-            </div>
 
-            <div class="col-12 col-lg-3 d-flex justify-content-center" onclick="window.location.href='./../../pages/dadosCadastrais/dadosCadastrais.php'">
-                <button type="submit" value="cadastrar" class="btn btn-outline-success col-4">Cadastrar</button>
-            </div>
+            <?php 
+                $tipoUsuario = 2;
+                $localizacao = "";
+                if ($tipoUsuario == 1) {
+                    $localizacao = './../../pages/dadosCadastrais/dadosCadastrais.php';
+                } else {
+                    $localizacao = './../../pages/cadastroMarca/cadastroMarca.php';
+                }
+
+                echo "
+                <div class='col-12 col-lg-3 d-flex justify-content-center mb-3 mt-2' onclick=\"window.location.href='$localizacao'\">
+                    <button type='submit' value='entrar' class='btn btn-outline-info col-4'>Entrar</button>
+                </div>
+
+                <div class='col-12 col-lg-3 d-flex justify-content-center' onclick=\"window.location.href='$localizacao'\">
+                    <button type='submit' value='cadastrar' class='btn btn-outline-success col-4'>Cadastrar</button>
+                </div>
+                ";
+            ?>
+            
+            
         </form>
 
     </div>
