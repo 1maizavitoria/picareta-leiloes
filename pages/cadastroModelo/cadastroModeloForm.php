@@ -18,7 +18,7 @@
 
         <div class="left">
             <?php
-            include './../../components/sidebar/sidebar.html';
+            include './../../components/sidebar/sidebar.php';
             ?>
         </div>
 

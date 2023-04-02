@@ -22,7 +22,7 @@
 .buttonsSidebar {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     margin-top: calc(100% / 20);
 }
 
@@ -42,13 +42,13 @@
     color: white;
     font-family: sans-serif;
     margin-bottom: 15px !important;
-    font-size: 11px;
+    font-size: 15px;
 }
 
 .hrSidebar {
     background-color: rgb(255, 255, 255) !important;
     height: 2px !important;
-    width: 250px !important;
+    width: 225px !important;
     opacity: 1 !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
