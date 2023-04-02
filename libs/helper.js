@@ -80,6 +80,8 @@ function validateInput(input) {
             break;
         case "expenses":
             regex = /^R\$\d{1,}(\.\d{3})*,\d{2}$/;
+            validField = parseFloat(input.value.replace("R$", "").replace(",", ".")) >= 0;
+            break;
         case "auctionDate":
             validField = new Date(input.value) >= new Date();
             break;
@@ -91,6 +93,14 @@ function validateInput(input) {
             break;
         case "financial":
             validField = input.value != "";
+            break;
+        case "initialValue":
+            regex = /^R\$\d{1,}(\.\d{3})*,\d{2}$/;
+            validField = parseFloat(input.value.replace("R$", "").replace(",", ".")) > 0;
+            break;
+        case "incrementalValue":
+            regex = /^R\$\d{1,}(\.\d{3})*,\d{2}$/;
+            validField = parseFloat(input.value.replace("R$", "").replace(",", ".")) > 0;
             break;
 
     }
@@ -184,12 +194,9 @@ function formatMoney(money) {
 function checkAllFields(id) {
     let form = document.getElementById(id)
     let elements = Array.from(form.querySelectorAll('[onblur]'));
-    elements = elements.concat(Array.from(form.querySelectorAll('[onchange]')));
     
     elements.forEach(element => {
         if(element.onblur)
             element.onblur();
-        else if (element.onchange)
-            element.onchange();
     })
 }

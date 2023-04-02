@@ -32,7 +32,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="brand" onchange="validateInput(this)" required>
+                        <select class="form-select" id="brand" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Marca</option>
                             <option value="1">FORD</option>
                             <option value="2">BMW</option>
@@ -43,7 +43,7 @@
                         <div class="invalid-feedback" id="invalid-message-brand">Informe uma marca válida.</div>
                     </div>
                     <div class="col-6 col-lg-4">
-                        <select class="form-select" id="model" onchange="validateInput(this)" required>
+                        <select class="form-select" id="model" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Modelo</option>
                             <option value="1">FIESTA</option>
                             <option value="2">X1</option>
@@ -54,7 +54,7 @@
                         <div class="invalid-feedback" id="invalid-message-model">Informe um modelo válido.</div>
                     </div>
                     <div class="col-2 col-lg-2">
-                        <select class="form-select" id="year" onchange="validateInput(this)" required>
+                        <select class="form-select" id="year" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Ano Modelo</option>
                             <option value="1">2010</option>
                             <option value="2">2012</option>
@@ -68,7 +68,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="color" onchange="validateInput(this)" required>
+                        <select class="form-select" id="color" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Cor</option>
                             <option value="1">PRETO</option>
                             <option value="2">VERMELHO</option>
@@ -101,7 +101,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-3 col-lg-2">
-                        <select class="form-select" id="steering" onchange="validateInput(this)" required>
+                        <select class="form-select" id="steering" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Direção</option>
                             <option value="1">Mecânica</option>
                             <option value="2">Hidráulica</option>
@@ -111,7 +111,7 @@
                         <div class="invalid-feedback" id="invalid-message-steering">Informe uma direção válida.</div>
                     </div>
                     <div class="col-3 col-lg-2">
-                        <select class="form-select" id="fuel" onchange="validateInput(this)" required>
+                        <select class="form-select" id="fuel" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Combustível</option>
                             <option value="1">Álcool</option>
                             <option value="2">Gasolina</option>
@@ -188,6 +188,54 @@
                     </div>
                 </div>
                 
+                <div class="row justify-content-center mb-5 gap-4">
+                    <div class="col-3 col-lg-2 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="frontal" accept="image/*">
+                            <label class="custom-file-label" for="frontal">Frontal</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="traseira" accept="image/*">
+                            <label class="custom-file-label" for="traseira">Traseira</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="lateralEsquerda" accept="image/*">
+                            <label class="custom-file-label" for="lateralEsquerda">Lateral Esquerda</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="lateralDireita" accept="image/*">
+                            <label class="custom-file-label" for="lateralDireita">Lateral Direita</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mb-5 gap-4">
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="interior" accept="image/*">
+                            <label class="custom-file-label" for="interior">Interior</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="painel" accept="image/*">
+                            <label class="custom-file-label" for="painel">Painel</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="motor" accept="image/*">
+                            <label class="custom-file-label" for="motor">Motor</label>
+                        </div>
+                    </div>
+                </div>
+
                 <?php 
                     if (isset($_GET["id"]))
                         $id = $_GET["id"];

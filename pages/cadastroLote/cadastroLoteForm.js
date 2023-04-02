@@ -4,20 +4,20 @@ window.validateInput = validateInput;
 window.checkAllFields = checkAllFields;
 
 document.addEventListener('DOMContentLoaded', function() {
-    listenLicensePlate();
-    listenExpenses();
+    listenInitialValue();
+    listenIncrementalValue();
 });
 
-function listenLicensePlate() {
-    const licensePlateInput = document.getElementById('licensePlate');
-    licensePlateInput.addEventListener('input', function() {
-        licensePlateInput.value = formatLicensePlate(licensePlateInput.value);
+function listenInitialValue() {
+    const initialValueInput = document.getElementById('initialValue');
+    initialValueInput.addEventListener('input', function() {
+        initialValueInput.value = formatMoney(initialValueInput.value);
     });
 }
 
-function listenExpenses() {
-    const expensesInput = document.getElementById('listenExpenses');
-    expensesInput.addEventListener('input', function() {
-        expensesInput.value = formatMoney(expensesInput.value);
+function listenIncrementalValue() {
+    const incrementalValueInput = document.getElementById('incrementalValue');
+    incrementalValueInput.addEventListener('input', function() {
+        incrementalValueInput.value = formatMoney(incrementalValueInput.value);
     });
 }

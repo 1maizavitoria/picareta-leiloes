@@ -32,7 +32,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="brand" onchange="validateInput(this)" required>
+                        <select class="form-select" id="brand" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Marca</option>
                             <option value="1">FORD</option>
                             <option value="2">BMW</option>
@@ -43,7 +43,7 @@
                         <div class="invalid-feedback" id="invalid-message-brand">Informe uma marca válida.</div>
                     </div>
                     <div class="col-6 col-lg-4">
-                        <select class="form-select" id="model" onchange="validateInput(this)" required>
+                        <select class="form-select" id="model" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Modelo</option>
                             <option value="1">FIESTA</option>
                             <option value="2">X1</option>
@@ -57,11 +57,18 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <input type="text" id="year" class="form-control" placeholder="Ano Modelo" onblur="validateInput(this)" disabled>
-                        <div class="invalid-feedback" id="invalid-message-year">Informe um ano modelo válido.<br> <em>Ex: 2020</em></div>
+                        <select class="form-select" id="year" onblur="validateInput(this)" required>
+                            <option value="" disabled selected hidden>Ano Modelo</option>
+                            <option value="1">2010</option>
+                            <option value="2">2012</option>
+                            <option value="3">2014</option>
+                            <option value="4">2016</option>
+                            <option value="5">2020</option>
+                        </select>
+                        <div class="invalid-feedback" id="invalid-message-year">Informe um ano modelo válido.</div>
                     </div>
                     <div class="col-6 col-lg-4">
-                        <select class="form-select" id="color" onchange="validateInput(this)" required>
+                        <select class="form-select" id="color" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Cor</option>
                             <option value="1">PRETO</option>
                             <option value="2">VERMELHO</option>

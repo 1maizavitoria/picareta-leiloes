@@ -62,7 +62,7 @@
                         <div class="invalid-feedback" id="invalid-message-birthDate">Informe uma data de nascimento válida.<br> <em>Ex: 01/01/2000</em></div>
                     </div>
                     <div class="col-5 col-lg-3">
-                        <select class="form-select" id="maritalStatus" onchange="validateInput(this)" required>
+                        <select class="form-select" id="maritalStatus" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Estado civil</option>
                             <option value="1">Solteiro</option>
                             <option value="2">Casado</option>
@@ -73,7 +73,7 @@
                         <div class="invalid-feedback" id="invalid-message-maritalStatus">Informe um estado civil válido.</div>
                     </div>
                     <div class="col-3 col-lg-2">
-                        <select class="form-select" id="gender" onchange="validateInput(this)" required>
+                        <select class="form-select" id="gender" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Sexo</option>
                             <option value="1">Masculino</option>
                             <option value="2">Feminino</option>
@@ -92,7 +92,7 @@
                         <div class="invalid-feedback" id="invalid-message-city">Informe uma cidade válida.<br> <em>Ex: Curitiba</em></div>
                     </div>
                     <div class="col-4 col-lg-2">
-                        <select class="form-select" id="state" onchange="validateInput(this)" required>
+                        <select class="form-select" id="state" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Estado</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>

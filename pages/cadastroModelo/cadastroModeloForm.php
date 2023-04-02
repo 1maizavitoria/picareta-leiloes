@@ -32,7 +32,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="brand" onchange="validateInput(this)" required>
+                        <select class="form-select" id="brand" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Marca</option>
                             <option value="1">FORD</option>
                             <option value="2">BMW</option>

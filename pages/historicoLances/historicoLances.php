@@ -146,7 +146,7 @@
                     $editavel = false;
                     $urlClick = "https://www.google.com?id=";
 
-                    gerarGrid($titulos, $produtos, 10, $editavel,  $urlClick);
+                    gerarGrid($titulos, $produtos, 12, $editavel,  $urlClick);
                 ?>
             </div>
 

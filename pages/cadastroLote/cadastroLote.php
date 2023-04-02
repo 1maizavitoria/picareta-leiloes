@@ -40,7 +40,7 @@
                 
                     $titulos = array('Marca', 'Modelo', 'Ano Modelo', 'Cor', 'Placa', 'Valor', 'Data Leilão');
                     $editavel = true;
-                    $urlClick = "cadastroVeiculoForm.php?id=";
+                    $urlClick = "cadastroLoteForm.php?id=";
                 
                     gerarGrid($titulos, $produtos, 10, $editavel, $urlClick);
                 ?>

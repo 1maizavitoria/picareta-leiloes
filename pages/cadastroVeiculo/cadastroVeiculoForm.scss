@@ -34,3 +34,13 @@ input[type="date"]:valid::before {
 	content: "" !important;
 }
 
+@media (max-width: 768px) {
+    .content {
+        height: 1500px;
+    }
+}
+
+input[type="file"] {
+    width: 135px;
+}
+  

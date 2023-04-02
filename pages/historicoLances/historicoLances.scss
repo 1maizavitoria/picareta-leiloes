@@ -1,10 +1,11 @@
 @import './../../libs/base-imports.scss';
 
-@media only screen and (min-width: 600px) and (max-width: 1024px) {
+@media (max-width: 768px) {
     body, html {
       width: 1500px !important;
-      height: 1000px !important;
+      height: 1420px !important;
     }
+   
   }
 
 .content {
