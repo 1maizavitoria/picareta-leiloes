@@ -32,7 +32,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-6 col-lg-4">
-                        <input type="text" id="name" class="form-control" placeholder="Marca" onblur="validateInput(this)" required>
+                        <input type="text" id="name" class="form-control" placeholder="Marca*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-name">Informe um nome de marca válido.<br> <em>Ex: Chevrolet</em></div>
                     </div>
                 </div>

@@ -33,7 +33,7 @@
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
                         <select class="form-select" id="brand" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Marca</option>
+                            <option value="" disabled selected hidden>Marca*</option>
                             <option value="1">FORD</option>
                             <option value="2">BMW</option>
                             <option value="3">FIAT</option>
@@ -43,11 +43,11 @@
                         <div class="invalid-feedback" id="invalid-message-brand">Informe uma marca válida.</div>
                     </div>
                     <div class="col-6 col-lg-4">
-                        <input type="text" id="name" class="form-control" placeholder="Modelo" onblur="validateInput(this)" required>
+                        <input type="text" id="name" class="form-control" placeholder="Modelo*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-name">Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
                     </div>
                     <div class="col-3">
-                        <input type="number" id="year" maxLength="4" class="form-control" placeholder="Ano Modelo" onblur="validateInput(this)" required>
+                        <input type="number" id="year" maxLength="4" class="form-control" placeholder="Ano Modelo*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-year">Informe um ano modelo válido.<br> <em>Ex: 2020</em></div>
                     </div>
                 </div>

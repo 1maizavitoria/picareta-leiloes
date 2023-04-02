@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-6 col-lg-4">
                         <select class="form-select" id="model" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Modelo</option>
+                            <option value="" disabled selected hidden>Modelo*</option>
                             <option value="1">FIESTA</option>
                             <option value="2">X1</option>
                             <option value="3">UNO</option>
@@ -58,7 +58,7 @@
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
                         <select class="form-select" id="year" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Ano Modelo</option>
+                            <option value="" disabled selected hidden>Ano Modelo*</option>
                             <option value="1">2010</option>
                             <option value="2">2012</option>
                             <option value="3">2014</option>
@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-6 col-lg-4">
                         <select class="form-select" id="color" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Cor</option>
+                            <option value="" disabled selected hidden>Cor*</option>
                             <option value="1">PRETO</option>
                             <option value="2">VERMELHO</option>
                             <option value="3">BRANCO</option>

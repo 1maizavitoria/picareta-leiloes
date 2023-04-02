@@ -32,7 +32,7 @@
 
                 <div class="row justify-content-center mb-5">
                 <div class="col-4 col-lg-3">
-                        <input type="date" id="auctionDate" class="form-control" placeholder="Data do leilão" onblur="validateInput(this)" required>
+                        <input type="date" id="auctionDate" class="form-control" placeholder="Data do leilão*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-auctionDate">Informe uma data de leilão válida.<br> <em>Ex: 25/05/2023</em></div>
                     </div>
                 </div>

@@ -33,7 +33,7 @@
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
                         <select class="form-select" id="brand" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Marca</option>
+                            <option value="" disabled selected hidden>Marca*</option>
                             <option value="1">FORD</option>
                             <option value="2">BMW</option>
                             <option value="3">FIAT</option>
@@ -42,9 +42,9 @@
                         </select>
                         <div class="invalid-feedback" id="invalid-message-brand">Informe uma marca válida.</div>
                     </div>
-                    <div class="col-6 col-lg-4">
+                    <div class="col-5 col-lg-4">
                         <select class="form-select" id="model" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Modelo</option>
+                            <option value="" disabled selected hidden>Modelo*</option>
                             <option value="1">FIESTA</option>
                             <option value="2">X1</option>
                             <option value="3">UNO</option>
@@ -53,14 +53,14 @@
                         </select>
                         <div class="invalid-feedback" id="invalid-message-model">Informe um modelo válido.</div>
                     </div>
-                    <div class="col-2 col-lg-2">
+                    <div class="col-3 col-lg-2">
                         <select class="form-select" id="year" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Ano Modelo</option>
-                            <option value="1">2010</option>
-                            <option value="2">2012</option>
-                            <option value="3">2014</option>
-                            <option value="4">2016</option>
-                            <option value="5">2020</option>
+                            <option value="" disabled selected hidden>Ano Modelo*</option>
+                            <option value="2010">2010</option>
+                            <option value="2012">2012</option>
+                            <option value="2014">2014</option>
+                            <option value="2016">2016</option>
+                            <option value="2020">2020</option>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-year">Informe um ano modelo válido.</div>
                     </div>
@@ -69,7 +69,7 @@
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
                         <select class="form-select" id="color" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Cor</option>
+                            <option value="" disabled selected hidden>Cor*</option>
                             <option value="1">PRETO</option>
                             <option value="2">VERMELHO</option>
                             <option value="3">BRANCO</option>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-4 col-lg-3">
                         <select class="form-select" id="licensePlateSelect" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Placa</option>
+                            <option value="" disabled selected hidden>Placa*</option>
                             <option value="1">AAA-0000</option>
                             <option value="2">AAA-1111</option>
                             <option value="3">AAA-2222</option>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="col-4 col-lg-3">
                         <select class="form-select" id="auctionDateSelect" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Data do leilão</option>
+                            <option value="" disabled selected hidden>Data do leilão*</option>
                             <option value="23/03/2023">23/03/2023</option>
                             <option value="24/03/2023">24/03/2023</option>
                             <option value="25/03/2023">25/03/2023</option>
@@ -105,7 +105,7 @@
                 <div class="row justify-content-center mb-5">
                 <div class="col-4 col-lg-3">
                         <select class="form-select" id="financial" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Financeira</option>
+                            <option value="" disabled selected hidden>Financeira*</option>
                             <option value="1">Santander</option>
                             <option value="2">Itaú</option>
                             <option value="3">Pan</option>
@@ -113,11 +113,11 @@
                         <div class="invalid-feedback" id="invalid-message-financial">Informe uma Financeira válida.</div>
                     </div>
                     <div class="col-3">
-                        <input type="text" id="initialValue" class="form-control" placeholder="Valor Inicial" onblur="validateInput(this)" required>
+                        <input type="text" id="initialValue" class="form-control" placeholder="Valor Inicial*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-initialValue">Informe um valor inicial válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                     <div class="col-3">
-                        <input type="text" id="incrementalValue" class="form-control" placeholder="Valor Incremento" onblur="validateInput(this)" required>
+                        <input type="text" id="incrementalValue" class="form-control" placeholder="Valor Incremento*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-incrementalValue">Informe um valor incremento válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                 </div>

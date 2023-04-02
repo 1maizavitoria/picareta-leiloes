@@ -21,10 +21,10 @@
 
         <form class="col-12 d-flex flex-column justify-content-center align-items-center" action="post">
             <div class="col-7 col-lg-3 mb-4">
-                <input type="email" class="form-control" placeholder="✉" required>
+                <input type="email" class="form-control" placeholder="✉*" required>
             </div>
             <div class="col-7 col-lg-3 mb-5">
-                <input type="password" class="form-control" placeholder="🔑" required>
+                <input type="password" class="form-control" placeholder="🔑*" required>
             </div>
 
             <?php 

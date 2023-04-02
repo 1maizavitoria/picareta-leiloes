@@ -32,7 +32,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-6 col-lg-4">
-                        <input type="text" id="name" class="form-control" placeholder="Cor" onblur="validateInput(this)" required>
+                        <input type="text" id="name" class="form-control" placeholder="Cor*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-name">Informe um nome de cor válido.<br> <em>Ex: Branco</em></div>
                     </div>
                 </div>
