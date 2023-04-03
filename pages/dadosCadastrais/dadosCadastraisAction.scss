@@ -1,0 +1,23 @@
+@import './../../libs/base-imports.scss';
+
+table.user-info {
+  width: 60%;
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+  color: #000000;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+table.user-info td {
+  border: 5px;
+  font-size: 16px;
+}
+
+table.user-info th {
+  background-color: #7c93ad;
+  color: white;
+  text-align: center;
+  padding: 15px;
+}
