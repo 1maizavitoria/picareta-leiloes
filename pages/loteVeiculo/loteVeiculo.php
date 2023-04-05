@@ -19,7 +19,7 @@
             <div class="card-header text-center text-uppercase"><h2>Mitsubishi <span class="text-blue">Eclipse</span></h2> </div>
             <div class="row">
                 <div class="col-6">
-                    <img src="./../loteVeiculo/images/eclipse-direita.jpg"  >
+                    <img  class="img-fluid" src="./../loteVeiculo/images/eclipse-direita.jpg"  >
                 </div>
                 <div class="col-6 mt-3">
                     <div class="row">
@@ -27,10 +27,13 @@
                             <h4 class="font-label">Lance Atual</h4>
                             <h2 class="font-info" style="font-size: 20px;">R$45.000,00</h2>
                         </div>
-                        <div class="col-8">
+                        <div class="col-4">
                             <h4 class="font-label">Financeira</h4>
                             <h3 class="font-info" style="font-size: 20px;">Bradesco</h3>
                         </div>
+                        <div class="col-4">
+                            <i class="bi bi-arrow-left-circle"></i>
+                        </div >
                         <div class="col-4">
                             <h4 class="font-label">Ano</h4>
                             <h3 class="font-info">1998/1998</h3>
@@ -81,6 +84,10 @@
                         <div class="col-4">
                             <h4 class="font-label">Doc p/ Rodar</h4>
                             <h3 class="font-info">Sim</h3>
+                        </div>
+
+                        <div class="mt-3 float-right">
+                            <button class="btn btn-success"> Dar lance</button>
                         </div>
 
                         
