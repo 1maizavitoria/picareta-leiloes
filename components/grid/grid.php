@@ -142,6 +142,8 @@
         $botoesNaFrente = $paginaAtual <= 2 ? 5 : $paginaAtual + 3;
         $botoesNaFrente = $botoesNaFrente >= $paginaMaxima ? $paginaMaxima : $botoesNaFrente;
 
+        
+
         if ($paginaAtual <= 2) {
             $botoesAtras = 0;
             $botoesNaFrente = $paginaMaxima <= 5 ? $paginaMaxima : 5;
@@ -153,6 +155,10 @@
             $botoesAtras = $paginaAtual - 2;
             $botoesNaFrente = $paginaAtual + 3;
         }
+        
+
+        if($botoesAtras < 0)
+            $botoesAtras = 0;
 
         for ($i = $botoesAtras; $i < $botoesNaFrente; $i ++) {
             echo "
