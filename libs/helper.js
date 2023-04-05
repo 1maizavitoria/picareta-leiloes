@@ -105,7 +105,7 @@ function validateInput(input) {
 
     }
 
-    if (!regex?.test(input.value) || !validField) {
+    if (!regex?.test(input.value) && !validField) {
         invalidDiv.hidden = false;
         input.classList.add("is-invalid");
         input.classList.remove("is-valid")
