@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="eventos.scss">
-    <title>Eventos</title>
+    <link rel="stylesheet" href="leiloes.scss">
+    <title>Leiloes</title>
 </head>
 <body>
 
@@ -13,13 +13,13 @@
     include './../../components/header/header.html';
     ?>
 
-    <h2 class="h1-responsive font-weight-bold text-center my-4">Eventos</h2>
+    <h2 class="h1-responsive font-weight-bold text-center my-4">Leiloes</h2>
 
     <div class="mx-auto" style="margin-bottom: 20px;">
         <div class="row g-3">
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card" style="width: 20rem;">
-                    <img src="./../eventos/assets/event01.webp" class="card-img-top" alt="O sonho do primeiro carro">
+                    <img src="./../leiloes/assets/event01.webp" class="card-img-top" alt="O sonho do primeiro carro">
                     <div class="card-body">
                         <h5 class="card-title">Leilão Presencial</h5>
                         <p class="card-text">Está procurando o primeiro carro e não sabe por onde começar? Vem conferir!</p>
@@ -33,7 +33,7 @@
                         <!-- Adicionar página de listagem de lotes quando for criada -->
 
                         <div class="justify-content-center d-flex">
-                            <button onclick="window.location.href = './../contato/contato.php'"; class="btn btn-outline-success col-6">Leilão</button>
+                            <button onclick="window.location.href = './../../pages/lotes/lotes.php?id=1'"; class="btn btn-outline-success col-6">Leilão</button>
                         </div>
 
                     </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card" style="width: 20rem;">
-                    <img src="./../eventos/assets/event02.jpg" class="card-img-top" alt="As opções mais aguardadas">
+                    <img src="./../leiloes/assets/event02.jpg" class="card-img-top" alt="As opções mais aguardadas">
                     <div class="card-body">
                         <h5 class="card-title">Leilão Presencial - Online</h5>
                         <p class="card-text">Para você que está esperando pelo momento ideal, chegou a sua vez!</p>
@@ -55,7 +55,7 @@
                         <!-- Adicionar página de listagem de lotes quando for criada -->
 
                         <div class="justify-content-center d-flex">
-                            <button onclick="window.location.href = './../contato/contato.php'"; class="btn btn-outline-success col-6">Leilão</button>
+                            <button onclick="window.location.href = './../../pages/lotes/lotes.php?id=2'"; class="btn btn-outline-success col-6">Leilão</button>
                         </div>
 
                     </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card" style="width: 20rem;">
-                    <img src="./../eventos/assets/event03.webp" class="card-img-top" alt="Que vença o mais audacioso!">
+                    <img src="./../leiloes/assets/event03.webp" class="card-img-top" alt="Que vença o mais audacioso!">
                     <div class="card-body">
                         <h5 class="card-title">Leilão Presencial</h5>
                         <p class="card-text">Preparado para grandes emoções? Venha conferir para se surpreender!</p>
@@ -77,7 +77,7 @@
                         <!-- Adicionar página de listagem de lotes quando for criada -->
 
                         <div class="justify-content-center d-flex">
-                            <button onclick="window.location.href = './../contato/contato.php'"; class="btn btn-outline-success col-6">Leilão</button>
+                            <button onclick="window.location.href = './../../pages/lotes/lotes.php?id=3'"; class="btn btn-outline-success col-6">Leilão</button>
                         </div>
                     </div>
                 </div>
