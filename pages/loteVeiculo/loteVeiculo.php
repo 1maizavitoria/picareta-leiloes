@@ -32,7 +32,7 @@
         <div class="card-body col-12">
             <div class="card-header text-center text-uppercase"><h2>Mitsubishi <span class="text-blue">Eclipse</span></h2> </div>
             <div class="row">
-                <div class="col-6 mt-3">
+                <div class="col-6">
                     <img  class="img-fluid" src="./../loteVeiculo/images/eclipse-direita.jpg"  >
                 </div>
                 <div class="col-6 mt-3">
