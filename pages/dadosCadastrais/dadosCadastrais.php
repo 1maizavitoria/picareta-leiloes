@@ -31,13 +31,19 @@
             <form class="row d-flex justify-content-center" id="form" action="save" method="POST">
 
                 <div class="row justify-content-center mb-5">
-                    <div class="col-6 col-lg-4">
+                    <div class="col-4 col-lg-3">
                         <input type="text" id="name" class="form-control" placeholder="Nome completo*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-name">Informe um nome válido.<br> <em>Ex: Tyler Durden</em></div>
                     </div>
-                    <div class="col-6 col-lg-4">
+                    <div class="col-4 col-lg-3">
                         <input type="email" id="email" class="form-control" placeholder="E-mail*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-email">Informe um e-mail válido.<br> <em>Ex: nome@dominio.com</em></div>
+                    </div>
+                    <div class="col-4 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="userImage" accept="image/*">
+                            <label class="custom-file-label" for="userImage">Foto de perfil</label>
+                        </div>
                     </div>
                 </div>
                 
@@ -127,7 +133,7 @@
                 </div>
 
                 <div class="row justify-content-center mb-5">
-                <div class="col-4 col-lg-3">
+                    <div class="col-4 col-lg-3">
                         <input type="text" id="houseNumber" class="form-control" placeholder="Número da residência*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-houseNumber">Informe uma número de residência válido.<br> <em>Ex: 338</em></div>
                     </div>
@@ -139,22 +145,11 @@
                         <input type="tel" id="cep" maxLength="9" class="form-control" placeholder="CEP*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-cep">Informe um CEP válido.<br> <em>Ex: 81720-290</em></div>
                     </div>
-                </div>
+                </div>        
 
                 <div class="col-6 col-lg-3 mx-auto d-flex justify-content-center">
                     <button type="submit" value="salvar" class="btn btn-outline-success col-6" onclick="checkAllFields('form')">Salvar</button>
                 </div>
-                
-                <form method="post" action="processar_upload.php" enctype="multipart/form-data">
-                    <div class="form-group">
-                      <label for="foto">Foto de Perfil:</label>
-                      <input type="file" name="foto" id="foto">
-                    </div>
-                    <div class="form-group">
-                      <button type="submit" name="submit">Enviar</button>
-                    </div>
-                  </form>
-                  
 
             </form>
 
