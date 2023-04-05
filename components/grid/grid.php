@@ -74,7 +74,7 @@
         foreach ($dados as $dado) {
             $contador = 0;
             if ($urlClick)
-                echo "<tr class='text-center' onclick=\"window.open('$urlClick" . $dado[0] . "')\">";
+                echo "<tr class='text-center' style='cursor: pointer;'  onclick=\"window.location.href='$urlClick" . $dado[0] ."'\">";
             else
                 echo "<tr class='text-center'>";
             foreach ($dado as $col) {
@@ -187,13 +187,12 @@
     }
 
     function criarCampoBusca($editavel, $urlClick) {
-        console_log($urlClick);
         echo "
         <form action='?id=0' class='formPesquisa' method='GET'>";
             if ($editavel)
                 echo "
                 <div class='float-start'>
-                    <button type='button' class='btn btn-success col-12' onclick=\"window.open('$urlClick')\">Novo</button>
+                    <button type='button' class='btn btn-success col-12' onclick=\"window.location.href='$urlClick'\">Novo</button>
                 </div>
                 ";
 
