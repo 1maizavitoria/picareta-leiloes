@@ -28,7 +28,7 @@
                 <h2>Cadastro de Modelo Cor</h2>
             </div>
 
-            <form class="row d-flex justify-content-center" id="form" action="post">
+            <form class="row d-flex justify-content-center" id="form" action="" method="POST">
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
@@ -59,11 +59,11 @@
                     <div class="col-4 col-lg-3">
                         <select class="form-select" id="year" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Ano Modelo*</option>
-                            <option value="1">2010</option>
-                            <option value="2">2012</option>
-                            <option value="3">2014</option>
-                            <option value="4">2016</option>
-                            <option value="5">2020</option>
+                            <option value="2010">2010</option>
+                            <option value="2012">2012</option>
+                            <option value="2014">2014</option>
+                            <option value="2016">2016</option>
+                            <option value="2020">2020</option>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-year">Informe um ano modelo válido.</div>
                     </div>
@@ -94,7 +94,7 @@
                         } else {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.close()\">Cancelar</button>
+                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
                                 <button type='submit' value='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                             </div>
                             ";

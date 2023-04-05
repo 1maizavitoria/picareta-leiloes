@@ -17,7 +17,6 @@ function listenLicensePlate() {
 
 function listenExpenses() {
     const expensesInput = document.getElementById('expenses');
-    expensesInput.value = "R$0"
     expensesInput.addEventListener('input', function() {
         expensesInput.value = formatMoney(expensesInput.value);
     });

@@ -24,7 +24,8 @@
         <div class="row">
 
             <div class="col-md-8 mb-md-0 mb-5">
-                <form id="contact-form" name="contact-form" action="save" method="POST">
+
+                <form id="contact-form" name="contact-form" action="" method="POST">
 
                     <div class="row justify-content-center mb-5">
 

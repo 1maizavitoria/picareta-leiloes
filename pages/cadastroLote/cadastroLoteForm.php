@@ -28,7 +28,7 @@
                 <h2>Cadastro de Lote</h2>
             </div>
 
-            <form class="row d-flex justify-content-center" id="form" action="post">
+            <form class="row d-flex justify-content-center" id="form" action="" method="POST">
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
@@ -136,7 +136,7 @@
                         } else {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.close()\">Cancelar</button>
+                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
                                 <button type='submit' value='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                             </div>
                             ";
