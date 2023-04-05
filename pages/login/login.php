@@ -19,7 +19,7 @@
                 <h2>Bem-vindo!</h2>
         </div>
 
-        <form class="col-12 d-flex flex-column justify-content-center align-items-center" action="post">
+        <form class="col-12 d-flex flex-column justify-content-center align-items-center" action="" method="POST">
             <div class="col-7 col-lg-3 mb-4">
                 <input type="email" class="form-control" placeholder="✉*" required>
             </div>

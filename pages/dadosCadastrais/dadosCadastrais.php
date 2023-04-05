@@ -28,7 +28,7 @@
                 <h2>Dados Cadastrais</h2>
             </div>
 
-            <form class="row d-flex justify-content-center" id="form" action="save" method="POST">
+            <form class="row d-flex justify-content-center" id="form" action="" method="POST">
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">

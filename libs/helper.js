@@ -52,7 +52,7 @@ function validateInput(input) {
         case "brand":
             validField = input.value != "";
             break;
-        case "year":
+        case "year":    
             validField = input.value >= 1900 && input.value <= new Date().getFullYear() + 1;
             break;
         case "model":
@@ -80,6 +80,8 @@ function validateInput(input) {
             validField = input.value != "";
             break;
         case "expenses":
+            if (input.value == "")
+                input.value = "R$0,00";
             regex = /^R\$\d{1,}(\.\d{3})*,\d{2}$/;
             validField = parseFloat(input.value.replace("R$", "").replace(",", ".")) >= 0;
             break;
