@@ -94,7 +94,7 @@
                         <div class="invalid-feedback" id="invalid-message-odometer">Informe uma quilometragem válida.<br> <em>Ex: 1000</em></div>
                     </div>
                     <div class="col-9 col-lg-6">
-                        <input type="text" id="complement" class="form-control" placeholder="Observações*" onblur="validateInput(this)">
+                        <input type="text" id="complement" class="form-control" placeholder="Observações" onblur="validateInput(this)">
                         <div class="invalid-feedback" id="invalid-message-complement">Informe observações válidas.<br> <em>Ex: Falta a chave</em></div>
                     </div>
                 </div>

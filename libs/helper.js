@@ -44,6 +44,7 @@ function validateInput(input) {
             break;
         case "complement":
             regex = /^[\p{L}\s\d]+$/u;
+            validField = true;
             break;
         case "cep":
             regex = /^\d{5}-\d{3}$/;
