@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="contato.scss">
+    <script type="module" src="./contato.js"></script>
     <title>Contato</title>
 </head>
 <body>
@@ -23,42 +24,46 @@
         <div class="row">
 
             <div class="col-md-8 mb-md-0 mb-5">
-                <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                <form id="contact-form" name="contact-form" action="save" method="POST">
 
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center mb-5">
 
                         <div class="col-md-6">
                             <div class="md-form mb-0">
                                 <label for="name" class="">Nome</label>
-                                <input type="text" id="name" name="name" class="form-control">
-                            </div>
+                                <input type="text" id="name" class="form-control" onblur="validateInput(this)" required>
+                                <div class="invalid-feedback" id="invalid-message-name">Informe um nome válido.<br> <em>Ex: Tyler Durden</em></div>
+                           </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="md-form mb-0">
                                 <label for="email" class="">E-mail</label>
-                                <input type="text" id="email" name="email" class="form-control">
+                                <input type="text" id="email" name="email" class="form-control" onblur="validateInput(this)" required>
+                                <div class="invalid-feedback" id="invalid-message-email">Informe um e-mail válido.<br> <em>Ex: nome@dominio.com</em></div>
                             </div>
                         </div>
 
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-5">
                         <div class="col-md-12">
                             <div class="md-form mb-0">
-                                <label for="subject" class="">Título</label>
-                                <input type="text" id="subject" name="subject" class="form-control">
+                                <label for="subject">Título</label>
+                                <input type="text" id="name" name="title" class="form-control" onblur="validateInput(this)" required>
+                                <div class="invalid-feedback" id="invalid-message-email">Título não pode ser vazio.</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-5">
 
                         <div class="col-md-12">
 
                             <div class="md-form">
                                 <label for="message">Sua mensagem</label>
-                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
+                                <textarea type="text" id="name" name="message" rows="2" class="form-control md-textarea" onblur="validateInput(this)" required></textarea>
+                                <div class="invalid-feedback" id="invalid-message-email">Título não pode ser vazio.</div>
                             </div>
 
                         </div>
@@ -67,7 +72,7 @@
                 </form>
 
                 <div class="col-6 col-lg-3 mx-auto d-flex justify-content-center mt-5">
-                    <button type="submit" value="salvar" class="btn btn-outline-success col-6" onclick="">Enviar</button>
+                    <button type="submit" value="salvar" class="btn btn-outline-success col-6" onclick="checkAllFields('form')">Enviar</button>
                 </div>
             </div>
 
