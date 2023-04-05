@@ -43,8 +43,18 @@
     font-weight: 600;
 }
 
+.font-avancar {
+    display: flex;
+    color: #2e2d37;
+    font-size: 16px;
+    font-weight: 600;
+}
 
 
 li {
     list-style-type: none;
+}
+
+.pointer{
+    cursor: pointer;
 }

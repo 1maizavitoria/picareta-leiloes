@@ -13,6 +13,19 @@
     include './../../components/header/header.html';
     ?>
     
+    <div class="d-flex justify-content-center align-items-center col-12 row my-3">
+    <div class="col-1 d-flex justify-content-center" >
+        <i class="fa-sharp fa-solid fa-circle-arrow-left pointer" style="color: #3065ac; font-size: 20px;"></i>
+    </div>
+    <div class="col-1 d-flex justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-center ">
+       <span class="font-avancar">Lote 01</span> 
+    </div>
+</div>
+    <div class="col-1 d-flex justify-content-center">   
+        <i class="fa-sharp fa-solid fa-circle-arrow-right pointer" style="color: #3065ac; font-size: 20px;"></i>             
+    </div>
+</div>
     <div class="card mx-5">
 
         <div class="card-body col-12">
@@ -31,9 +44,7 @@
                             <h4 class="font-label">Financeira</h4>
                             <h3 class="font-info" style="font-size: 20px;">Bradesco</h3>
                         </div>
-                        <div class="col-4">
-                            <i class="bi bi-arrow-left-circle"></i>
-                        </div >
+                        
                         <div class="col-4">
                             <h4 class="font-label">Ano</h4>
                             <h3 class="font-info">1998/1998</h3>
@@ -60,7 +71,7 @@
 
                         <div class="col-4">
                             <h4 class="font-label">Despesas Administrativas</h4>
-                            <h3 class="font-info">R$1.450,0</h3>
+                            <h3 class="font-info">R$1.450,00</h3>
                         </div>
 
                         <div class="col-4">
@@ -86,8 +97,39 @@
                             <h3 class="font-info">Sim</h3>
                         </div>
 
-                        <div class="mt-3 float-right">
-                            <button class="btn btn-success"> Dar lance</button>
+                        <div class="mt-3 float-right text-center">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Incrementar lance
+                                </button>
+                                <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">R$500</a>
+                                <a class="dropdown-item" href="#">R$750</a>
+                                <a class="dropdown-item" href="#">R$1000</a>
+                                <a class="dropdown-item" href="#">R$1500</a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body"> 
+                            <?php 
+                    include './../../components/grid/grid.php';
+                    $produtos = array(
+                        array("1", "R$45.000,00", "231442"),
+                        array("2", "R$44.500,00", "284875"),
+                       
+                    );
+                
+                    $titulos = array('Lance', 'Usuário');
+                
+                    $editavel = false;
+                    $urlClick = "";
+
+                    gerarGrid($titulos, $produtos, 5, $editavel,  $urlClick);
+                ?>
+                            </div>
                         </div>
 
                         

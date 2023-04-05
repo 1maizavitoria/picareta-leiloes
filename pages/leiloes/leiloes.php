@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="leiloes.scss">
-    <title>Leiloes</title>
+    <title>Leilões</title>
 </head>
 <body>
 
@@ -13,7 +13,7 @@
     include './../../components/header/header.html';
     ?>
 
-    <h2 class="h1-responsive font-weight-bold text-center my-4">Leiloes</h2>
+    <h2 class="h1-responsive font-weight-bold text-center my-4">Leilões</h2>
 
     <div class="mb-2">
         <div class="row mid g-3">
