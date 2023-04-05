@@ -37,12 +37,12 @@
                 }
 
                 echo "
-                <div class='col-12 col-lg-3 d-flex justify-content-center mb-3 mt-2' onclick=\"window.location.href='$localizacao'\">
-                    <button type='submit' value='entrar' class='btn btn-outline-info col-4'>Entrar</button>
+                <div class='col-3 col-lg-1 d-flex justify-content-center mb-3 mt-2' onclick=\"window.location.href='$localizacao'\">
+                    <button type='submit' value='entrar' class='btn btn-outline-info col-12'>Entrar</button>
                 </div>
 
-                <div class='col-12 col-lg-3 d-flex justify-content-center' onclick=\"window.location.href='$localizacao'\">
-                    <button type='submit' value='cadastrar' class='btn btn-outline-success col-4'>Cadastrar</button>
+                <div class='col-3 col-lg-1 d-flex justify-content-center' onclick=\"window.location.href='$localizacao'\">
+                    <button type='submit' value='cadastrar' class='btn btn-outline-success col-12'>Cadastrar</button>
                 </div>
                 ";
             ?>

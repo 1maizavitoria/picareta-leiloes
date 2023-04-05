@@ -16,9 +16,9 @@
     <h2 class="h1-responsive font-weight-bold text-center my-4">Leiloes</h2>
 
     <div class="mx-auto" style="margin-bottom: 20px;">
-        <div class="row g-3">
+        <div class="row mid g-3">
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="card" style="width: 20rem;">
+                <div class="card">
                     <img src="./../leiloes/assets/event01.webp" class="card-img-top" alt="O sonho do primeiro carro">
                     <div class="card-body">
                         <h5 class="card-title">Leilão Presencial</h5>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="card" style="width: 20rem;">
+                <div class="card">
                     <img src="./../leiloes/assets/event02.jpg" class="card-img-top" alt="As opções mais aguardadas">
                     <div class="card-body">
                         <h5 class="card-title">Leilão Presencial - Online</h5>
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="card" style="width: 20rem;">
+                <div class="card">
                     <img src="./../leiloes/assets/event03.webp" class="card-img-top" alt="Que vença o mais audacioso!">
                     <div class="card-body">
                         <h5 class="card-title">Leilão Presencial</h5>

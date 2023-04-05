@@ -29,15 +29,15 @@
 
                         <div class="col-md-6">
                             <div class="md-form mb-0">
-                                <input type="text" id="name" name="name" class="form-control">
                                 <label for="name" class="">Nome</label>
+                                <input type="text" id="name" name="name" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="md-form mb-0">
-                                <input type="text" id="email" name="email" class="form-control">
                                 <label for="email" class="">E-mail</label>
+                                <input type="text" id="email" name="email" class="form-control">
                             </div>
                         </div>
 
@@ -46,8 +46,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="md-form mb-0">
-                                <input type="text" id="subject" name="subject" class="form-control">
                                 <label for="subject" class="">Título</label>
+                                <input type="text" id="subject" name="subject" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -57,8 +57,8 @@
                         <div class="col-md-12">
 
                             <div class="md-form">
-                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
                                 <label for="message">Sua mensagem</label>
+                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea"></textarea>
                             </div>
 
                         </div>
@@ -66,8 +66,8 @@
 
                 </form>
 
-                <div class="col-6 col-lg-3 mx-auto d-flex justify-content-center">
-                    <button type="submit" value="salvar" class="btn btn-outline-success col-6" onclick="checkAllFields('form')">Enviar</button>
+                <div class="col-6 col-lg-3 mx-auto d-flex justify-content-center mt-5">
+                    <button type="submit" value="salvar" class="btn btn-outline-success col-6" onclick="">Enviar</button>
                 </div>
             </div>
 

@@ -1,5 +1,11 @@
 img {
-    width: 200px; /* You can set the dimensions to whatever you want */
+    width: 200px;
     height: 200px;
     object-fit: cover;
+}
+
+.mid {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    justify-content: center;
 }

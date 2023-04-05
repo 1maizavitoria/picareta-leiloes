@@ -34,3 +34,10 @@ input[type="date"]:valid::before {
 	content: "" !important;
 }
 
+@media (max-width: 768px) {
+    body, html {
+      width: 1000px !important;
+      height: 1080px !important;
+    }
+   
+  }
