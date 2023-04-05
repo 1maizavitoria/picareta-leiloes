@@ -14,8 +14,8 @@
     include './../../components/header/header.html';
     ?>
 
-    <div>
-        <div class="d-flex justify-content-center align-items-center col-12 mb-4">
+    <div class="h-100">
+        <div class="d-flex justify-content-center align-items-center col-12 my-4">
         <div class="col-1 d-flex justify-content-center" >
             <i class="fa-sharp fa-solid fa-circle-arrow-left pointer" style="color: #3065ac; font-size: 20px;"></i>
         </div>
