@@ -72,7 +72,7 @@
                     $titulos = array('Marca', 'Modelo do veículo', 'Cor', 'Ano do veículo', 'Valor atual', 'Financeira Responsável', 'Data resultado');
                 
                     $editavel = false;
-                    $urlClick = "https://www.google.com?id=";
+                    $urlClick = "http://localhost/picareta-leiloes/pages/loteVeiculo/loteVeiculo.php?id=";
 
                     gerarGrid($titulos, $produtos, 12, $editavel,  $urlClick);
                 ?>
