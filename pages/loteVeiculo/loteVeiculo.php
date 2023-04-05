@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="loteVeiculo.scss">
+    
     <title>Lotes</title>
 </head>
 <body>
@@ -31,7 +32,7 @@
         <div class="card-body col-12">
             <div class="card-header text-center text-uppercase"><h2>Mitsubishi <span class="text-blue">Eclipse</span></h2> </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 mt-3">
                     <img  class="img-fluid" src="./../loteVeiculo/images/eclipse-direita.jpg"  >
                 </div>
                 <div class="col-6 mt-3">
@@ -98,21 +99,10 @@
                         </div>
 
                         <div class="mt-3 float-right text-center">
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Incrementar lance
-                                </button>
-                                <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">R$500</a>
-                                <a class="dropdown-item" href="#">R$750</a>
-                                <a class="dropdown-item" href="#">R$1000</a>
-                                <a class="dropdown-item" href="#">R$1500</a>
-
-                                </div>
-                            </div>
+                            <button class="btn btn-success"> Incrementar R$500,00</button>
                         </div>
 
-                        <div class="card">
+                        <div class="card mt-3">
                             <div class="card-body"> 
                             <?php 
                     include './../../components/grid/grid.php';
