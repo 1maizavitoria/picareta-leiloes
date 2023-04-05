@@ -34,6 +34,11 @@ input[type="date"]:valid::before {
 	content: "" !important;
 }
 
+input[type="file"] {
+    width: 135px;
+}
+  
+
 @media (max-width: 768px) {
     body, html {
       width: 1000px !important;
