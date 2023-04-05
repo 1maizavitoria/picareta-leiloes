@@ -18,7 +18,7 @@
         <div class="right">
 
             <div class="d-flex justify-content-center mt-5">
-                <h2>Lotes do Leilão <?php 
+                <h2>Lotes do Leilão N.º<?php 
                 if(isset($_GET["id"]))
                     echo $_GET["id"];
                  ?></h2>
