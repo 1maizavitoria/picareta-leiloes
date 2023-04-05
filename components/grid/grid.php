@@ -21,6 +21,9 @@
         global $paginaAtual;
         global $paginaMaxima;
 
+        if ($resultadosPorPagina == 5)
+            $paginaAtual = 0;
+
 
         if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["busca"])) {
             $busca = $_GET["busca"];
@@ -36,7 +39,8 @@
         echo "<div class='grid row'>";
         echo "<div class='col-12'>";
 
-        criarCampoBusca($editavel, $urlClick);
+        if ($resultadosPorPagina != 5)
+            criarCampoBusca($editavel, $urlClick);
         
         echo "<table class='table table-hover table-responsive table-light table-striped mb-0'>";
 
@@ -47,7 +51,7 @@
 
         if (empty($dados)) {
             echo "<div class='alert alert-danger' role='alert'>Nenhum resultado encontrado.</div>";
-        } else {
+        } else if ($resultadosPorPagina != 5) {
             criarPaginacao();
         }	
 

@@ -64,7 +64,7 @@
                             <div class="md-form">
                                 <label for="message">Sua mensagem</label>
                                 <textarea type="text" id="name" name="message" rows="2" class="form-control md-textarea" onblur="validateInput(this)" required></textarea>
-                                <div class="invalid-feedback" id="invalid-message-email">Título não pode ser vazio.</div>
+                                <div class="invalid-feedback" id="invalid-message-email">Mensagem não pode ser vazio.</div>
                             </div>
 
                         </div>

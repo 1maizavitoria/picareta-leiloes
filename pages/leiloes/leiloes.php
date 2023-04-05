@@ -28,7 +28,7 @@
                         <i class="fas fa-calendar-alt"></i>
                         <p class='card-text'>18/07/2023</p>
                         <div class="justify-content-center d-flex">
-                            <button onclick="window.location.href = './../../pages/lotes/lotes.php?id=2'"; class="btn btn-outline-success col-6">Acessar Leilão</button>
+                            <button onclick="window.location.href = './../../pages/lotes/lotes.php?id=1'"; class="btn btn-outline-success col-6">Acessar Leilão</button>
                         </div>
                     </div>
                 </div>
