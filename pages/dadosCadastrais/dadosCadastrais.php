@@ -144,6 +144,17 @@
                 <div class="col-6 col-lg-3 mx-auto d-flex justify-content-center">
                     <button type="submit" value="salvar" class="btn btn-outline-success col-6" onclick="checkAllFields('form')">Salvar</button>
                 </div>
+                
+                <form method="post" action="processar_upload.php" enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="foto">Foto de Perfil:</label>
+                      <input type="file" name="foto" id="foto">
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" name="submit">Enviar</button>
+                    </div>
+                  </form>
+                  
 
             </form>
 
