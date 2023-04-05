@@ -72,7 +72,7 @@
                 </form>
 
                 <div class="col-6 col-lg-3 mx-auto d-flex justify-content-center mt-5">
-                    <button type="submit" value="salvar" class="btn btn-outline-success col-6" onclick="checkAllFields('form')">Enviar</button>
+                    <button type="submit" value="salvar" class="btn btn-outline-success col-6" onclick="checkAllFields('contact-form')">Enviar</button>
                 </div>
             </div>
 
