@@ -21,7 +21,9 @@
         </div>
         <div class="col-1 d-flex justify-content-center align-items-center">
         <div class="d-flex flex-column justify-content-center ">
-        <span class="font-avancar">Lote 01</span>
+        <span class="font-avancar">Lote <?php if(isset($_GET["id"]))
+                    echo $_GET["id"];
+                    ?></h2> </span>
         </div>
     </div>
         <div class="col-1 d-flex justify-content-center">   
