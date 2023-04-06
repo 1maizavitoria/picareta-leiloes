@@ -128,7 +128,7 @@
                     </div>
 
                     <div class="col-3">
-                        <input type="text" id="expenses" class="form-control" placeholder="Despesas*" onblur="validateInput(this)" required>
+                        <input type="text" id="expenses" class="form-control" placeholder="Despesas" onblur="validateInput(this)">
                         <div class="invalid-feedback" id="invalid-message-expenses">Informe um valor de despesa válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                 </div>
