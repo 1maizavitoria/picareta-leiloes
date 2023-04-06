@@ -25,7 +25,7 @@
                 <?php 
                     include './../../components/grid/grid.php';
                     $produtos = array(
-                        array("1", "FORD", "FIESTA SEDAN", "PRETO", "2012/2013", "R$17.400,00", "SANTANDER", "15/05/2023"),
+                        array("1", "MITSUBISHI", "ECLIPSE", "PRETO", "1998/1998", "R$45.000,00", "BRADESCO", "15/05/2023"),
                         array("2", "PEUGEOUT", "208 GRIFFE", "PRATA", "2013/2014", "R$22.800,00", "SANTANDER", "15/05/2023"),
                         array("3", "FORD", "KA", "BRANCO", "2017/2018", "R$35.000,00", "BANCO DO BRASIL", "15/05/2023"),
                         array("4", "CHEVROLET", "ONIX", "VERMELHO", "2020/2021", "R$54.900,00", "CAIXA ECONÔMICA FEDERAL", "15/05/2023"),
