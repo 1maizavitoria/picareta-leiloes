@@ -7,33 +7,51 @@
     <link rel="stylesheet" href="./../../components/header/header.scss">
     <title>Header</title>
 </head>
-<body>
+    <body>
+        
+        <nav class="navbar sticky-top navbar-expand-lg bg-info">
+            <div class="container d-flex justify-content-start align-items-center mx-2">
+            
+                <a class="navbar-brand" href="window.location.href='./../../pages/index/index.php">
+                    <img class="w-100" src="./../../components/header/logo.svg" alt="">
+                </a>
 
-    <header>
+                <button class="navbar-toggler" type="button" style="color: #ffffff;" data-toggle="collapse" data-target="#navbarSupportedContent">
+                    <i class="fa-solid fa-bars" style="color: #ffffff;"></i>
+                </button>
+            
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto w-50 d-flex gap-4 justify-content-around align-items-center">
+                        <div class="button" onclick="window.location.href='./../../pages/index/index.php'">
+                            <p>Home</p>
+                            <hr>
+                        </div>
 
-        <div class="buttons">
+                        <div class="button" onclick="window.location.href='./../../pages/contato/contato.php'">
+                            <p>Contato</p>
+                            <hr>
+                        </div>
 
-            <div class="button" onclick="window.location.href='./../../pages/index/index.php'">
-                <p>Home</p>
-                <hr>
+                        <div class="button" onclick="window.location.href='./../../pages/leiloes/leiloes.php'">
+                            <p>Leilões</p>
+                            <hr>
+                        </div> 
+                        
+                        <div class="userLogo" onclick="window.location.href='./../../pages/login/login.php'">
+                            <p class="userName">matheus@hotmail.com</p>
+                            <i class="fa-solid fa-circle-user"></i>
+                        </div>
+
+                    </ul>
+                </div>
             </div>
 
-            <div class="button" onclick="window.location.href='./../../pages/leiloes/leiloes.php'">
-                <p>Leilões</p>
-                <hr>
-            </div>
 
-        </div>
-
-        <div class="userLogo" onclick="window.location.href='./../../pages/login/login.php'">
-
-            <p class="userName">matheus@hotmail.com</p>
-            <i class="fa-solid fa-circle-user"></i>
-
-        </div>
-
-
-    </header>
+        </nav>      
     
-</body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    
+    </body>
 </html>
