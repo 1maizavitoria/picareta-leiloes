@@ -7,20 +7,19 @@
     margin-left: calc(100% / 40);
 }
 
-.userLogo {
-    cursor: pointer;
-    margin-right: calc(100% / 45);
-    display: flex;
-    align-items: center;
-    z-index: -300;
-}
+// .userLogo {
+//     cursor: pointer;
+//     margin-right: calc(100% / 45);
+//     display: flex;
+//     align-items: center;
+// }
 
-.button {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+// .button {
+//     cursor: pointer;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+// }
 
 .button:hover, .userLogo:hover {
     transform: scale(0.85);

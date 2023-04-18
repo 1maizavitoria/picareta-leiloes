@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <div class="sidebar opened" id="sidebar">
+    <div class="sidebar opened bg-info" id="sidebar">
 
         <div class="buttonsSidebar">
 

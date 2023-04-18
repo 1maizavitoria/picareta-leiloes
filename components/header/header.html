@@ -10,9 +10,9 @@
     <body>
         
         <nav class="navbar sticky-top navbar-expand-lg bg-info">
-            <div class="container d-flex justify-content-start align-items-center mx-2">
+            <div class="container d-flex align-items-center mx-2">
             
-                <a class="navbar-brand" href="window.location.href='./../../pages/index/index.php">
+                <a class="navbar-brand" onclick="window.location.href='./../../pages/index/index.php'">
                     <img class="w-100" src="./../../components/header/logo.svg" alt="">
                 </a>
 
@@ -21,7 +21,7 @@
                 </button>
             
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto w-50 d-flex gap-4 justify-content-around align-items-center">
+                    <ul class="navbar-nav mr-auto w-25 d-flex justify-content-around align-items-center">
                         <div class="button" onclick="window.location.href='./../../pages/index/index.php'">
                             <p>Home</p>
                             <hr>
@@ -35,17 +35,19 @@
                         <div class="button" onclick="window.location.href='./../../pages/leiloes/leiloes.php'">
                             <p>Leilões</p>
                             <hr>
-                        </div> 
-                        
-                        <div class="userLogo" onclick="window.location.href='./../../pages/login/login.php'">
-                            <p class="userName">matheus@hotmail.com</p>
-                            <i class="fa-solid fa-circle-user"></i>
-                        </div>
-
+                        </div>                       
                     </ul>
                 </div>
             </div>
 
+            <div class="collapse navbar-collapse mx-3" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">               
+                    <div class="button mt-2 d-flex flex-row" onclick="window.location.href='./../../pages/login/login.php'">
+                        <p class="userName">matheus@hotmail.com</p>
+                        <i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>
+                    </div>
+                </ul>
+            </div>
 
         </nav>      
     
