@@ -14,12 +14,14 @@
 //     align-items: center;
 // }
 
-// .button {
-//     cursor: pointer;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-// }
+.button {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: calc(100% / 45);
+}
 
 .button:hover, .userLogo:hover {
     transform: scale(0.85);
