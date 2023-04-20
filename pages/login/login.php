@@ -65,27 +65,12 @@
                 <input type="password" name="password" class="form-control" placeholder="🔑*" required>
             </div>
 
-            <?php 
-                $tipoUsuario = 2;
-                $localizacao = "";
-                if ($tipoUsuario == 1) {
-                    $localizacao = './../../pages/dadosCadastrais/dadosCadastrais.php';
-                } else {
-                    $localizacao = './../../pages/cadastroMarca/cadastroMarca.php';
-                }
-
-                echo "
-                <div class='col-3 col-lg-1 d-flex justify-content-center mb-3 mt-2'>
-                    <button type='submit' value='entrar' class='btn btn-outline-info col-12'>Entrar</button>
-                </div>
-
-                <div class='col-3 col-lg-1 d-flex justify-content-center'>
-                    <button type='submit' value='cadastrar' class='btn btn-outline-success col-12'>Cadastrar</button>
-                </div>
-                ";
-            ?>
-            
-            
+            <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center mb-3 mt-2'>
+                <button type='submit' value='entrar' class='btn btn-outline-info col-12'>Entrar</button>
+            </div>
+            <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center'>
+                <button type='submit' value='cadastrar' class='btn btn-outline-success col-12'>Cadastrar</button>
+            </div>
         </form>
 
     </div>

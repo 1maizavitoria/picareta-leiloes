@@ -15,7 +15,7 @@
         <div class="buttonsSidebar">
 
             <?php 
-                $tipoUsuario = 2;
+                $tipoUsuario = $_SESSION['tipoUsuario'];
                 if ($tipoUsuario == 1) {
                     echo "
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/dadosCadastrais/dadosCadastrais.php'\">
