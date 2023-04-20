@@ -24,7 +24,7 @@
 
         <div class="right">
 
-            <div class="d-flex justify-content-center my-5">
+            <div class="d-flex justify-content-center mb-3">
                 <h2>Cadastro de Veiculo</h2>
             </div>
 
