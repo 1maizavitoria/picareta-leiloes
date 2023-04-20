@@ -11,7 +11,7 @@
 
     <?php
     include './../../libs/authenticator.php';
-    autenticar(1);
+    autenticar(2);
     ?>
 
     <?php
