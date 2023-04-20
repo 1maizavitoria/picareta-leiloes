@@ -1,4 +1,5 @@
 @import './../../libs/base-imports.scss';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 footer {
     width: 100%;
@@ -6,7 +7,7 @@ footer {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #2C3139;
+    background-color: #3a506b;
 
 }
 
@@ -16,8 +17,9 @@ footer a:hover {
     color: white;
 }
 
-footer a{
+footer a {
     color: white;
-    font-family: sans-serif;
     text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
 }
