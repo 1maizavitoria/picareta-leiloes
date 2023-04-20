@@ -10,6 +10,11 @@
 <body>
 
     <?php
+    include './../../libs/authenticator.php';
+    autenticar(1);
+    ?>
+
+    <?php
     include './../../components/header/header.html';
     ?>
     
