@@ -10,6 +10,7 @@
 <body>
 
     <?php
+    include './../../components/toastr/toastr.php';
     session_set_cookie_params((60 * 60) * 3);
     session_start();
 
@@ -18,31 +19,36 @@
         $senha = $_POST['password'];
 
         include './../../libs/databaseQuery.php';
+        
 
         if (isset($_POST['entrar'])) {
-            $usuario = executeQuery("SELECT loginId, tipoLogin FROM USUARIOS WHERE EMAIL = $email AND SENHA = $senha");
-            if (mysqli_num_rows($loginId) == 1) {
+            $usuario = executeQuery("SELECT loginId, tipoLogin FROM LOGIN WHERE EMAIL = '$email' AND SENHA = '$senha'");
+            if (mysqli_num_rows($usuario) == 1) {
+                $usuario = mysqli_fetch_assoc($usuario);
                 $_SESSION['loginId'] = $usuario['loginId'];
                 $_SESSION['tipoUsuario'] = $usuario['tipoLogin'];
+                
+                if ($usuario['tipoLogin'] == 1) {
+                    header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
+                } else  {
+                    header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
+                }
+
             } else {
-                echo '<p>Usuário ou senha inválidos</p>';
+                toastr('error', 'Email ou senha inválidos.');
             }
         } elseif (isset($_POST['cadastrar'])) {
-            $emailExistente = executeQuery("SELECT * FROM USUARIOS WHERE EMAIL = $email");
+            $emailExistente = executeQuery("SELECT * FROM LOGIN WHERE EMAIL = '$email'");
             if (mysqli_num_rows($emailExistente) == 0) {
-                executeQuery("INSERT INTO USUARIOS (EMAIL, SENHA) VALUES ($email, $senha)");
-                $loginId = executeQuery("SELECT loginId FROM USUARIOS WHERE EMAIL = $email AND SENHA = $senha");
+                executeQuery("INSERT INTO LOGIN (email, senha, tipoLogin) VALUES ('$email', '$senha', '1')");
+                $loginId = executeQuery("SELECT loginId FROM LOGIN WHERE EMAIL = '$email' AND SENHA = '$senha'");
+                $loginId = mysqli_fetch_assoc($loginId);
                 $_SESSION['loginId'] = $loginId;
                 $_SESSION['tipoUsuario'] = 1;
+                header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
             } else {
-                echo '<p>Usuário já cadastrado</p>';
+                toastr('error', 'Email já cadastrado.');
             }
-        }
-
-        if ($_SESSION['tipoUsuario'] == 1) {
-            header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
-        } else {
-            header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
         }
     }
     ?>
@@ -66,10 +72,10 @@
             </div>
 
             <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center mb-3 mt-2'>
-                <button type='submit' value='entrar' class='btn btn-outline-info col-12'>Entrar</button>
+                <button type='submit' name='entrar' class='btn btn-outline-info col-12'>Entrar</button>
             </div>
             <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center'>
-                <button type='submit' value='cadastrar' class='btn btn-outline-success col-12'>Cadastrar</button>
+                <button type='submit' name='cadastrar' class='btn btn-outline-success col-12'>Cadastrar</button>
             </div>
         </form>
 

@@ -4,13 +4,13 @@
     function autenticar($tipoUsuarioTela) {
         $tipoUsuario = $_SESSION['tipoUsuario'];
         $loginId = $_SESSION['loginId'];
-        if (!isset($loginId) || $loginId == null || $tipoUsuario !== $tipoUsuarioTela) {
+        if ($tipoUsuario == null ||  $loginId == null) {
             header('Location: ./../../pages/login/login.php');
             exit;
         } else {
-            if ($tipoUsuario == 1) {
+            if ($tipoUsuario == 1 && $tipoUsuario != $tipoUsuarioTela) {
                 header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
-            } else {
+            } elseif ($tipoUsuario == 2 && $tipoUsuario != $tipoUsuarioTela) {
                 header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
             }
         }

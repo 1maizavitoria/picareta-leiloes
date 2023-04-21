@@ -3,13 +3,12 @@
         $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname = "bdname";
+        $dbname = "picaretaleiloes";
         $conexao = new mysqli($servername, $username, $password, $dbname);
 
         function executeQuery($sql){
             global $conexao;
             $result = $conexao->query($sql);
-            mysqli_close($conexao);
             return $result;
         }
     } catch (mysqli_sql_exception $e) {
