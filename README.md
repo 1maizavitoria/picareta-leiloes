@@ -5,7 +5,7 @@ CREATE DATABASE PICARETALEILOES;
 USE PICARETALEILOES;
 
 CREATE TABLE Veiculo ( 
-    veiculoId int, 
+    veiculoId int AUTO_INCREMENT, 
     chassi varchar(1), 
     placa varchar(6), 
     modeloId int, 
@@ -27,14 +27,14 @@ CREATE TABLE Veiculo (
 );
 
 CREATE TABLE Marca ( 
-    marcaId smallint, 
+    marcaId smallint AUTO_INCREMENT, 
     descricao varchar(50), 
     PRIMARY KEY (marcaId, descricao), 
     UNIQUE (marcaId, descricao) 
 );
 
 CREATE TABLE Modelo ( 
-    modeloId int, 
+    modeloId int AUTO_INCREMENT, 
     marcaId smallint, 
     anoModelo smallint, 
     descricao varchar(100), 
@@ -43,18 +43,18 @@ CREATE TABLE Modelo (
 );
 
 CREATE TABLE Cor ( 
-    corId smallint PRIMARY KEY, 
+    corId smallint PRIMARY KEY AUTO_INCREMENT, 
     Descricao varchar(50) 
 );
 
 CREATE TABLE ModeloCor ( 
-    corId smallint, 
+    corId smallint AUTO_INCREMENT, 
     modeloId int, 
     PRIMARY KEY (corId, modeloId) 
 );
 
 CREATE TABLE Lote ( 
-    loteId smallint, 
+    loteId smallint AUTO_INCREMENT, 
     veiculoId int, 
     leilaoId int, 
     valorInicial decimal, 
@@ -64,7 +64,7 @@ CREATE TABLE Lote (
 );
 
 CREATE TABLE Lance ( 
-    lanceId smallint, 
+    lanceId smallint AUTO_INCREMENT, 
     sequencia int, 
     dataLance dateTime, 
     valorLance decimal, 
@@ -75,17 +75,17 @@ CREATE TABLE Lance (
 );
 
 CREATE TABLE Leilao ( 
-    leilaoId int PRIMARY KEY, 
+    leilaoId int PRIMARY KEY AUTO_INCREMENT, 
     dataLeilao dateTime 
 );
 
 CREATE TABLE Financeira ( 
-    financeiraId int PRIMARY KEY, 
+    financeiraId int PRIMARY KEY AUTO_INCREMENT, 
     descricaoFinanceira varchar(100) 
 );
 
 CREATE TABLE Login ( 
-    loginId int PRIMARY KEY, 
+    loginId int PRIMARY KEY AUTO_INCREMENT, 
     email varchar(120), 
     senha varchar(50), 
     tipoLogin smallint 
