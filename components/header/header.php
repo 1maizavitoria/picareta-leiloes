@@ -10,7 +10,7 @@
     <body>
     <?php session_start(); ?>
         <nav class="navbar d-flex justify-content-between sticky-top navbar-expand-lg bg-info gap-4">
-            <div class="container d-flex justify-content-around align-items-center mx-2">
+            <div class="container d-flex justify-content-around align-items-center">
             
                 <a class="navbar-brand button" onclick="window.location.href='./../../pages/index/index.php'">
                     <img class="w-100" src="./../../components/header/logo.svg" alt="">
@@ -41,7 +41,7 @@
             </div>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav w-100 justify-content-end d-flex">               
+                <ul class="w-100 navbar-nav justify-content-end d-flex">               
                     <div class="button mt-2 d-flex flex-row" onclick=<?php 
                         if(isset($_SESSION['email']))
                             if ($_SESSION['tipoUsuario'] == 1)

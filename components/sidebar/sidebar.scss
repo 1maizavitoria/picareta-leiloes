@@ -10,7 +10,7 @@
 }
 
 .closed {
-    width: 80px;
+    width: 60px;
     transition: width 0.5s ease;
 }
 
@@ -31,10 +31,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 275px !important;
 }
 
-.buttonSidebar:hover {
-    transform: scale(1.1);
+.logo:hover {
+transform: scale(1.25);
+transition: transform 0.5s ease;
+}
+
+.buttonSidebar p:hover {
+    transform: scale(1.25);
     transition: transform 0.5s ease;
 }
 
@@ -48,9 +54,14 @@
 .hrSidebar {
     background-color: rgb(255, 255, 255) !important;
     height: 2px !important;
-    width: 225px !important;
+    width: 150px !important;
     opacity: 1 !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
 
+.logo {
+    position: fixed;
+    margin-left: 15px !important;
+    margin-top: 10px !important;
+}

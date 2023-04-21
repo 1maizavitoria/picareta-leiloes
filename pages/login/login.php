@@ -10,8 +10,9 @@
 <body>
 
     <?php
+    include './../../components/header/header.php';
     include './../../components/toastr/toastr.php';
-    session_set_cookie_params((60 * 60) * 3);
+
     
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -53,10 +54,6 @@
             }
         }
     }
-    ?>
-
-    <?php
-    include './../../components/header/header.php';
     ?>
 
     <div class="content">

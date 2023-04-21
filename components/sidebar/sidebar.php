@@ -19,46 +19,76 @@
                 if ($tipoUsuario == 1) {
                     echo "
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/dadosCadastrais/dadosCadastrais.php'\">
-                        <p>Dados cadastrais</p>
+                        <div class='d-flex col-12'>
+                            <i class='fa-solid fa-clipboard-user fa-2xl logo'></i>
+                            <p class='mx-auto'>Dados cadastrais</p>
+                        </div>
                         <hr class='hrSidebar'>
                     </div>
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/historicoLances/historicoLances.php'\">
-                        <p>Histórico de lances</p>
+                        <div class='d-flex col-12'>
+                            <i class='fa-solid fa-clock-rotate-left fa-2xl logo'></i>
+                            <p class='mx-auto'>Histórico de lances</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     ";
                 } else {
                     echo "
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/cadastroMarca/cadastroMarca.php'\">
-                        <p>Cadastro de marca</p>
+                        <div class='d-flex col-12'>    
+                            <i class='fa-solid fa-copyright fa-2xl logo'></i>    
+                            <p class='mx-auto'>Cadastro de marca</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/cadastroCor/cadastroCor.php'\">
-                        <p>Cadastro de cor</p>
+                        <div class='d-flex col-12'>    
+                            <i class='fa-solid fa-palette fa-2xl logo'></i>    
+                            <p class='mx-auto'>Cadastro de cor</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/cadastroModelo/cadastroModelo.php'\">
-                        <p>Cadastro de modelo</p>
+                        <div class='d-flex col-12'>    
+                            <i class='fa-solid fa-car-side fa-2xl logo'></i>    
+                            <p class='mx-auto'>Cadastro de modelo</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/cadastroModeloCor/cadastroModeloCor.php'\">
-                        <p>Cadastro de modelo cor</p>
+                        <div class='d-flex col-12'>    
+                            <i class='fa-solid fa-paintbrush fa-2xl logo'></i>    
+                            <p class='mx-auto'>Cadastro de modelo/cor</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/cadastroVeiculo/cadastroVeiculo.php'\">
-                        <p>Cadastro de veiculo</p>
+                        <div class='d-flex col-12'>    
+                            <i class='fa-solid fa-car fa-2xl logo'></i>    
+                            <p class='mx-auto'>Cadastro de veiculo</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/cadastroLeilao/cadastroLeilao.php'\">
-                        <p>Cadastro de leilao</p>
+                        <div class='d-flex col-12'>    
+                            <i class='fa-solid fa-gavel fa-2xl logo'></i>    
+                            <p class='mx-auto'>Cadastro de leilao</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/cadastroFinanceira/cadastroFinanceira.php'\">
-                        <p>Cadastro de financeira</p>
+                        <div class='d-flex col-12'>    
+                            <i class='fa-solid fa-coins fa-2xl logo'></i>    
+                            <p class='mx-auto'>Cadastro de financeira</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     <div class='buttonSidebar' onclick=\"window.location.href='./../../pages/cadastroLote/cadastroLote.php'\">
-                        <p>Cadastro de lote</p>
+                        <div class='d-flex col-12'>    
+                            <i class='fa-solid fa-table-list fa-2xl logo'></i>    
+                            <p class='mx-auto'>Cadastro de lote</p>
+                        </div>   
                         <hr class='hrSidebar'>
                     </div>
                     ";
@@ -68,6 +98,7 @@
 
         <div>
             <button class="btn btn-secondary col-12" onclick="toggleSidebar()"><i class="fa-solid fa-arrow-right-arrow-left"></i></i></button>
+            <button class="btn btn-danger col-12" onclick="window.location.href='./../../pages/logout/logout.php'">Sair</button>
         </div>
 
     </div>
