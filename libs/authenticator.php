@@ -1,5 +1,4 @@
 <?php
-    session_start();
 
     function autenticar($tipoUsuarioTela) {
         $tipoUsuario = $_SESSION['tipoUsuario'];

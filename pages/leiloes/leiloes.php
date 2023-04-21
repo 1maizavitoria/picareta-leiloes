@@ -11,7 +11,7 @@
 <body>
 
     <?php
-    include './../../components/header/header.html';
+    include './../../components/header/header.php';
     ?>
 
     <h2 class="h1-responsive font-weight-bold text-center my-4">Leilões</h2>

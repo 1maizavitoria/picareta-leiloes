@@ -11,7 +11,7 @@
 <body>
 
     <?php
-    include './../../components/header/header.html';
+    include './../../components/header/header.php';
     ?>
 
     <div class="container d-flex flex-column gap-3">

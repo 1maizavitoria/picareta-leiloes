@@ -12,7 +12,7 @@
     <?php
     include './../../components/toastr/toastr.php';
     session_set_cookie_params((60 * 60) * 3);
-    session_start();
+    
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
@@ -27,8 +27,9 @@
                 $usuario = mysqli_fetch_assoc($usuario);
                 $_SESSION['loginId'] = $usuario['loginId'];
                 $_SESSION['tipoUsuario'] = $usuario['tipoLogin'];
+                $_SESSION['email'] = $email;
                 
-                if ($usuario['tipoLogin'] == 1) {
+                if ($_SESSION['tipoUsuario'] == 1) {
                     header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
                 } else  {
                     header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
@@ -45,6 +46,7 @@
                 $loginId = mysqli_fetch_assoc($loginId);
                 $_SESSION['loginId'] = $loginId;
                 $_SESSION['tipoUsuario'] = 1;
+                $_SESSION['email'] = $email;
                 header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
             } else {
                 toastr('error', 'Email já cadastrado.');
@@ -54,7 +56,7 @@
     ?>
 
     <?php
-    include './../../components/header/header.html';
+    include './../../components/header/header.php';
     ?>
 
     <div class="content">

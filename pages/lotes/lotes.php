@@ -15,7 +15,7 @@
     ?>
 
     <?php
-    include './../../components/header/header.html';
+    include './../../components/header/header.php';
     ?>
     
     <div class="content">

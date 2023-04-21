@@ -8,8 +8,8 @@
     <title>Header</title>
 </head>
     <body>
-        
-        <nav class="navbar sticky-top navbar-expand-lg bg-info">
+    <?php session_start(); ?>
+        <nav class="navbar d-flex justify-content-between sticky-top navbar-expand-lg bg-info gap-4">
             <div class="container d-flex justify-content-around align-items-center mx-2">
             
                 <a class="navbar-brand button" onclick="window.location.href='./../../pages/index/index.php'">
@@ -21,7 +21,7 @@
                 </button>
             
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto d-flex justify-content-around align-items-center">
+                    <ul class="navbar-nav mr-auto d-flex justify-content-around align-items-center gap-4">
                         <div class="button mx-2 m-2" onclick="window.location.href='./../../pages/index/index.php'">
                             <p>Home</p>
                             <hr>
@@ -40,10 +40,25 @@
                 </div>
             </div>
 
-            <div class="collapse navbar-collapse mx-3 m-2" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">               
-                    <div class="button mt-2 d-flex flex-row" onclick="window.location.href='./../../pages/login/login.php'">
-                        <p class="userName">matheus@hotmail.com</p>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav w-100 justify-content-end d-flex">               
+                    <div class="button mt-2 d-flex flex-row" onclick=<?php 
+                        if(isset($_SESSION['email']))
+                            if ($_SESSION['tipoUsuario'] == 1)
+                                echo 'window.location.href=\'./../../pages/dadosCadastrais/dadosCadastrais.php\'';
+                            else
+                                echo 'window.location.href=\'./../../pages/cadastroMarca/cadastroMarca.php\'';
+                        else
+                            echo 'window.location.href=\'./../../pages/login/login.php\''; 
+                    ?>>
+                        <p class="userName">
+                            <?php 
+                            if(isset($_SESSION['email']))
+                                echo $_SESSION['email'];
+                            else
+                                echo 'Entrar'; 
+                            ?>
+                        </p>
                         <i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>
                     </div>
                 </ul>

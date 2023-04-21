@@ -11,7 +11,7 @@
 <body>
 
     <?php
-    include './../../components/header/header.html';
+    include './../../components/header/header.php';
     ?>
     
     <div class="content">
@@ -109,6 +109,11 @@
 
     <?php
     include './../../components/footer/footer.html';
+    ?>
+
+    <?php
+    include './../../libs/authenticator.php';
+    autenticar(2);
     ?>
     
 </body>
