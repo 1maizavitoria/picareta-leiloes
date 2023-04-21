@@ -1,315 +1,157 @@
 # picareta-leiloes
 
-/* picaretaleiloes_66.4: */
+CREATE DATABASE PICARETALEILOES;
 
-CREATE TABLE Veiculo (
-    veiculoId int,
-    chassi varchar(1),
-    placa varchar(6),
-    modeloId int,
-    hodometro int,
-    observacao varchar(256),
-    direcao smallint,
-    cambioAutomatico boolean,
-    vidroEletrico boolean,
-    tipoCombustivel smallint,
-    kitGnv boolean,
-    arCondicionado boolean,
-    kitMultimidia boolean,
-    valorDespesas decimal,
-    ipvaQuitado boolean,
-    documentoParaRodar boolean,
-    anoFabricacao smallint,
-    sinistro boolean,
-    PRIMARY KEY (modeloId, placa, chassi, marcaId, veiculoId)
+USE PICARETALEILOES;
+
+CREATE TABLE Veiculo ( 
+    veiculoId int, 
+    chassi varchar(1), 
+    placa varchar(6), 
+    modeloId int, 
+    hodometro int, 
+    observacao varchar(256), 
+    direcao smallint, 
+    cambioAutomatico boolean, 
+    vidroEletrico boolean, 
+    tipoCombustivel smallint, 
+    kitGnv boolean, 
+    arCondicionado boolean, 
+    kitMultimidia boolean, 
+    valorDespesas decimal, 
+    ipvaQuitado boolean, 
+    documentoParaRodar boolean, 
+    anoFabricacao smallint, 
+    sinistro boolean, 
+    PRIMARY KEY (veiculoId, modeloId, placa, chassi) 
 );
 
-CREATE TABLE Marca (
-    marcaId smallint,
-    descricao varchar(50),
-    PRIMARY KEY (marcaId, descricao),
-    UNIQUE (marcaId, descricao)
+CREATE TABLE Marca ( 
+    marcaId smallint, 
+    descricao varchar(50), 
+    PRIMARY KEY (marcaId, descricao), 
+    UNIQUE (marcaId, descricao) 
 );
 
-CREATE TABLE Modelo (
-    modeloId int,
-    marcaId smallint,
-    anoModelo smallint,
-    descricao varchar(100),
-    PRIMARY KEY (modeloId, marcaId, anoModelo),
-    UNIQUE (anoModelo, modeloId)
+CREATE TABLE Modelo ( 
+    modeloId int, 
+    marcaId smallint, 
+    anoModelo smallint, 
+    descricao varchar(100), 
+    PRIMARY KEY (modeloId, marcaId, anoModelo), 
+    UNIQUE (anoModelo, modeloId) 
 );
 
-CREATE TABLE Cor (
-    corId smallint PRIMARY KEY,
-    Descricao varchar(50)
+CREATE TABLE Cor ( 
+    corId smallint PRIMARY KEY, 
+    Descricao varchar(50) 
 );
 
-CREATE TABLE ModeloCor (
-    corId smallint,
-    modeloId int,
-    PRIMARY KEY (corId, modeloId)
+CREATE TABLE ModeloCor ( 
+    corId smallint, 
+    modeloId int, 
+    PRIMARY KEY (corId, modeloId) 
 );
 
-CREATE TABLE Lote (
-    loteId smallint,
-    veiculoId int,
-    leilaoId int,
-    valorInicial decimal,
-    valorIncremento decimal,
-    financeiraId int,
-    PRIMARY KEY (loteId, leilaoId, veiculoId, financeiraId)
+CREATE TABLE Lote ( 
+    loteId smallint, 
+    veiculoId int, 
+    leilaoId int, 
+    valorInicial decimal, 
+    valorIncremento decimal, 
+    financeiraId int, 
+    PRIMARY KEY (loteId, leilaoId, veiculoId, financeiraId) 
 );
 
-CREATE TABLE Lance (
-    lanceId smallint,
-    sequencia int,
-    dataLance dateTime,
-    valorLance decimal,
-    loteId smallint,
-    loginId int,
-    PRIMARY KEY (lanceId, sequencia, loteId),
-    UNIQUE (sequencia, lanceId)
+CREATE TABLE Lance ( 
+    lanceId smallint, 
+    sequencia int, 
+    dataLance dateTime, 
+    valorLance decimal, 
+    loteId smallint, 
+    loginId int, 
+    PRIMARY KEY (lanceId, sequencia, loteId), 
+    UNIQUE (sequencia, lanceId) 
 );
 
-CREATE TABLE Leilao (
-    leilaoId int PRIMARY KEY,
-    dataLeilao dateTime
+CREATE TABLE Leilao ( 
+    leilaoId int PRIMARY KEY, 
+    dataLeilao dateTime 
 );
 
-CREATE TABLE Financeira (
-    financeiraId int PRIMARY KEY,
-    descricaoFinanceira varchar(100)
+CREATE TABLE Financeira ( 
+    financeiraId int PRIMARY KEY, 
+    descricaoFinanceira varchar(100) 
 );
 
-CREATE TABLE Login (
-    loginId int  PRIMARY KEY,
-    email varchar(120),
-    senha varchar(50),
-    tipoLogin smallint
+CREATE TABLE Login ( 
+    loginId int PRIMARY KEY, 
+    email varchar(120), 
+    senha varchar(50), 
+    tipoLogin smallint 
 );
 
-CREATE TABLE Pessoa (
-    loginId int  PRIMARY KEY,
-    nome varchar(256),
-    cpf varchar(11),
-    rg varchar(9),
-    dataNascimento dateTime,
-    telefone varchar(),
-    estadoCivil smallint,
-    sexo smallint,
-    foto blob
+CREATE TABLE Pessoa ( 
+    loginId int PRIMARY KEY, 
+    nome varchar(256), 
+    cpf varchar(11), 
+    rg varchar(9), 
+    dataNascimento dateTime, 
+    telefone varchar(11), 
+    estadoCivil smallint, 
+    sexo smallint, 
+    foto blob 
 );
 
-CREATE TABLE Endereco (
-    cep varchar(8),
-    logradouro varchar(256),
-    numeroResidencia smallint,
-    complemento varchar(30),
-    cidade varchar(50),
-    uf varchar(2),
-    loginId int PRIMARY KEY
+CREATE TABLE Endereco ( 
+    cep varchar(8), 
+    logradouro varchar(256), 
+    numeroResidencia smallint, 
+    complemento varchar(30), 
+    cidade varchar(50), 
+    uf varchar(2), 
+    loginId int PRIMARY KEY 
 );
 
-CREATE TABLE ImagensLote (
-    loteId smallint,
-    tipoImagem smallint UNIQUE,
-    imagem blob,
-    PRIMARY KEY (loteId, tipoImagem)
-);
- 
-ALTER TABLE Veiculo ADD CONSTRAINT FK_ModeloVeiculo
-    FOREIGN KEY (modeloId)
-    REFERENCES Modelo(modeloId);
- 
-
- 
-ALTER TABLE Modelo ADD CONSTRAINT FK_Modelo_Marca
-    FOREIGN KEY (marcaId)
-    REFERENCES Marca(marcaId);
- 
-ALTER TABLE ModeloCor ADD CONSTRAINT FK_Modelo_ModeloCor
-    FOREIGN KEY (modeloId)
-    REFERENCES Modelo(modeloId);
- 
-ALTER TABLE ModeloCor ADD CONSTRAINT FK_ModeloCor_Cor
-    FOREIGN KEY (corId)
-    REFERENCES Cor(corId);
-    
-
-ALTER TABLE Lote ADD CONSTRAINT FK_Lote_Leilao
-    FOREIGN KEY (leilaoId)
-    REFERENCES Leilao(leilaoId);
- 
-ALTER TABLE Lote ADD CONSTRAINT FK_Lote_Veiculo
-    FOREIGN KEY (veiculoID)
-    REFERENCES Veiculo(veiculoId);
- 
-ALTER TABLE Lance ADD CONSTRAINT FK_Lote_Financeira
-    FOREIGN KEY (financeiraId)
-    REFERENCES Financeira(financeiraId);
- 
-ALTER TABLE Pessoa ADD CONSTRAINT FK_Login_Pessoa
-    FOREIGN KEY (loginId)
-    REFERENCES Login (loginId);
- 
-
-ALTER TABLE Endereco ADD CONSTRAINT FK_Endereco_Pessoa
-    FOREIGN KEY (loginId)
-    REFERENCES Pessoa(loginId);/* picaretaleiloes_66.4: */
-
-CREATE TABLE Veiculo (
-    veiculoId int,
-    chassi varchar(1),
-    placa varchar(6),
-    modeloId int,
-    hodometro int,
-    observacao varchar(256),
-    direcao smallint,
-    cambioAutomatico boolean,
-    vidroEletrico boolean,
-    tipoCombustivel smallint,
-    kitGnv boolean,
-    arCondicionado boolean,
-    kitMultimidia boolean,
-    valorDespesas decimal,
-    ipvaQuitado boolean,
-    documentoParaRodar boolean,
-    anoFabricacao smallint,
-    sinistro boolean,
-    PRIMARY KEY (modeloId, placa, chassi, marcaId, veiculoId)
+CREATE TABLE ImagensLote ( 
+    loteId smallint, 
+    tipoImagem smallint UNIQUE, 
+    imagem blob, 
+    PRIMARY KEY (loteId, tipoImagem) 
 );
 
-CREATE TABLE Marca (
-    marcaId smallint,
-    descricao varchar(50),
-    PRIMARY KEY (marcaId, descricao),
-    UNIQUE (marcaId, descricao)
-);
+ALTER TABLE Veiculo 
+ADD CONSTRAINT FK_ModeloVeiculo 
+FOREIGN KEY (modeloId) REFERENCES Modelo(modeloId);
 
-CREATE TABLE Modelo (
-    modeloId int,
-    marcaId smallint,
-    anoModelo smallint,
-    descricao varchar(100),
-    PRIMARY KEY (modeloId, marcaId, anoModelo),
-    UNIQUE (anoModelo, modeloId)
-);
+ALTER TABLE Modelo 
+ADD CONSTRAINT FK_Modelo_Marca 
+FOREIGN KEY (marcaId) REFERENCES Marca(marcaId);
 
-CREATE TABLE Cor (
-    corId smallint PRIMARY KEY,
-    Descricao varchar(50)
-);
+ALTER TABLE ModeloCor 
+ADD CONSTRAINT FK_Modelo_ModeloCor 
+FOREIGN KEY (modeloId) REFERENCES Modelo(modeloId);
 
-CREATE TABLE ModeloCor (
-    corId smallint,
-    modeloId int,
-    PRIMARY KEY (corId, modeloId)
-);
+ALTER TABLE ModeloCor 
+ADD CONSTRAINT FK_ModeloCor_Cor 
+FOREIGN KEY (corId) REFERENCES Cor(corId);
 
-CREATE TABLE Lote (
-    loteId smallint,
-    veiculoId int,
-    leilaoId int,
-    valorInicial decimal,
-    valorIncremento decimal,
-    financeiraId int,
-    PRIMARY KEY (loteId, leilaoId, veiculoId, financeiraId)
-);
+ALTER TABLE Lote 
+ADD CONSTRAINT FK_Lote_Leilao 
+FOREIGN KEY (leilaoId) REFERENCES Leilao(leilaoId);
 
-CREATE TABLE Lance (
-    lanceId smallint,
-    sequencia int,
-    dataLance dateTime,
-    valorLance decimal,
-    loteId smallint,
-    loginId int,
-    PRIMARY KEY (lanceId, sequencia, loteId),
-    UNIQUE (sequencia, lanceId)
-);
+ALTER TABLE Lote 
+ADD CONSTRAINT FK_Lote_Veiculo 
+FOREIGN KEY (veiculoId) REFERENCES Veiculo(veiculoId);
 
-CREATE TABLE Leilao (
-    leilaoId int PRIMARY KEY,
-    dataLeilao dateTime
-);
+ALTER TABLE Lote 
+ADD CONSTRAINT FK_Lote_Financeira 
+FOREIGN KEY (financeiraId) REFERENCES Financeira(financeiraId);
 
-CREATE TABLE Financeira (
-    financeiraId int PRIMARY KEY,
-    descricaoFinanceira varchar(100)
-);
+ALTER TABLE Pessoa 
+ADD CONSTRAINT FK_Login_Pessoa 
+FOREIGN KEY (loginId) REFERENCES Login (loginId);
 
-CREATE TABLE Login (
-    loginId int  PRIMARY KEY,
-    email varchar(120),
-    senha varchar(50),
-    tipoLogin smallint
-);
-
-CREATE TABLE Pessoa (
-    loginId int  PRIMARY KEY,
-    nome varchar(256),
-    cpf varchar(11),
-    rg varchar(9),
-    dataNascimento dateTime,
-    telefone varchar(),
-    estadoCivil smallint,
-    sexo smallint,
-    foto blob
-);
-
-CREATE TABLE Endereco (
-    cep varchar(8),
-    logradouro varchar(256),
-    numeroResidencia smallint,
-    complemento varchar(30),
-    cidade varchar(50),
-    uf varchar(2),
-    loginId int PRIMARY KEY
-);
-
-CREATE TABLE ImagensLote (
-    loteId smallint,
-    tipoImagem smallint UNIQUE,
-    imagem blob,
-    PRIMARY KEY (loteId, tipoImagem)
-);
- 
-ALTER TABLE Veiculo ADD CONSTRAINT FK_ModeloVeiculo
-    FOREIGN KEY (modeloId)
-    REFERENCES Modelo(modeloId);
- 
-
- 
-ALTER TABLE Modelo ADD CONSTRAINT FK_Modelo_Marca
-    FOREIGN KEY (marcaId)
-    REFERENCES Marca(marcaId);
- 
-ALTER TABLE ModeloCor ADD CONSTRAINT FK_Modelo_ModeloCor
-    FOREIGN KEY (modeloId)
-    REFERENCES Modelo(modeloId);
- 
-ALTER TABLE ModeloCor ADD CONSTRAINT FK_ModeloCor_Cor
-    FOREIGN KEY (corId)
-    REFERENCES Cor(corId);
-    
-
-ALTER TABLE Lote ADD CONSTRAINT FK_Lote_Leilao
-    FOREIGN KEY (leilaoId)
-    REFERENCES Leilao(leilaoId);
- 
-ALTER TABLE Lote ADD CONSTRAINT FK_Lote_Veiculo
-    FOREIGN KEY (veiculoId)
-    REFERENCES Veiculo(veiculoId);
- 
-ALTER TABLE Lote ADD CONSTRAINT FK_Lote_Financeira
-    FOREIGN KEY (financeiraId)
-    REFERENCES Financeira(financeiraId);
- 
-ALTER TABLE Pessoa ADD CONSTRAINT FK_Login_Pessoa
-    FOREIGN KEY (loginId)
-    REFERENCES Login (loginId);
- 
-
-ALTER TABLE Endereco ADD CONSTRAINT FK_Endereco_Pessoa
-    FOREIGN KEY (loginId)
-    REFERENCES Pessoa(loginId);
+ALTER TABLE Endereco 
+ADD CONSTRAINT FK_Endereco_Pessoa 
+FOREIGN KEY (loginId) REFERENCES Pessoa(loginId);
