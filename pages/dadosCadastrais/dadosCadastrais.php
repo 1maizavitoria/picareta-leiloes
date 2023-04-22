@@ -21,7 +21,7 @@
         $name = $_POST['nome'];
         $imagemBlob = null;
         
-        if (isset($_FILES['foto'])) {
+        if (isset($_FILES['foto']) && strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION) != null)) {
 
             $tipoImagem = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
             if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
@@ -54,7 +54,11 @@
         if (mysqli_num_rows($dadosPessoa) == 0) {
             executeQuery("INSERT INTO pessoa (loginId, nome, foto, cpf, rg, telefone, dataNascimento, estadoCivil, sexo) VALUES ('$loginId', '$name', '$imagemBlob', '$cpf', '$rg', '$telefone', '$dataNascimento', '$estadoCivil', '$sexo')");
         } else {
-            executeQuery("UPDATE  pessoa SET nome = '$name', foto = '$imagemBlob', cpf = '$cpf', rg = '$rg', telefone = '$telefone', dataNascimento = '$dataNascimento', estadoCivil = '$estadoCivil', sexo = '$sexo' WHERE loginId = '$loginId'");
+            if ($imagemBlob != null)
+                executeQuery("UPDATE  pessoa SET nome = '$name', foto = '$imagemBlob', cpf = '$cpf', rg = '$rg', telefone = '$telefone', dataNascimento = '$dataNascimento', estadoCivil = '$estadoCivil', sexo = '$sexo' WHERE loginId = '$loginId'");
+            else 
+                executeQuery("UPDATE  pessoa SET nome = '$name', cpf = '$cpf', rg = '$rg', telefone = '$telefone', dataNascimento = '$dataNascimento', estadoCivil = '$estadoCivil', sexo = '$sexo' WHERE loginId = '$loginId'");
+
         }
 
         if (mysqli_num_rows($dadosEndereco) == 0) {
