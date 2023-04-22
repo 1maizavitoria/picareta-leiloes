@@ -19,9 +19,6 @@
         $email = $_POST['email'];
         $senha = $_POST['password'];
 
-        include './../../libs/databaseQuery.php';
-        
-
         if (isset($_POST['entrar'])) {
             $usuario = executeQuery("SELECT loginId, tipoLogin FROM LOGIN WHERE EMAIL = '$email' AND SENHA = '$senha'");
             if (mysqli_num_rows($usuario) == 1) {

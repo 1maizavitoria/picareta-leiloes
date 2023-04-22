@@ -59,7 +59,22 @@
                                 echo 'Entrar'; 
                             ?>
                         </p>
-                        <i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>
+                        <?php
+                            include './../../libs/databaseQuery.php';
+                            if (isset($_SESSION['loginId'])) {
+                                $loginId = $_SESSION['loginId'];
+                                $foto = executeQuery("SELECT foto FROM pessoa WHERE loginId = '$loginId'");
+
+                                if ($foto == null)
+                                    echo '<i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>';
+                                else {
+                                    $foto = mysqli_fetch_array($foto, MYSQLI_NUM)[0];
+                                    echo '<img class="userLogoImg" src="data:image/gif;base64,' . base64_encode($foto). '" />';
+                                }
+                            } else {
+                                echo '<i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>';
+                            }
+                        ?>
                     </div>
                 </ul>
             </div>

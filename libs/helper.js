@@ -10,7 +10,7 @@ function validateInput(input) {
             regex = /^[\p{L}\s]+$/u;
             break;
         case "email":
-            regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/u;
+            regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/u;
             break;
         case "cpf":
             regex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
