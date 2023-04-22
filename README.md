@@ -96,7 +96,7 @@ CREATE TABLE Pessoa (
     nome varchar(256), 
     cpf varchar(11), 
     rg varchar(9), 
-    dataNascimento dateTime, 
+    dataNascimento date, 
     telefone varchar(11), 
     estadoCivil smallint, 
     sexo smallint, 
