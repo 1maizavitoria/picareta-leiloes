@@ -8,12 +8,7 @@
     <title>Lotes</title>
 </head>
 <body>
-
-    <?php
-    include './../../libs/authenticator.php';
-    autenticar(2);
-    ?>
-
+    
     <?php
     include './../../components/header/header.php';
     ?>
@@ -84,7 +79,7 @@
 
     </div>
 
-    <?php include './../../components/footer/footer.html'; ?>
+    <?php include './../../components/footer/footer.php'; ?>
     
 </body>
 </html>

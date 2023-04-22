@@ -140,7 +140,7 @@
         </div>
     </div>
 
-    <?php include './../../components/footer/footer.html'; ?>
+    <?php include './../../components/footer/footer.php'; ?>
     
 </body>
 </html>

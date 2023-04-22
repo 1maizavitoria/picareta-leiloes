@@ -100,7 +100,28 @@
     </div>
 
     <?php
-    include './../../components/footer/footer.html';
+    include './../../components/footer/footer.php';
+
+    if (isset($_SESSION['loginId'])) {
+        $nome = executeQuery("SELECT nome FROM pessoa WHERE loginId = '$loginId'");
+        $email = executeQuery("SELECT email FROM login WHERE loginId = '$loginId'");
+
+        $nomeTela = null;
+        $emailTela = null;
+
+    if (mysqli_num_rows($nome) == 1)
+        $nomeTela = mysqli_fetch_assoc($nome)['nome'];
+
+    if (mysqli_num_rows($email) == 1)
+        $emailTela = mysqli_fetch_assoc($email)['email'];
+
+    echo "
+        <script>
+            document.getElementById('name').value = '$nomeTela';
+            document.getElementById('email').value = '$emailTela';
+            document.currentScript.remove();
+        </script>";
+    }
     ?>
     
 </body>

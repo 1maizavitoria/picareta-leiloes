@@ -13,7 +13,17 @@
 
         <a href="./../../pages/contato/contato.php">Contato</a>
         <a href="./../../pages/leiloes/leiloes.php">Leilões</a>
-        <a href="./../../pages/login/login.php">Minha Conta</a>
+        <a href="
+            <?php 
+                if(isset($_SESSION['email']))
+                    if ($_SESSION['tipoUsuario'] == 1)
+                        echo './../../pages/dadosCadastrais/dadosCadastrais.php';
+                    else
+                        echo './../../pages/cadastroMarca/cadastroMarca.php';
+                else
+                    echo './../../pages/login/login.php'; 
+            ?>">
+                    Minha Conta</a>
 
     </footer>
     

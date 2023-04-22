@@ -49,7 +49,7 @@
     </div>
 
     <?php
-    include './../../components/footer/footer.html';
+    include './../../components/footer/footer.php';
     ?>
 
     <?php

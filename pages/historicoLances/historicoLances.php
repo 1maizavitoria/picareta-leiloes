@@ -154,7 +154,7 @@
 
     </div>
 
-    <?php include './../../components/footer/footer.html'; ?>
+    <?php include './../../components/footer/footer.php'; ?>
 
     <?php
     include './../../libs/authenticator.php';
