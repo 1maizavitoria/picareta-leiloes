@@ -58,7 +58,6 @@
                 executeQuery("UPDATE  pessoa SET nome = '$name', foto = '$imagemBlob', cpf = '$cpf', rg = '$rg', telefone = '$telefone', dataNascimento = '$dataNascimento', estadoCivil = '$estadoCivil', sexo = '$sexo' WHERE loginId = '$loginId'");
             else 
                 executeQuery("UPDATE  pessoa SET nome = '$name', cpf = '$cpf', rg = '$rg', telefone = '$telefone', dataNascimento = '$dataNascimento', estadoCivil = '$estadoCivil', sexo = '$sexo' WHERE loginId = '$loginId'");
-
         }
 
         if (mysqli_num_rows($dadosEndereco) == 0) {
@@ -67,8 +66,11 @@
             executeQuery("UPDATE endereco SET logradouro = '$logradouro', cidade = '$cidade', uf = '$uf', numeroResidencia = '$numeroResidencia', complemento = '$complemento', cep = '$cep' WHERE loginId = '$loginId'");
         }
 
-        if (mysqli_num_rows($dadosLogin) == 1) {
+        $emailExistente = executeQuery("SELECT * FROM LOGIN WHERE EMAIL = '$email'");
+        if (mysqli_num_rows($dadosLogin) == 1 && mysqli_num_rows($emailExistente) == 0) {
             executeQuery("UPDATE login SET email = '$email' WHERE loginId = '$loginId'");
+        } else {
+            toastr('error', 'Email já cadastrado.');
         }
     }
     ?>
