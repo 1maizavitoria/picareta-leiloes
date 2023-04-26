@@ -15,6 +15,7 @@
         <div class="buttonsSidebar">
 
             <?php 
+            if (isset($_SESSION['tipoUsuario'])) {
                 $tipoUsuario = $_SESSION['tipoUsuario'];
                 if ($tipoUsuario == 1) {
                     echo "
@@ -93,6 +94,7 @@
                     </div>
                     ";
                 }
+            }
             ?>
         </div>
 

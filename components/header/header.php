@@ -8,7 +8,7 @@
     <title>Header</title>
 </head>
     <body>
-    <?php session_start(); ?>
+    <?php session_start(); ob_start();?>
         <nav class="navbar d-flex justify-content-between sticky-top navbar-expand-lg bg-info gap-4">
             <div class="container d-flex justify-content-around align-items-center">
             
