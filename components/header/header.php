@@ -64,7 +64,7 @@
                             if (isset($_SESSION['loginId'])) {
                                 $loginId = $_SESSION['loginId'];
                                 $foto = executeQuery("SELECT foto FROM pessoa WHERE loginId = '$loginId'");
-
+                                $foto = mysqli_fetch_assoc($foto);
                                 if ($foto == null)
                                     echo '<i class="fa-solid fa-circle-user fa-2xl" style="color: #ffffff;"></i>';
                                 else {

@@ -42,7 +42,7 @@
                 executeQuery("INSERT INTO LOGIN (email, senha, tipoLogin) VALUES ('$email', '$senha', '1')");
                 $loginId = executeQuery("SELECT loginId FROM LOGIN WHERE EMAIL = '$email' AND SENHA = '$senha'");
                 $loginId = mysqli_fetch_assoc($loginId);
-                $_SESSION['loginId'] = $loginId;
+                $_SESSION['loginId'] = $loginId['loginId'];
                 $_SESSION['tipoUsuario'] = 1;
                 $_SESSION['email'] = $email;
                 header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
