@@ -19,29 +19,36 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $senha = $_POST['password'];
+        
 
         if (isset($_POST['entrar'])) {
-            $usuario = executeQuery("SELECT loginId, tipoLogin FROM LOGIN WHERE EMAIL = '$email' AND SENHA = '$senha'");
+            $usuario = executeQuery("SELECT loginId, tipoLogin, senha FROM LOGIN WHERE EMAIL = '$email'");
             if (mysqli_num_rows($usuario) == 1) {
                 $usuario = mysqli_fetch_assoc($usuario);
-                $_SESSION['loginId'] = $usuario['loginId'];
-                $_SESSION['tipoUsuario'] = $usuario['tipoLogin'];
-                $_SESSION['email'] = $email;
-                
-                if ($_SESSION['tipoUsuario'] == 1) {
-                    header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
-                } else  {
-                    header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
+                if ($usuario['senha'] == md5($senha)) {
+                    $_SESSION['loginId'] = $usuario['loginId'];
+                    $_SESSION['tipoUsuario'] = $usuario['tipoLogin'];
+                    $_SESSION['email'] = $email;
+                    
+                    if ($_SESSION['tipoUsuario'] == 1) {
+                        header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
+                    } else  {
+                        header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
+                    }
+                    
+                } else {
+                    toastr('error', "Senha incorreta.");
                 }
 
             } else {
-                toastr('error', 'Email ou senha inválidos.');
+                toastr('error', "Email não cadastrado.");
             }
         } elseif (isset($_POST['cadastrar'])) {
             $emailExistente = executeQuery("SELECT * FROM LOGIN WHERE EMAIL = '$email'");
             if (mysqli_num_rows($emailExistente) == 0) {
+                $senha = md5($senha);
                 executeQuery("INSERT INTO LOGIN (email, senha, tipoLogin) VALUES ('$email', '$senha', '1')");
-                $loginId = executeQuery("SELECT loginId FROM LOGIN WHERE EMAIL = '$email' AND SENHA = '$senha'");
+                $loginId = executeQuery("SELECT loginId FROM LOGIN WHERE EMAIL = '$email'");
                 $loginId = mysqli_fetch_assoc($loginId);
                 $_SESSION['loginId'] = $loginId['loginId'];
                 $_SESSION['tipoUsuario'] = 1;
