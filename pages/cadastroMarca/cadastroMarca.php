@@ -30,19 +30,17 @@
             <div class="col-12 px-5 mt-5 d-flex justify-content-center">
                 <?php 
                     include './../../components/grid/grid.php';
-                    $produtos = array(
-                        array("1", "FORD"),
-                        array("2", "BMW"),
-                        array("3", "FIAT"),
-                        array("4", "VOLKSWAGEN"),
-                        array("5", "CHEVROLET"),
-                    );
+                    $marcas = executeQuery('select * from marca');
+
                 
                     $titulos = array('Marca');
                     $editavel = true;
                     $urlClick = "cadastroMarcaForm.php?id=";
                 
-                    gerarGrid($titulos, $produtos, 10, $editavel, $urlClick);
+                    $marcas = mysqli_fetch_assoc($marcas);
+                    gerarGrid($titulos, $marcas, 10, $editavel, $urlClick);
+
+                    
                 ?>
             </div>
 
@@ -57,6 +55,7 @@
     <?php
     include './../../libs/authenticator.php';
     autenticar(2);
+
     ?>
     
 </body>
