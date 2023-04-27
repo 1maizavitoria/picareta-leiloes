@@ -12,6 +12,11 @@
 
     <?php
     include './../../components/header/header.php';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $descricao = $_POST['descricao'];
+    executeQuery("INSERT INTO marca (descricao) VALUES ('$descricao')");
+    }
     ?>
     
     <div class="content">
@@ -19,9 +24,7 @@
         <div class="left">
             <?php
             include './../../components/sidebar/sidebar.php';
-            $descricao = $_POST['descricao'];
-
-            executeQuery("INSERT INTO marca (descricao) VALUES ('$descricao')");
+            
 
 
             ?>
