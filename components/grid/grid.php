@@ -160,14 +160,13 @@
             $botoesNaFrente = $paginaAtual + 3;
         }
         
-
         if($botoesAtras < 0)
-            $botoesAtras = 0;
-
+        $botoesAtras = 0;
+        
         for ($i = $botoesAtras; $i < $botoesNaFrente; $i ++) {
             echo "
-            <li class='page-item " . ($paginaAtual == $i ? "active" : null) . "'>
-                <a class='page-link' href='" .  ($paginaAtual == $i ? '#' : montarParametrosPaginacao($i)) . "'>" . $i + 1 . "</a>
+            <li class='page-item " . ((int)$paginaAtual == (int)$i ? "active" : null) . "'>
+                <a class='page-link' href='" .  ((int)$paginaAtual == (int)$i ? '#' : montarParametrosPaginacao((int)$i)) . "'>" . $i + 1 . "</a>
             </li>";
         }
     }
