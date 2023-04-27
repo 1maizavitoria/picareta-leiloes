@@ -30,19 +30,17 @@
             <div class="col-12 px-5 mt-5 d-flex justify-content-center">
                 <?php 
                     include './../../components/grid/grid.php';
-                    $produtos = array(
-                        array("1", "FORD", "FIESTA", "2010"),
-                        array("2", "BMW", "X1", "2015"),
-                        array("3", "FIAT", "UNO", "2018"),
-                        array("4", "VOLKSWAGEN", "GOL", "2019"),
-                        array("5", "CHEVROLET", "ONIX", "2018"),
-                    );
                 
                     $titulos = array('Marca', 'Modelo', 'Ano Modelo');
                     $editavel = true;
                     $urlClick = "cadastroModeloForm.php?id=";
-                
-                    gerarGrid($titulos, $produtos, 10, $editavel, $urlClick);
+
+                    $modelos = array();
+                    $selectModelo = executeQuery("SELECT mo.modeloId, mo.anoModelo, mo.descricao, ma.descricao as dsMarca FROM modelo mo inner join marca ma on mo.marcaId = ma.marcaId");
+                    while($row = mysqli_fetch_assoc($selectModelo)) {
+                        $modelos[] = array($row['modeloId'], $row['dsMarca'], $row['anoModelo'], $row['descricao']);
+                    }
+                    gerarGrid($titulos, $modelos, 10, $editavel, $urlClick);
                 ?>
             </div>
 
