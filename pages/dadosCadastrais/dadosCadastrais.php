@@ -67,7 +67,7 @@
         }
 
         $emailExistente = executeQuery("SELECT * FROM LOGIN WHERE EMAIL = '$email'");
-        if (mysqli_num_rows($dadosLogin) == 1 && mysqli_num_rows($emailExistente) == 0) {
+        if ((mysqli_num_rows($dadosLogin) == 1 && mysqli_num_rows($emailExistente) == 0) || $email == mysqli_fetch_assoc($dadosLogin)['email']) {
             executeQuery("UPDATE login SET email = '$email' WHERE loginId = '$loginId'");
         } else {
             toastr('error', 'Email já cadastrado.');
