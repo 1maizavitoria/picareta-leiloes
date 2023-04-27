@@ -41,7 +41,7 @@
                         $marcas[] = array($row['marcaId'], $row['descricao']);
                     }
 
-                    gerarGrid($titulos, $array, 10, $editavel, $urlClick);
+                    gerarGrid($titulos, $marcas, 10, $editavel, $urlClick);
 
                     
                 ?>
