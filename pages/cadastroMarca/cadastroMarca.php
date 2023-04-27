@@ -30,14 +30,17 @@
             <div class="col-12 px-5 mt-5 d-flex justify-content-center">
                 <?php 
                     include './../../components/grid/grid.php';
-                    $marcas = executeQuery('select * from marca');
-
-                
+                    
+                    
                     $titulos = array('Marca');
                     $editavel = true;
                     $urlClick = "cadastroMarcaForm.php?id=";
-                
-                    $marcas = mysqli_fetch_assoc($marcas);
+                    $marcas = array();
+                    $selectMarca = executeQuery('select * from marca');
+                    while($row = mysqli_fetch_assoc($selectMarca)){
+                        $marcas[] = array($row['marcaId'], $row['descricao']);
+                    }
+
                     gerarGrid($titulos, $marcas, 10, $editavel, $urlClick);
 
                     
