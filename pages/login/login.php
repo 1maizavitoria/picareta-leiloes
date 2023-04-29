@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.scss">
+    <script type="module" src="./login.js"></script>
     <title>Login/Cadastro</title>
 </head>
 <body>
@@ -18,29 +19,36 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $senha = $_POST['password'];
+        
 
         if (isset($_POST['entrar'])) {
-            $usuario = executeQuery("SELECT loginId, tipoLogin FROM LOGIN WHERE EMAIL = '$email' AND SENHA = '$senha'");
+            $usuario = executeQuery("SELECT loginId, tipoLogin, senha FROM LOGIN WHERE EMAIL = '$email'");
             if (mysqli_num_rows($usuario) == 1) {
                 $usuario = mysqli_fetch_assoc($usuario);
-                $_SESSION['loginId'] = $usuario['loginId'];
-                $_SESSION['tipoUsuario'] = $usuario['tipoLogin'];
-                $_SESSION['email'] = $email;
-                
-                if ($_SESSION['tipoUsuario'] == 1) {
-                    header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
-                } else  {
-                    header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
+                if ($usuario['senha'] == md5($senha)) {
+                    $_SESSION['loginId'] = $usuario['loginId'];
+                    $_SESSION['tipoUsuario'] = $usuario['tipoLogin'];
+                    $_SESSION['email'] = $email;
+                    
+                    if ($_SESSION['tipoUsuario'] == 1) {
+                        header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
+                    } else  {
+                        header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
+                    }
+                    
+                } else {
+                    toastr('error', "Senha incorreta.");
                 }
 
             } else {
-                toastr('error', 'Email ou senha inválidos.');
+                toastr('error', "Email não cadastrado.");
             }
         } elseif (isset($_POST['cadastrar'])) {
             $emailExistente = executeQuery("SELECT * FROM LOGIN WHERE EMAIL = '$email'");
             if (mysqli_num_rows($emailExistente) == 0) {
+                $senha = md5($senha);
                 executeQuery("INSERT INTO LOGIN (email, senha, tipoLogin) VALUES ('$email', '$senha', '1')");
-                $loginId = executeQuery("SELECT loginId FROM LOGIN WHERE EMAIL = '$email' AND SENHA = '$senha'");
+                $loginId = executeQuery("SELECT loginId FROM LOGIN WHERE EMAIL = '$email'");
                 $loginId = mysqli_fetch_assoc($loginId);
                 $_SESSION['loginId'] = $loginId['loginId'];
                 $_SESSION['tipoUsuario'] = 1;
@@ -64,10 +72,11 @@
                 <input type="email" name="email" class="form-control" placeholder="✉*" required>
             </div>
             <div class="col-7 col-lg-3 mb-5">
-                <input type="password" name="password" class="form-control" placeholder="🔑*" required>
+                <input type="password" name="password" id="password" class="form-control" placeholder="🔑*"  onblur="validateInput(this)" required>
+                <div class="invalid-feedback" id="invalid-message-password">Informe uma senha válida, 8 dígitos. <br> No mínimo 1 letra maiúscula, <br>1 letra minúscula e 1 número.</em></div>
             </div>
 
-            <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center mb-3 mt-2'>
+            <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center mb-3 mt-4'>
                 <button type='submit' name='entrar' class='btn btn-outline-info col-12'>Entrar</button>
             </div>
             <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center'>

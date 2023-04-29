@@ -12,6 +12,56 @@
 
     <?php
     include './../../components/header/header.php';
+    include './../../components/toastr/toastr.php';
+
+    $id = $_GET['id'];
+    if($id != '') {
+        if (!isset($_GET['marcaId'])) {
+            echo "<script>console.log('oi')</script>";
+            $modeloCor = executeQuery('SELECT mo.marcaId, ma.descricao as marcaDescricao, mo.descricao, mo.anoModelo, c.corId FROM MODELO MO INNER JOIN MARCA MA ON MA.marcaId = MO.modeloId INNER JOIN modelocor MC ON MC.modeloId = MO.modeloId INNER JOIN cor C ON C.corId = MC.corId WHERE mc.modeloCorId = ' . $_GET['id']);
+            $modeloCor = mysqli_fetch_assoc($modeloCor);
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroModeloCor/cadastroModeloCorForm.php?id=$id&marcaId=" . $modeloCor['marcaId'] . "&descricaoModelo=" . $modeloCor['descricao'] . "&anoModelo=" . $modeloCor['anoModelo'] . "&corId=" . $modeloCor['corId'] . "");
+        }
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $modelo = $_POST['modelo'];
+        $corId = $_POST['cor'];
+        $ano = $_POST['ano'];
+        $marcaId = $_POST['marca'];
+
+        $modeloId = executeQuery("SELECT modeloId FROM modelo WHERE descricao = '$modelo' AND anoModelo = '$ano' AND marcaId = '$marcaId'");
+        $modeloId = mysqli_fetch_assoc($modeloId);
+        $modeloId = $modeloId['modeloId'];
+
+        $modeloExistente = executeQuery("SELECT * FROM modeloCor mc INNER JOIN modelo mo ON mo.modeloId = mc.modeloId INNER JOIN marca ma ON ma.marcaId = mo.modeloId WHERE mc.modeloId = '$modeloId' AND mc.corId = '$corId'");
+        $modeloExistente = mysqli_fetch_assoc($modeloExistente);
+        $redirect = true;
+
+        if (isset($_POST['adicionar'])) {
+            if($modeloExistente != null)
+                toastr('error', 'Modelo Cor já cadastrado');
+            else
+                executeQuery("INSERT INTO MODELOCOR (modeloId, corId) VALUES ('$modeloId', '$corId')");
+        }
+
+        if (isset($_POST['salvar'])) {
+            if($modeloExistente != null && $modeloExistente['modeloId'] != $_GET['id']) {
+                toastr('error', 'Modelo Cor já cadastrado');
+                $redirect = false;
+            } else
+                executeQuery("UPDATE MODELOCOR SET modeloId = '$modeloId', corId = '$corId' WHERE modeloCorId = '$id'");
+        }
+
+        if (isset($_POST['deletar'])) {
+            echo "<script>console.log('oi')</script>";
+            executeQuery("DELETE FROM MODELOCOR WHERE modeloCorId = '$id'");
+        }
+
+        if ($redirect)
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroModeloCor/cadastroModeloCor.php");
+
+    }
     ?>
     
     <div class="content">
@@ -32,24 +82,34 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="brand" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Marca</option>
-                            <option value="1">FORD</option>
-                            <option value="2">BMW</option>
-                            <option value="3">FIAT</option>
-                            <option value="4">VOLKSWAGEN</option>
-                            <option value="5">CHEVROLET</option>
+                        <select class="form-select" name="marca" id="brand" onblur="validateInput(this)" onchange='parameterURL("marcaId", this.value)' required>
+                            <?php
+                            $marcaId = $_GET['marcaId'] ?? -1;
+                            $selected = $marcaId == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Marca*</option>";
+                            $selectMarcas = executeQuery('SELECT * FROM MARCA');
+                            while ($row = mysqli_fetch_assoc($selectMarcas)) {
+                                $selected = $marcaId == $row['marcaId'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['marcaId'] . ">" . $row['descricao'] . "</option>";
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-brand">Informe uma marca válida.</div>
                     </div>
                     <div class="col-6 col-lg-4">
-                        <select class="form-select" id="model" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Modelo*</option>
-                            <option value="1">FIESTA</option>
-                            <option value="2">X1</option>
-                            <option value="3">UNO</option>
-                            <option value="4">GOL</option>
-                            <option value="5">ONIX</option>
+                    <?php
+                        $marcaId = $_GET['marcaId'] ?? -1;
+                        $disabled = $marcaId == -1 ? "disabled" : "";
+                        echo "<select class='form-select' id='model' $disabled name='modelo' onblur='validateInput(this)' onchange='parameterURL(\"descricaoModelo\", this.value)' required>";
+                            $descricaoModelo = $_GET['descricaoModelo'] ?? -1;
+                            $selected = $descricaoModelo == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Modelo*</option>";
+                            $selectModelos = executeQuery('SELECT DISTINCT  descricao from MODELO where MARCAID = ' . $marcaId . '');
+                            while ($row = mysqli_fetch_assoc($selectModelos)) {
+                                $selected = $descricaoModelo == $row['descricao'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['descricao'] . ">" . $row['descricao'] . "</option>";
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-model">Informe um modelo válido.</div>
                     </div>
@@ -57,24 +117,37 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="year" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Ano Modelo*</option>
-                            <option value="2010">2010</option>
-                            <option value="2012">2012</option>
-                            <option value="2014">2014</option>
-                            <option value="2016">2016</option>
-                            <option value="2020">2020</option>
+                        <?php 
+                            $descricaoModelo = $_GET['descricaoModelo'] ?? -1;
+                            $disabled = $descricaoModelo == -1 ? "disabled" : "";
+                        echo "<select class='form-select' id='year' name='ano' $disabled onblur='validateInput(this)' onchange='parameterURL(\"anoModelo\", this.value)' required>";
+                            $anoModelo = $_GET['anoModelo'] ?? -1;
+                            $selected = $anoModelo == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Ano Modelo*</option>";
+                            $selectModelos = executeQuery('SELECT * FROM MODELO WHERE DESCRICAO = "' . $descricaoModelo . '"');
+                            while ($row = mysqli_fetch_assoc($selectModelos)) {
+                                $selected = $anoModelo == $row['anoModelo'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['anoModelo'] . ">" . $row['anoModelo'] . "</option>";
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-year">Informe um ano modelo válido.</div>
                     </div>
                     <div class="col-6 col-lg-4">
-                        <select class="form-select" id="color" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Cor*</option>
-                            <option value="1">PRETO</option>
-                            <option value="2">VERMELHO</option>
-                            <option value="3">BRANCO</option>
-                            <option value="4">ROSA</option>
-                            <option value="5">PRATA</option>
+                        <select class="form-select" id="color" name="cor" onblur="validateInput(this)" onchange='parameterURL("corId", this.value)' required>
+                            <?php 
+                            $marcaId = $_GET['marcaId'] ?? -1;
+                            $descricaoModelo = $_GET['descricaoModelo'] ?? -1;
+                            $anoModelo = $_GET['anoModelo'] ?? -1;
+                            $corId = $_GET['corId'] ?? -1;
+                            $selected = $corId == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Cor*</option>";
+                            $selectCoresModelo = executeQuery('SELECT * FROM COR');
+                            while ($row = mysqli_fetch_assoc($selectCoresModelo)) {
+                                $selected = $corId == $row['corId'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['corId'] . ">" . $row['Descricao'] . "</option>";
+                            }
+                            ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-color">Informe uma cor válida.</div>
                     </div>
@@ -87,15 +160,15 @@
                         if (isset($id) && $id != "") {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='submit' value='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
-                                <button type='submit' value='salvar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Salvar</button>
+                                <button type='submit' name='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
+                                <button type='submit' name='salvar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Salvar</button>
                             </div>
                             ";
                         } else {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
-                                <button type='submit' value='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
+                                <button type='button' name='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
+                                <button type='submit' name='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                             </div>
                             ";
                         }
