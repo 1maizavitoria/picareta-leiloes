@@ -48,9 +48,10 @@ CREATE TABLE Cor (
 );
 
 CREATE TABLE ModeloCor ( 
-    corId smallint AUTO_INCREMENT, 
-    modeloId int, 
-    PRIMARY KEY (corId, modeloId) 
+    modeloCorId smallint AUTO_INCREMENT, 
+    modeloId int,
+    corId int,
+    PRIMARY KEY (modeloCorId, modeloId, corId) 
 );
 
 CREATE TABLE Lote ( 
