@@ -1,4 +1,4 @@
-export { validateInput, formatCPF, formatRG, formatCEP, formatPhone, formatLicensePlate, formatMoney, checkAllFields };
+export { validateInput, formatCPF, formatRG, formatCEP, formatPhone, formatLicensePlate, formatMoney, checkAllFields, parameterURL };
 
 function validateInput(input) {
     let regex;
@@ -205,4 +205,20 @@ function checkAllFields(id) {
         if(element.onblur)
             element.onblur();
     })
+}
+
+function parameterURL(nome, valor) {
+    if (valor == null || valor == undefined || valor == "") return
+
+    var params = new URLSearchParams(window.location.search);
+    if (!params.has(nome)) 
+        params.append(nome, valor);
+    else if (params.has('marcaId') && params.get('marcaId') != valor && nome == 'marcaId') {
+        params.delete('descricaoModelo');
+        params.delete('anoModelo');
+        params.delete('corId');
+        params.set(nome, valor);
+    } else 
+            params.set(nome, valor);
+    window.location.search = params.toString();
 }

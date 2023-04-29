@@ -30,19 +30,18 @@
             <div class="col-12 px-5 mt-5 d-flex justify-content-center">
                 <?php 
                     include './../../components/grid/grid.php';
-                    $produtos = array(
-                        array("1", "FORD", "FIESTA", "2010", "PRETO"),
-                        array("2", "BMW", "X1", "2015", "PRETO"),
-                        array("3", "FIAT", "UNO", "2018", "VERMELHO"),
-                        array("4", "VOLKSWAGEN", "GOL", "2019", "PRATA"),
-                        array("5", "CHEVROLET", "ONIX", "2018", "BRANCO"),
-                    );
+
+                    $modeloCor = array();
+                    $selectModeloCor = executeQuery('SELECT mc.modeloCorId, mo.marcaId, ma.descricao as marcaDescricao, mo.descricao, mo.anoModelo, c.Descricao as corDescricao FROM MODELO MO INNER JOIN MARCA MA ON MA.marcaId = MO.marcaId INNER JOIN modelocor MC ON MC.modeloId = MO.modeloId INNER JOIN cor C ON C.corId = MC.corId');
+                    while($row = mysqli_fetch_assoc($selectModeloCor)){
+                        $modeloCor[] = array($row['modeloCorId'], $row['marcaDescricao'], $row['descricao'] , $row['anoModelo'], $row['corDescricao']);
+                    }
                 
                     $titulos = array('Marca', 'Modelo', 'Ano Modelo', 'Cor');
                     $editavel = true;
                     $urlClick = "cadastroModeloCorForm.php?id=";
                 
-                    gerarGrid($titulos, $produtos, 10, $editavel, $urlClick);
+                    gerarGrid($titulos, $modeloCor, 10, $editavel, $urlClick);
                 ?>
             </div>
 
