@@ -11,7 +11,27 @@
 <body>
 
     <?php
-    include './../../components/header/header.php';
+        include './../../components/header/header.php';
+        include './../../components/toastr/toastr.php';
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            $marcaId = $_POST["brand"];
+            $anoModelo = $_POST["year"];
+            $descricao = $_POST["descricao"];
+
+            $modeloExistente = executeQuery("SELECT marcaId, anoModelo, descricao FROM modelo WHERE marcaId = '$marcaId' AND anoModelo = '$anoModelo' AND descricao = '$descricao'");
+
+            if ($modeloExistente -> num_rows > 0) {
+                // Exibe mensagem de erro
+                toastr('error', 'Modelo já cadastrado.');
+            } else {
+                // Insere o novo registro na tabela modelo
+                executeQuery("INSERT INTO modelo (marcaId, anoModelo, descricao) VALUES ('$marcaId','$anoModelo', '$descricao')");
+            }
+
+        }
+
     ?>
     
     <div class="content">
@@ -32,22 +52,30 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="brand" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Marca*</option>
-                            <option value="1">FORD</option>
-                            <option value="2">BMW</option>
-                            <option value="3">FIAT</option>
-                            <option value="4">VOLKSWAGEN</option>
-                            <option value="5">CHEVROLET</option>
+                        <select class="form-select" id="brand" name="brand" onblur="validateInput(this)" required>
+
+                        <?php
+
+                            $dadosMarca = executeQuery("SELECT marcaId, descricao FROM marca");
+
+                            if ($dadosMarca -> num_rows > 0) {
+                                // Loop para iterar pelos resultados
+                                while($row = $dadosMarca -> fetch_assoc()) {
+                                    // Gera a opção com os dados do banco de dados
+                                    echo "<option value='" . $row["marcaId"] . "'>" . $row["descricao"] . "</option>";
+                                }
+                            }
+                        ?>
+
                         </select>
                         <div class="invalid-feedback" id="invalid-message-brand">Informe uma marca válida.</div>
                     </div>
                     <div class="col-6 col-lg-4">
-                        <input type="text" id="name" class="form-control" placeholder="Modelo*" onblur="validateInput(this)" required>
+                        <input type="text" id="descricao" name="descricao" class="form-control" placeholder="Modelo*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-name">Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
                     </div>
                     <div class="col-3">
-                        <input type="number" id="year" maxLength="4" class="form-control" placeholder="Ano Modelo*" onblur="validateInput(this)" required>
+                        <input type="number" id="year" name="year" maxLength="4" class="form-control" placeholder="Ano Modelo*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-year">Informe um ano modelo válido.<br> <em>Ex: 2020</em></div>
                     </div>
                 </div>
@@ -79,13 +107,12 @@
 
     </div>
 
-    <?php
-    include './../../components/footer/footer.php';
-    ?>
+
 
     <?php
-    include './../../libs/authenticator.php';
-    autenticar(2);
+        include './../../components/footer/footer.php';
+        include './../../libs/authenticator.php';
+        autenticar(2);
     ?>
     
 </body>
