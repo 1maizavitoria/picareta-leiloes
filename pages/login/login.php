@@ -17,8 +17,8 @@
     
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $email = $_POST['email'];
-        $senha = $_POST['password'];
+        $email = trim($_POST['email']);
+        $senha = trim($_POST['password']);
         
 
         if (isset($_POST['entrar'])) {

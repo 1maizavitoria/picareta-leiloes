@@ -18,7 +18,7 @@
         $loginId = $_SESSION['loginId'];
 
         $dadosPessoa = executeQuery("SELECT * FROM pessoa WHERE loginId = '$loginId'");
-        $name = $_POST['nome'];
+        $name = trim($_POST['nome']);
         $imagemBlob = null;
         
         if (isset($_FILES['foto']) && strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION) != null)) {
@@ -40,15 +40,15 @@
         $sexo = $_POST['sexo'];
 
         $dadosEndereco = executeQuery("SELECT * FROM endereco WHERE loginId = '$loginId'");
-        $logradouro = $_POST['logradouro'];
-        $cidade = $_POST['cidade'];
+        $logradouro = trim($_POST['logradouro']);
+        $cidade = trim($_POST['cidade']);
         $uf = $_POST['uf'];
-        $numeroResidencia = $_POST['numeroResidencia'];
-        $complemento = $_POST['complemento'];
+        $numeroResidencia = trim($_POST['numeroResidencia']);
+        $complemento = trim($_POST['complemento']);
         $cep = preg_replace('/[^0-9]/', '', $_POST['cep']);
 
         $dadosLogin = executeQuery("SELECT email FROM login WHERE loginId = '$loginId'");
-        $email = $_POST['email'];
+        $email = trim($_POST['email']);
         $_SESSION['email'] = $email;
 
         if (mysqli_num_rows($dadosPessoa) == 0) {
