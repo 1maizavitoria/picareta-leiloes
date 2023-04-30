@@ -38,7 +38,7 @@
                     $modelos = array();
                     $selectModelo = executeQuery("SELECT mo.modeloId, mo.anoModelo, mo.descricao, ma.descricao as dsMarca FROM modelo mo inner join marca ma on mo.marcaId = ma.marcaId");
                     while($row = mysqli_fetch_assoc($selectModelo)) {
-                        $modelos[] = array($row['modeloId'], $row['dsMarca'], $row['anoModelo'], $row['descricao']);
+                        $modelos[] = array($row['modeloId'], $row['dsMarca'], $row['descricao'], $row['anoModelo']);
                     }
                     gerarGrid($titulos, $modelos, 10, $editavel, $urlClick);
                 ?>
