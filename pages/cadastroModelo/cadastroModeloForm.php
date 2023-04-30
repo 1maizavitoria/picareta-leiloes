@@ -13,6 +13,52 @@
     <?php
         include './../../components/header/header.php';
         include './../../components/toastr/toastr.php';
+
+        $id = $_GET['id'];
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $marcaId = $_POST['brand'];
+            $anoModelo = $_POST['year'];
+            $descricao = $_POST['descricao'];
+
+            $modeloExistente = executeQuery("SELECT marcaId, modeloId, anoModelo, descricao FROM modelo WHERE marcaId = '$marcaId' AND anoModelo = '$anoModelo' AND descricao = '$descricao'");
+
+            // $modeloExistente = mysqli_fetch_array($modeloExistente);
+
+            $redirect = true;
+
+            if(isset($_POST["adicionar"])) {
+                echo "<script>console.log('funcione');</script>";
+                if ($modeloExistente -> num_rows > 0) {
+                    toastr('error', 'Modelo já cadastrado.');
+                    $redirect = false;
+                } else {
+                    executeQuery("INSERT INTO modelo (marcaId, anoModelo, descricao) VALUES ('$marcaId','$anoModelo', '$descricao')");
+                }
+            }
+
+            if(isset($_POST['salvar'])) {
+                echo "<script>console.log('funcione');</script>";
+                if ($modeloExistente -> num_rows > 0) {
+                    toastr('error', 'Modelo já cadastrado.');
+                    $redirect = false;
+                } else {
+                    executeQuery("UPDATE modelo SET marcaId = '$marcaId', anoModelo = '$anoModelo', descricao = '$descricao' WHERE modeloId = '$id'");
+                    toastr('success', 'Modelo atualizado!');
+                }
+            }
+
+            if (isset($_POST['deletar'])) {
+                echo "<script>console.log('funcione');</script>";
+                executeQuery("DELETE FROM modelo WHERE modeloId = '$id'");
+                toastr('success', 'Modelo excluído');
+            }
+    
+            if ($redirect) {
+                header("Location: http://localhost/picareta-leiloes/pages/cadastroModelo/cadastroModelo.php");
+            }
+        }
     ?>
     
     <div class='content'>
@@ -78,48 +124,12 @@
 
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                            <button type='button' value='deletar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Deletar</button>
-                                <button type='submit' value='salvar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Salvar</button>
+                            <button type='submit' name='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
+                                <button type='submit' value='salvar' name='salvar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Salvar</button>
                             </div>
                             ";
 
-                            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-                                $marcaId = $_POST['brand'];
-                                $anoModelo = $_POST['year'];
-                                $descricao = $_POST['descricao'];
-                    
-                                $modeloExistente = executeQuery("SELECT marcaId, anoModelo, descricao FROM modelo WHERE marcaId = '$marcaId' AND anoModelo = '$anoModelo' AND descricao = '$descricao'");
-                    
-                                if ($modeloExistente -> num_rows > 0) {
-                                    toastr('error', 'Modelo já cadastrado.');
-                                } else {
-                                    executeQuery("UPDATE modelo SET marcaId = '$marcaId', anoModelo = '$anoModelo', descricao = '$descricao' WHERE modeloId = '$id'");
-                                    toastr('success', 'Modelo atualizado.');
-                                }
-                    
-                            }
-
                         } else {
-
-                            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-                                $marcaId = $_POST['brand'];
-                                $anoModelo = $_POST['year'];
-                                $descricao = $_POST['descricao'];
-                    
-                                $modeloExistente = executeQuery("SELECT marcaId, anoModelo, descricao FROM modelo WHERE marcaId = '$marcaId' AND anoModelo = '$anoModelo' AND descricao = '$descricao'");
-                    
-                                if ($modeloExistente -> num_rows > 0) {
-                                    // Exibe mensagem de erro
-                                    toastr('error', 'Modelo já cadastrado.');
-                                } else {
-                                    // Insere o novo registro na tabela modelo
-                                    executeQuery("INSERT INTO modelo (marcaId, anoModelo, descricao) VALUES ('$marcaId','$anoModelo', '$descricao')");
-                                    toastr('success', 'Modelo cadastrado.');
-                                }
-                    
-                            }
 
                             echo "
                             <div class='row justify-content-center mb-5'>
@@ -129,9 +139,7 @@
                                     $dadosMarca = executeQuery("SELECT marcaId, descricao FROM marca");
 
                                     if ($dadosMarca -> num_rows > 0) {
-                                        // Loop para iterar pelos resultados
                                         while($row = $dadosMarca -> fetch_assoc()) {
-                                            // Gera a opção com os dados do banco de dados
                                             echo "<option value='" . $row["marcaId"] . "'>" . $row["descricao"] . "</option>";
                                         }
                                     }
@@ -150,7 +158,7 @@
                                 </div>
                                 <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
                                 <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
-                                    <button type='submit' value='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
+                                    <button type='submit' value='adicionar' name='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                                 </div>
                             ";
                         }
@@ -168,6 +176,8 @@
         include './../../components/footer/footer.php';
         include './../../libs/authenticator.php';
         autenticar(2);
+
+        
     ?>
     
 </body>
