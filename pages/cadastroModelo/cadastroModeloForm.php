@@ -39,7 +39,9 @@
 
                             $modeloSelecionado = executeQuery("SELECT mo.modeloId, mo.anoModelo, mo.descricao, ma.marcaId, ma.descricao as dsMarca FROM modelo mo INNER JOIN marca ma on mo.marcaId = ma.marcaId WHERE mo.modeloId = '$id'");
 
-                            $modeloMarca = executeQuery("SELECT DISTINCT ma.marcaId, ma.descricao FROM marca ma LEFT JOIN modelo mo ON mo.marcaId = ma.marcaId order by case when mo.modeloId = '$id' then 0 else 1 end");
+                            $modeloMarca = executeQuery("SELECT ma.marcaId, ma.descricao FROM marca ma LEFT JOIN modelo mo ON mo.marcaId = ma.marcaId order by case when mo.modeloId = '$id' then 0 else 1 end");
+
+                            // echo "<script>console.log('".$id."');</script>";
 
                             if($modeloSelecionado -> num_rows > 0) {
                                 $modelo = $modeloSelecionado -> fetch_assoc();
@@ -48,7 +50,9 @@
                             $validateInput = "";
                             if ($modeloMarca -> num_rows > 0) {
                                 while($row = $modeloMarca -> fetch_assoc()) {
-                                    $validateInput = $validateInput . "<option value='" . $row["marcaId"] . "'>" . $row["descricao"] . "</option>";
+                                    if (!str_contains($validateInput, $row["descricao"])) {
+                                        $validateInput = $validateInput . "<option value='" . $row["marcaId"] . "'>" . $row["descricao"] . "</option>";
+                                    }
                                 }
                             }
 
@@ -74,8 +78,8 @@
 
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='submit' value='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
-                                <button type='submit' value='salvar' class='btn btn-outline-success col-5' onclick=\'checkAllFields('form')\; \window.location.href='./../../pages/index/index.php';'>Salvar</button>
+                            <button type='button' value='deletar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Deletar</button>
+                                <button type='submit' value='salvar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Salvar</button>
                             </div>
                             ";
 
@@ -91,6 +95,7 @@
                                     toastr('error', 'Modelo já cadastrado.');
                                 } else {
                                     executeQuery("UPDATE modelo SET marcaId = '$marcaId', anoModelo = '$anoModelo', descricao = '$descricao' WHERE modeloId = '$id'");
+                                    toastr('success', 'Modelo atualizado.');
                                 }
                     
                             }
@@ -111,6 +116,7 @@
                                 } else {
                                     // Insere o novo registro na tabela modelo
                                     executeQuery("INSERT INTO modelo (marcaId, anoModelo, descricao) VALUES ('$marcaId','$anoModelo', '$descricao')");
+                                    toastr('success', 'Modelo cadastrado.');
                                 }
                     
                             }
@@ -143,8 +149,8 @@
                                     </div>
                                 </div>
                                 <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                    <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\'window.history.back()\'>Cancelar</button>
-                                    <button type='submit' value='adicionar' class='btn btn-outline-success col-5' onclick=\'checkAllFields('form')\'>Adicionar</button>
+                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
+                                    <button type='submit' value='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                                 </div>
                             ";
                         }
