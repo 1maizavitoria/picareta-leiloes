@@ -18,35 +18,40 @@
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $marcaId = $_POST['brand'];
-            $anoModelo = $_POST['year'];
-            $descricao = $_POST['descricao'];
+            $marcaId = trim($_POST['brand']);
+            $anoModelo = trim($_POST['year']);
+            $descricao = trim($_POST['descricao']);
 
             $modeloExistente = executeQuery("SELECT marcaId, modeloId, anoModelo, descricao FROM modelo WHERE marcaId = '$marcaId' AND anoModelo = '$anoModelo' AND descricao = '$descricao'");
 
-            // $modeloExistente = mysqli_fetch_array($modeloExistente);
-
             $redirect = true;
 
-            if(isset($_POST["adicionar"])) {
-                echo "<script>console.log('funcione');</script>";
-                if ($modeloExistente -> num_rows > 0) {
-                    toastr('error', 'Modelo já cadastrado.');
-                    $redirect = false;
-                } else {
-                    executeQuery("INSERT INTO modelo (marcaId, anoModelo, descricao) VALUES ('$marcaId','$anoModelo', '$descricao')");
-                }
-            }
+            if(!empty($marcaId) && !empty($anoModelo) && !empty($descricao)) {
 
-            if(isset($_POST['salvar'])) {
-                echo "<script>console.log('funcione');</script>";
-                if ($modeloExistente -> num_rows > 0) {
-                    toastr('error', 'Modelo já cadastrado.');
-                    $redirect = false;
-                } else {
-                    executeQuery("UPDATE modelo SET marcaId = '$marcaId', anoModelo = '$anoModelo', descricao = '$descricao' WHERE modeloId = '$id'");
-                    toastr('success', 'Modelo atualizado!');
+                if(isset($_POST["adicionar"])) {
+                    echo "<script>console.log('funcione');</script>";
+                    if ($modeloExistente -> num_rows > 0) {
+                        toastr('error', 'Modelo já cadastrado.');
+                        $redirect = false;
+                    } else {
+                        executeQuery("INSERT INTO modelo (marcaId, anoModelo, descricao) VALUES ('$marcaId','$anoModelo', '$descricao')");
+                    }
                 }
+
+                if(isset($_POST['salvar'])) {
+                    echo "<script>console.log('funcione');</script>";
+                    if ($modeloExistente -> num_rows > 0) {
+                        toastr('error', 'Modelo já cadastrado.');
+                        $redirect = false;
+                    } else {
+                        executeQuery("UPDATE modelo SET marcaId = '$marcaId', anoModelo = '$anoModelo', descricao = '$descricao' WHERE modeloId = '$id'");
+                        toastr('success', 'Modelo atualizado!');
+                    }
+                }
+
+            } else {
+                $redirect = false;
+                toastr('error', 'Nenhum campo deve ser vazio.');
             }
 
             if (isset($_POST['deletar'])) {
@@ -111,13 +116,15 @@
                                     </select>
                                         <div class='invalid-feedback' id='invalid-message-brand'>Informe uma marca válida.</div>
                                     </div>
-                                        <div class='col-6 col-lg-4'>
-                                            <input type='text' id='descricao' name='descricao' class='form-control' placeholder='Modelo*' value='" . $modelo["descricao"] . "' onblur='validateInput(this)' required>
+
+                                    <div class='col-6 col-lg-4'>
+                                        <input type='text' id='model' name='descricao' class='form-control' placeholder='Modelo*' value='" . $modelo["descricao"] . "' onblur='validateInput(this)' required>
                                         <div class='invalid-feedback' id='invalid-message-name'>Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
-                                        </div>
-                                        <div class='col-3'>
-                                            <input type='number' id='year' name='year' maxLength='4' class='form-control' placeholder='Ano Modelo*' value='" . $modelo["anoModelo"] . "' onblur='validateInput(this)' required>
-                                        </div>
+                                    </div>
+                                    <div class='col-3'>
+                                        <input type='number' id='year' name='year' maxLength='4' class='form-control' placeholder='Ano Modelo*' value='" . $modelo["anoModelo"] . "' onblur='validateInput(this)' required>
+                                        <div class='invalid-feedback' id='invalid-message-year'>Informe um ano modelo válido.<br> <em>Ex: 2020</em></div>
+                                    </div>
                                 </div>
                                 ";
                             }
@@ -148,7 +155,7 @@
                                     <div class='invalid-feedback' id='invalid-message-brand'>Informe uma marca válida.</div>
                                     </div>
                                     <div class='col-6 col-lg-4'>
-                                        <input type='text' id='descricao' name='descricao' class='form-control' placeholder='Modelo*' onblur='validateInput(this)' required>
+                                        <input type='text' id='model' name='descricao' class='form-control' placeholder='Modelo*' onblur='validateInput(this)' required>
                                         <div class='invalid-feedback' id='invalid-message-name'>Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
                                     </div>
                                     <div class='col-3'>
