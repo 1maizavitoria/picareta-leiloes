@@ -61,7 +61,7 @@
             }
     
             if ($redirect) {
-                header("Location: http://localhost/picareta-leiloes/pages/cadastroModelo/cadastroModelo.php");
+                header("Location: http://localhost/picareta_leiloes/pages/cadastroModelo/cadastroModelo.php");
             }
         }
     ?>
