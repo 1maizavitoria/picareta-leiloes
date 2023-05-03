@@ -56,7 +56,7 @@
             }
         }
 
-        header("Location: http://localhost/picareta-leiloes/pages/cadastroMarca/cadastroMarca.php");
+        header("Location: http://localhost/picareta_leiloes/pages/cadastroMarca/cadastroMarca.php");
     }
     ?>
     
