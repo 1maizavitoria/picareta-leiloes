@@ -1,158 +1,186 @@
 # picareta-leiloes
 
-CREATE DATABASE PICARETALEILOES;
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-USE PICARETALEILOES;
+CREATE DATABASE IF NOT EXISTS `PICARETALEILOES` ;
+USE `PICARETALEILOES` ;
 
-CREATE TABLE Veiculo ( 
-    veiculoId int AUTO_INCREMENT, 
-    chassi varchar(1), 
-    placa varchar(6), 
-    modeloId int, 
-    hodometro int, 
-    observacao varchar(256), 
-    direcao smallint, 
-    cambioAutomatico boolean, 
-    vidroEletrico boolean, 
-    tipoCombustivel smallint, 
-    kitGnv boolean, 
-    arCondicionado boolean, 
-    kitMultimidia boolean, 
-    valorDespesas decimal, 
-    ipvaQuitado boolean, 
-    documentoParaRodar boolean, 
-    anoFabricacao smallint, 
-    sinistro boolean, 
-    PRIMARY KEY (veiculoId, modeloId, placa, chassi) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Marca` (
+`marcaId` SMALLINT NULL DEFAULT NULL AUTO_INCREMENT,
+`descricao` VARCHAR(50) NULL DEFAULT NULL,
+PRIMARY KEY (`marcaId`, `descricao`),
+UNIQUE INDEX (`marcaId` ASC, `descricao` ASC));
 
-CREATE TABLE Marca ( 
-    marcaId smallint AUTO_INCREMENT, 
-    descricao varchar(50), 
-    PRIMARY KEY (marcaId, descricao), 
-    UNIQUE (marcaId, descricao) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Modelo` (
+`modeloId` INT NULL DEFAULT NULL AUTO_INCREMENT,
+`marcaId` SMALLINT NULL DEFAULT NULL,
+`anoModelo` SMALLINT NULL DEFAULT NULL,
+`descricao` VARCHAR(100) NULL DEFAULT NULL,
+PRIMARY KEY (`modeloId`, `marcaId`, `anoModelo`),
+UNIQUE INDEX (`anoModelo` ASC, `modeloId` ASC),
+INDEX `FK_Modelo_Marca` (`marcaId` ASC),
+CONSTRAINT `FK_Modelo_Marca`
+FOREIGN KEY (`marcaId`)
+REFERENCES `PICARETALEILOES`.`Marca` (`marcaId`));
 
-CREATE TABLE Modelo ( 
-    modeloId int AUTO_INCREMENT, 
-    marcaId smallint, 
-    anoModelo smallint, 
-    descricao varchar(100), 
-    PRIMARY KEY (modeloId, marcaId, anoModelo), 
-    UNIQUE (anoModelo, modeloId) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Veiculo` (
+`veiculoId` INT NULL DEFAULT NULL AUTO_INCREMENT,
+`chassi` VARCHAR(1) NULL DEFAULT NULL,
+`placa` VARCHAR(6) NULL DEFAULT NULL,
+`modeloId` INT NULL DEFAULT NULL,
+`hodometro` INT NULL DEFAULT NULL,
+`observacao` VARCHAR(256) NULL DEFAULT NULL,
+`direcao` SMALLINT NULL DEFAULT NULL,
+`cambioAutomatico` TINYINT NULL DEFAULT NULL,
+`vidroEletrico` TINYINT NULL DEFAULT NULL,
+`tipoCombustivel` SMALLINT NULL DEFAULT NULL,
+`kitGnv` TINYINT NULL DEFAULT NULL,
+`arCondicionado` TINYINT NULL DEFAULT NULL,
+`kitMultimidia` TINYINT NULL DEFAULT NULL,
+`valorDespesas` DECIMAL NULL DEFAULT NULL,
+`ipvaQuitado` TINYINT NULL DEFAULT NULL,
+`documentoParaRodar` TINYINT NULL DEFAULT NULL,
+`anoFabricacao` SMALLINT NULL DEFAULT NULL,
+`sinistro` TINYINT NULL DEFAULT NULL,
+PRIMARY KEY (`veiculoId`, `modeloId`, `placa`, `chassi`),
+INDEX `FK_ModeloVeiculo` (`modeloId` ASC),
+CONSTRAINT `FK_ModeloVeiculo`
+FOREIGN KEY (`modeloId`)
+REFERENCES `PICARETALEILOES`.`Modelo`(`modeloId`));
 
-CREATE TABLE Cor ( 
-    corId smallint PRIMARY KEY AUTO_INCREMENT, 
-    Descricao varchar(50) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Cor` (
+`corId` SMALLINT NULL DEFAULT NULL AUTO_INCREMENT,
+`Descricao` VARCHAR(50) NULL DEFAULT NULL,
+PRIMARY KEY (`corId`));
 
-CREATE TABLE ModeloCor ( 
-    modeloCorId smallint AUTO_INCREMENT, 
-    modeloId int,
-    corId int,
-    PRIMARY KEY (modeloCorId, modeloId, corId) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ModeloCor` (
+`modeloCorId` SMALLINT NULL DEFAULT NULL AUTO_INCREMENT,
+`modeloId` INT NULL DEFAULT NULL,
+`corId` SMALLINT NULL DEFAULT NULL,
+PRIMARY KEY (`modeloCorId`, `modeloId`, `corId`),
+INDEX `FK_Modelo_ModeloCor` (`modeloId` ASC),
+INDEX `FK_ModeloCor_Cor` (`corId` ASC),
+CONSTRAINT `FK_Modelo_ModeloCor`
+FOREIGN KEY (`modeloId`)
+REFERENCES `PICARETALEILOES`.`Modelo` (`modeloId`),
+CONSTRAINT `FK_ModeloCor_Cor`
+FOREIGN KEY (`corId`)
+REFERENCES `PICARETALEILOES`.`Cor` (`corId`));
 
-CREATE TABLE Lote ( 
-    loteId smallint AUTO_INCREMENT, 
-    veiculoId int, 
-    leilaoId int, 
-    valorInicial decimal, 
-    valorIncremento decimal, 
-    financeiraId int, 
-    PRIMARY KEY (loteId, leilaoId, veiculoId, financeiraId) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Leilao` (
+`leilaoId` INT NULL DEFAULT NULL AUTO_INCREMENT,
+`dataLeilao` DATETIME NULL DEFAULT NULL,
+PRIMARY KEY (`leilaoId`));
 
-CREATE TABLE Lance ( 
-    lanceId smallint AUTO_INCREMENT, 
-    sequencia int, 
-    dataLance dateTime, 
-    valorLance decimal, 
-    loteId smallint, 
-    loginId int, 
-    PRIMARY KEY (lanceId, sequencia, loteId), 
-    UNIQUE (sequencia, lanceId) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Financeira` (
+`financeiraId` INT NULL DEFAULT NULL AUTO_INCREMENT,
+`descricaoFinanceira` VARCHAR(100) NULL DEFAULT NULL,
+PRIMARY KEY (`financeiraId`));
 
-CREATE TABLE Leilao ( 
-    leilaoId int PRIMARY KEY AUTO_INCREMENT, 
-    dataLeilao dateTime 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Lote` (
+`loteId` SMALLINT NULL AUTO_INCREMENT,
+`leilaoId` INT NULL DEFAULT NULL,
+`valorInicial` DECIMAL NULL DEFAULT NULL,
+`valorIncremento` DECIMAL NULL DEFAULT NULL,
+`financeiraId` INT NULL DEFAULT NULL,
+`veiculoId` INT NOT NULL,
+PRIMARY KEY (`loteId`, `leilaoId`, `financeiraId`, `veiculoId`),
+INDEX `FK_Lote_Leilao` (`leilaoId` ASC),
+INDEX `FK_Lote_Financeira` (`financeiraId` ASC),
+UNIQUE INDEX `loteId_UNIQUE` (`loteId` ASC),
+INDEX `fk_Lote_Veiculo1_idx` (`veiculoId` ASC),
+CONSTRAINT `FK_Lote_Leilao`
+FOREIGN KEY (`leilaoId`)
+REFERENCES `PICARETALEILOES`.`Leilao` (`leilaoId`),
+CONSTRAINT `FK_Lote_Financeira`
+FOREIGN KEY (`financeiraId`)
+REFERENCES `PICARETALEILOES`.`Financeira` (`financeiraId`),
+CONSTRAINT `fk_Lote_Veiculo1`
+FOREIGN KEY (`veiculoId`)
+REFERENCES `PICARETALEILOES`.`Veiculo` (`veiculoId`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION);
 
-CREATE TABLE Financeira ( 
-    financeiraId int PRIMARY KEY AUTO_INCREMENT, 
-    descricaoFinanceira varchar(100) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Login` (
+`loginId` INT NULL DEFAULT NULL AUTO_INCREMENT,
+`email` VARCHAR(120) NULL DEFAULT NULL,
+`senha` VARCHAR(50) NULL DEFAULT NULL,
+`tipoLogin` SMALLINT NULL DEFAULT NULL,
+PRIMARY KEY (`loginId`));
 
-CREATE TABLE Login ( 
-    loginId int PRIMARY KEY AUTO_INCREMENT, 
-    email varchar(120), 
-    senha varchar(50), 
-    tipoLogin smallint 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Pessoa` (
+`nome` VARCHAR(256) NULL DEFAULT NULL,
+`cpf` VARCHAR(11) NULL DEFAULT NULL,
+`rg` VARCHAR(9) NULL DEFAULT NULL,
+`dataNascimento` DATE NULL DEFAULT NULL,
+`telefone` VARCHAR(11) NULL DEFAULT NULL,
+`estadoCivil` SMALLINT NULL DEFAULT NULL,
+`sexo` SMALLINT NULL DEFAULT NULL,
+`foto` BLOB NULL DEFAULT NULL,
+`loginId` INT NOT NULL,
+PRIMARY KEY (`loginId`),
+CONSTRAINT `fk_Pessoa_Login1`
+FOREIGN KEY (`loginId`)
+REFERENCES `PICARETALEILOES`.`Login` (`loginId`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION);
 
-CREATE TABLE Pessoa ( 
-    loginId int PRIMARY KEY, 
-    nome varchar(256), 
-    cpf varchar(11), 
-    rg varchar(9), 
-    dataNascimento date, 
-    telefone varchar(11), 
-    estadoCivil smallint, 
-    sexo smallint, 
-    foto blob 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Lance` (
+`lanceId` SMALLINT NULL AUTO_INCREMENT,
+`sequencia` INT NULL DEFAULT NULL,
+`dataLance` DATETIME NULL DEFAULT NULL,
+`valorLance` DECIMAL NULL DEFAULT NULL,
+`loteId` SMALLINT NOT NULL,
+`leilaoId` INT NOT NULL,
+`loginId` INT NOT NULL,
+PRIMARY KEY (`lanceId`, `sequencia`, `loteId`, `leilaoId`, `loginId`),
+UNIQUE INDEX (`sequencia` ASC, `lanceId` ASC),
+INDEX `fk_Lance_Lote1_idx` (`loteId` ASC, `leilaoId` ASC),
+INDEX `fk_Lance_Pessoa1_idx` (`loginId` ASC),
+UNIQUE INDEX `lanceId_UNIQUE` (`lanceId` ASC),
+CONSTRAINT `fk_Lance_Lote1`
+FOREIGN KEY (`loteId` , `leilaoId`)
+REFERENCES `PICARETALEILOES`.`Lote` (`loteId` , `leilaoId`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION,
+CONSTRAINT `fk_Lance_Pessoa1`
+FOREIGN KEY (`loginId`)
+REFERENCES `PICARETALEILOES`.`Pessoa` (`loginId`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION);
 
-CREATE TABLE Endereco ( 
-    cep varchar(8), 
-    logradouro varchar(256), 
-    numeroResidencia smallint, 
-    complemento varchar(30), 
-    cidade varchar(50), 
-    uf varchar(2), 
-    loginId int PRIMARY KEY 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Endereco` (
+`cep` VARCHAR(8) NULL DEFAULT NULL,
+`logradouro` VARCHAR(256) NULL DEFAULT NULL,
+`numeroResidencia` SMALLINT NULL DEFAULT NULL,
+`complemento` VARCHAR(30) NULL DEFAULT NULL,
+`cidade` VARCHAR(50) NULL DEFAULT NULL,
+`uf` VARCHAR(2) NULL DEFAULT NULL,
+`loginId` INT NOT NULL,
+PRIMARY KEY (`loginId`),
+INDEX `fk_Endereco_Pessoa1_idx` (`loginId` ASC),
+CONSTRAINT `fk_Endereco_Pessoa1`
+FOREIGN KEY (`loginId`)
+REFERENCES `PICARETALEILOES`.`Pessoa` (`loginId`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION);
 
-CREATE TABLE ImagensLote ( 
-    loteId smallint, 
-    tipoImagem smallint UNIQUE, 
-    imagem blob, 
-    PRIMARY KEY (loteId, tipoImagem) 
-);
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ImagensLote` (
+`loteId` SMALLINT NULL DEFAULT NULL,
+`tipoImagem` SMALLINT NULL DEFAULT NULL,
+`imagem` BLOB NULL DEFAULT NULL,
+`leilaoId` INT NOT NULL,
+UNIQUE INDEX (`tipoImagem` ASC),
+PRIMARY KEY (`loteId`, `tipoImagem`, `leilaoId`),
+INDEX `fk_ImagensLote_Lote1_idx` (`leilaoId` ASC),
+CONSTRAINT `fk_ImagensLote_Lote1`
+FOREIGN KEY (`leilaoId`)
+REFERENCES `PICARETALEILOES`.`Lote` (`leilaoId`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION);
 
-ALTER TABLE Veiculo 
-ADD CONSTRAINT FK_ModeloVeiculo 
-FOREIGN KEY (modeloId) REFERENCES Modelo(modeloId);
-
-ALTER TABLE Modelo 
-ADD CONSTRAINT FK_Modelo_Marca 
-FOREIGN KEY (marcaId) REFERENCES Marca(marcaId);
-
-ALTER TABLE ModeloCor 
-ADD CONSTRAINT FK_Modelo_ModeloCor 
-FOREIGN KEY (modeloId) REFERENCES Modelo(modeloId);
-
-ALTER TABLE ModeloCor 
-ADD CONSTRAINT FK_ModeloCor_Cor 
-FOREIGN KEY (corId) REFERENCES Cor(corId);
-
-ALTER TABLE Lote 
-ADD CONSTRAINT FK_Lote_Leilao 
-FOREIGN KEY (leilaoId) REFERENCES Leilao(leilaoId);
-
-ALTER TABLE Lote 
-ADD CONSTRAINT FK_Lote_Veiculo 
-FOREIGN KEY (veiculoId) REFERENCES Veiculo(veiculoId);
-
-ALTER TABLE Lote 
-ADD CONSTRAINT FK_Lote_Financeira 
-FOREIGN KEY (financeiraId) REFERENCES Financeira(financeiraId);
-
-ALTER TABLE Pessoa 
-ADD CONSTRAINT FK_Login_Pessoa 
-FOREIGN KEY (loginId) REFERENCES Login (loginId);
-
-ALTER TABLE Endereco 
-ADD CONSTRAINT FK_Endereco_Pessoa 
-FOREIGN KEY (loginId) REFERENCES Pessoa(loginId);
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
