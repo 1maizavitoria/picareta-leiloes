@@ -63,7 +63,7 @@
     }
 
     function expirarSessao() {
-        $_SESSION['expire'] = time() + (1);
+        $_SESSION['expire'] = time() + (60 * 60 * 3);
     }
     ?>
 
