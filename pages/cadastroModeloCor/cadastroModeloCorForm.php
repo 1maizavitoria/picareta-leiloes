@@ -39,9 +39,10 @@
         $redirect = true;
 
         if (isset($_POST['adicionar'])) {
-            if($modeloExistente != null)
+            if($modeloExistente != null) {
                 toastr('error', 'Modelo Cor já cadastrado');
-            else
+                $redirect = false;
+            } else
                 executeQuery("INSERT INTO MODELOCOR (modeloId, corId) VALUES ('$modeloId', '$corId')");
         }
 
@@ -167,7 +168,7 @@
                         } else {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='button' name='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
+                                <button type='button' name='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.location.href='http://localhost/picareta_leiloes/pages/cadastroModeloCor/cadastroModeloCor.php'\">Cancelar</button>
                                 <button type='submit' name='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                             </div>
                             ";

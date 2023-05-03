@@ -29,7 +29,6 @@
             if(!empty($marcaId) && !empty($anoModelo) && !empty($descricao)) {
 
                 if(isset($_POST["adicionar"])) {
-                    echo "<script>console.log('funcione');</script>";
                     if ($modeloExistente -> num_rows > 0) {
                         toastr('error', 'Modelo já cadastrado.');
                         $redirect = false;
@@ -39,7 +38,6 @@
                 }
 
                 if(isset($_POST['salvar'])) {
-                    echo "<script>console.log('funcione');</script>";
                     if ($modeloExistente -> num_rows > 0) {
                         toastr('error', 'Modelo já cadastrado.');
                         $redirect = false;
@@ -55,13 +53,12 @@
             }
 
             if (isset($_POST['deletar'])) {
-                echo "<script>console.log('funcione');</script>";
                 executeQuery("DELETE FROM modelo WHERE modeloId = '$id'");
                 toastr('success', 'Modelo excluído');
             }
     
             if ($redirect) {
-                header("Location: http://localhost/picareta-leiloes/pages/cadastroModelo/cadastroModelo.php");
+                header("Location: http://localhost/picareta_leiloes/pages/cadastroModelo/cadastroModelo.php");
             }
         }
     ?>
@@ -164,7 +161,7 @@
                                     </div>
                                 </div>
                                 <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
+                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.location.href='http://localhost/picareta_leiloes/pages/cadastroModelo/cadastroModelo.php'\">Cancelar</button>
                                     <button type='submit' value='adicionar' name='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                                 </div>
                             ";

@@ -12,6 +12,53 @@
 
     <?php
     include './../../components/header/header.php';
+    include './../../components/toastr/toastr.php';
+
+    $id = $_GET['id'];
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        $cor = trim($_POST['cor']);
+
+        $corExistente = executeQuery("SELECT Descricao FROM cor WHERE Descricao = '$cor'");
+
+        $redirect = true;
+
+        if(!empty($cor)) {
+
+            if(isset($_POST["adicionar"])) {
+                if ($corExistente -> num_rows > 0) {
+                    toastr('error', 'Cor já cadastrada.');
+                    $redirect = false;
+                } else {
+                    executeQuery("INSERT INTO cor (Descricao) VALUES ('$cor')");
+                }
+            }
+
+            if(isset($_POST['salvar'])) {
+                if ($corExistente -> num_rows > 0) {
+                    toastr('error', 'Cor já cadastrada.');
+                    $redirect = false;
+                } else {
+                    executeQuery("UPDATE cor SET Descricao = '$cor' WHERE corId = '$id'");
+                    toastr('success', 'Cor atualizada!');
+                }
+            }
+
+        } else {
+            $redirect = false;
+            toastr('error', 'Nenhum campo deve ser vazio.');
+        }
+
+        if (isset($_POST['deletar'])) {
+            executeQuery("DELETE FROM cor WHERE corId = '$id'");
+            toastr('success', 'Cor excluída');
+        }
+
+        if ($redirect) {
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroCor/cadastroCor.php");
+        }
+    }
     ?>
     
     <div class="content">
@@ -32,7 +79,21 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-6 col-lg-4">
-                        <input type="text" id="name" class="form-control" placeholder="Cor*" onblur="validateInput(this)" required>
+                        <?php
+                        $marca["Descricao"] = "";
+                        if(isset($_GET["id"])){
+                            $id = $_GET["id"];
+
+                            if (isset($id) && $id != "") {
+                                $corSelecionada = executeQuery("SELECT Descricao FROM cor WHERE corId = '$id'");
+                                if($corSelecionada -> num_rows > 0) {
+                                    $marca = $corSelecionada -> fetch_assoc();
+                                }
+                            }
+                        }
+                            
+                        echo "<input type=\"text\" id=\"name\" name=\"cor\" class=\"form-control\" placeholder=\"Cor*\" value='" . $marca["Descricao"] . "' onblur=\"validateInput(this)\" required>"
+                        ?>
                         <div class="invalid-feedback" id="invalid-message-name">Informe um nome de cor válido.<br> <em>Ex: Branco</em></div>
                     </div>
                 </div>
@@ -44,15 +105,15 @@
                         if (isset($id) && $id != "") {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='submit' value='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
-                                <button type='submit' value='salvar' class='btn btn-outline-success col-5' onclick='checkAllFields('form')'>Salvar</button>
+                                <button type='submit' name='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
+                                <button type='submit' name='salvar' class='btn btn-outline-success col-5' onclick='checkAllFields('form')'>Salvar</button>
                             </div>
                             ";
                         } else {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
-                                <button type='submit' value='adicionar' class='btn btn-outline-success col-5' onclick='checkAllFields('form')'>Adicionar</button>
+                                <button type='button' name='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.location.href = 'http://localhost/picareta_leiloes/pages/cadastroCor/cadastroCor.php'\">Cancelar</button>
+                                <button type='submit' name='adicionar' class='btn btn-outline-success col-5' onclick='checkAllFields('form')'>Adicionar</button>
                             </div>
                             ";
                         }
