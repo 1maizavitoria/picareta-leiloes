@@ -106,7 +106,7 @@ function validateInput(input) {
             validField = parseFloat(input.value.replace("R$", "").replace(",", ".")) > 0;
             break;
         case "password":
-            regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             break;
 
     }
