@@ -31,7 +31,7 @@
                 <?php 
                     include './../../components/grid/grid.php';
                     $cores = array();
-                    $selectCor = executeQuery('select * from cor');
+                    $selectCor = executeQuery('select * from cor order by corId desc');
                     while($row = mysqli_fetch_assoc($selectCor)){
                         $cores[] = array($row['corId'], $row['Descricao']);
                     }

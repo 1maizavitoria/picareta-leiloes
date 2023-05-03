@@ -36,7 +36,7 @@
                     $editavel = true;
                     $urlClick = "cadastroMarcaForm.php?id=";
                     $marcas = array();
-                    $selectMarca = executeQuery('select * from marca');
+                    $selectMarca = executeQuery('select * from marca order by marcaId desc');
                     while($row = mysqli_fetch_assoc($selectMarca)){
                         $marcas[] = array($row['marcaId'], $row['descricao']);
                     }

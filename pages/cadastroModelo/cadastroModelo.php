@@ -36,7 +36,7 @@
                     $urlClick = "cadastroModeloForm.php?id=";
 
                     $modelos = array();
-                    $selectModelo = executeQuery("SELECT mo.modeloId, mo.anoModelo, mo.descricao, ma.descricao as dsMarca FROM modelo mo inner join marca ma on mo.marcaId = ma.marcaId");
+                    $selectModelo = executeQuery("SELECT mo.modeloId, mo.anoModelo, mo.descricao, ma.descricao as dsMarca FROM modelo mo inner join marca ma on mo.marcaId = ma.marcaId order by modeloId desc");
                     while($row = mysqli_fetch_assoc($selectModelo)) {
                         $modelos[] = array($row['modeloId'], $row['dsMarca'], $row['descricao'], $row['anoModelo']);
                     }

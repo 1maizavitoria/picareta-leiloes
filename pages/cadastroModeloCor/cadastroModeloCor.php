@@ -32,7 +32,7 @@
                     include './../../components/grid/grid.php';
 
                     $modeloCor = array();
-                    $selectModeloCor = executeQuery('SELECT mc.modeloCorId, mo.marcaId, ma.descricao as marcaDescricao, mo.descricao, mo.anoModelo, c.Descricao as corDescricao FROM MODELO MO INNER JOIN MARCA MA ON MA.marcaId = MO.marcaId INNER JOIN modelocor MC ON MC.modeloId = MO.modeloId INNER JOIN cor C ON C.corId = MC.corId');
+                    $selectModeloCor = executeQuery('SELECT mc.modeloCorId, mo.marcaId, ma.descricao as marcaDescricao, mo.descricao, mo.anoModelo, c.Descricao as corDescricao FROM MODELO MO INNER JOIN MARCA MA ON MA.marcaId = MO.marcaId INNER JOIN modelocor MC ON MC.modeloId = MO.modeloId INNER JOIN cor C ON C.corId = MC.corId order by modeloCorId desc');
                     while($row = mysqli_fetch_assoc($selectModeloCor)){
                         $modeloCor[] = array($row['modeloCorId'], $row['marcaDescricao'], $row['descricao'] , $row['anoModelo'], $row['corDescricao']);
                     }
