@@ -117,7 +117,7 @@
                             </div>
                             
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
+                                <button type='button' value='cancelar' class='btn btn-outline-danger col-5' onclick=\"onclick=\"window.location.href='http://localhost/picareta_leiloes/pages/cadastroMarca/cadastroMarca.php'\"\">Cancelar</button>
                                 <button type='submit' value='adicionar' name='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                             </div>
                             ";
