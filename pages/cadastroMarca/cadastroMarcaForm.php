@@ -19,6 +19,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $descricao = trim($_POST['descricao']);
         $marcaExistente = executeQuery("SELECT marcaId, descricao FROM marca WHERE  descricao = '$descricao'");
+        $redirect = true;
 
         if (!empty($descricao)) {
             
@@ -56,7 +57,8 @@
             }
         }
 
-        header("Location: http://localhost/picareta_leiloes/pages/cadastroMarca/cadastroMarca.php");
+        if ($redirect)
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroMarca/cadastroMarca.php");
     }
     ?>
     
