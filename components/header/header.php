@@ -8,7 +8,17 @@
     <title>Header</title>
 </head>
     <body>
-    <?php session_start(); ob_start();?>
+    <?php 
+    session_start(); 
+
+    if (isset($_SESSION['expire']))
+        if ($_SESSION['expire'] < time()) {
+            session_destroy();
+            header("Location: ./../../pages/login/login.php?expired=true");
+        }
+
+    ob_start();
+    ?>
         <nav class="navbar d-flex justify-content-between sticky-top navbar-expand-lg bg-info gap-4">
             <div class="container d-flex justify-content-around align-items-center">
             

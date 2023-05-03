@@ -29,7 +29,6 @@
             if(!empty($marcaId) && !empty($anoModelo) && !empty($descricao)) {
 
                 if(isset($_POST["adicionar"])) {
-                    echo "<script>console.log('funcione');</script>";
                     if ($modeloExistente -> num_rows > 0) {
                         toastr('error', 'Modelo já cadastrado.');
                         $redirect = false;
@@ -39,7 +38,6 @@
                 }
 
                 if(isset($_POST['salvar'])) {
-                    echo "<script>console.log('funcione');</script>";
                     if ($modeloExistente -> num_rows > 0) {
                         toastr('error', 'Modelo já cadastrado.');
                         $redirect = false;
@@ -55,7 +53,6 @@
             }
 
             if (isset($_POST['deletar'])) {
-                echo "<script>console.log('funcione');</script>";
                 executeQuery("DELETE FROM modelo WHERE modeloId = '$id'");
                 toastr('success', 'Modelo excluído');
             }

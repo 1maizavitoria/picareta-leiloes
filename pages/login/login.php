@@ -14,7 +14,8 @@
     include './../../components/header/header.php';
     include './../../components/toastr/toastr.php';
 
-    
+    if(isset($_GET['expired']))
+        toastr('error', 'Sessão expirada, faça login novamente.');
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = trim($_POST['email']);
@@ -35,7 +36,7 @@
                     } else  {
                         header('Location: ./../../pages/cadastroMarca/cadastroMarca.php');
                     }
-                    
+                    expirarSessao();
                 } else {
                     toastr('error', "Senha incorreta.");
                 }
@@ -53,11 +54,16 @@
                 $_SESSION['loginId'] = $loginId['loginId'];
                 $_SESSION['tipoUsuario'] = 1;
                 $_SESSION['email'] = $email;
+                expirarSessao();
                 header('Location: ./../../pages/dadosCadastrais/dadosCadastrais.php');
             } else {
                 toastr('error', 'Email já cadastrado.');
             }
         }
+    }
+
+    function expirarSessao() {
+        $_SESSION['expire'] = time() + (1);
     }
     ?>
 

@@ -30,19 +30,17 @@
             <div class="col-12 px-5 mt-5 d-flex justify-content-center">
                 <?php 
                     include './../../components/grid/grid.php';
-                    $produtos = array(
-                        array("1", "VERMELHO"),
-                        array("2", "VERDE"),
-                        array("3", "ROSA"),
-                        array("4", "PRETO"),
-                        array("5", "BRANCO"),
-                    );
+                    $cores = array();
+                    $selectCor = executeQuery('select * from cor');
+                    while($row = mysqli_fetch_assoc($selectCor)){
+                        $cores[] = array($row['corId'], $row['Descricao']);
+                    }
                 
                     $titulos = array('Cor');
                     $editavel = true;
                     $urlClick = "cadastroCorForm.php?id=";
                 
-                    gerarGrid($titulos, $produtos, 10, $editavel, $urlClick);
+                    gerarGrid($titulos, $cores, 10, $editavel, $urlClick);
                 ?>
             </div>
 
