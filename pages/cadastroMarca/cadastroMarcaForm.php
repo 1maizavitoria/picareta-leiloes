@@ -17,16 +17,28 @@
     $id = $_GET['id'];
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $descricao = $_POST['descricao'];
+        $descricao = trim($_POST['descricao']);
+        $marcaExistente = executeQuery("SELECT marcaId, descricao FROM marca WHERE  descricao = '$descricao'");
+
         if (!empty($descricao)) {
             
             if(isset($_POST["adicionar"])) {
-                executeQuery("INSERT INTO marca (descricao) VALUES ('$descricao')");   
+                if ($marcaExistente -> num_rows > 0) {
+                    toastr('error', 'Marca já cadastrada.');
+                    $redirect = false;
+                } else {
+                    executeQuery("INSERT INTO marca (descricao) VALUES ('$descricao')"); 
+                }  
             }
 
             if(isset($_POST['salvar'])) {
-                executeQuery("UPDATE marca SET descricao = '$descricao' WHERE marcaId = '$id'");
-                toastr('success', 'Modelo atualizado!');
+                if ($marcaExistente -> num_rows > 0) {
+                    toastr('error', 'Marca já cadastrada.');
+                    $redirect = false;
+                } else {
+                    executeQuery("UPDATE marca SET descricao = '$descricao' WHERE marcaId = '$id'");
+                    toastr('success', 'Marca atualizada!');
+                }
             }        
         }
 
@@ -40,7 +52,7 @@
 
             }else{
                 executeQuery("DELETE FROM marca WHERE marcaId = '$id'");
-                toastr('success', 'Modelo excluído');
+                toastr('success', 'Marca excluída');
             }
         }
 
