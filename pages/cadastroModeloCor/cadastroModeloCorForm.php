@@ -55,8 +55,19 @@
         }
 
         if (isset($_POST['deletar'])) {
-            echo "<script>console.log('oi')</script>";
-            executeQuery("DELETE FROM MODELOCOR WHERE modeloCorId = '$id'");
+            $modeloCorSelecionado = executeQuery("SELECT v.modeloCorId FROM veiculo v INNER JOIN modeloCor mc on mc.modeloCorId = v.modeloCorId WHERE mc.modeloCorId = '$id'");
+            if($modeloCorSelecionado -> num_rows > 0) {
+                $modeloCorId = $modeloCorSelecionado -> fetch_assoc();
+            }
+            if(isset($modeloCorId)){
+                toastr('error', 'Este modelo cor possui um veículo vinculado, não é possível excluí-lo.');
+                $redirect = false;
+
+
+            }else{
+                executeQuery("DELETE FROM marca WHERE marcaId = '$id'");
+                toastr('success', 'Marca excluída');
+            }
         }
 
         if ($redirect)
