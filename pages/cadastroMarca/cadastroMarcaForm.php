@@ -50,6 +50,8 @@
             }
             if(isset($marca)){
                 toastr('error', 'Esta marca possui um modelo vinculado, não é possível excluí-la.');
+                $redirect = false;
+
 
             }else{
                 executeQuery("DELETE FROM marca WHERE marcaId = '$id'");

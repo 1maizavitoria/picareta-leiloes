@@ -79,10 +79,10 @@
             </div>
             <div class="col-7 col-lg-3 mb-5">
                 <input type="password" name="password" id="password" class="form-control" placeholder="🔑*"  onblur="validateInput(this)" required>
-                <div class="invalid-feedback" id="invalid-message-password">Informe uma senha válida, 8 dígitos. <br> No mínimo 1 letra maiúscula, <br>1 letra minúscula e 1 número.</em></div>
+                <div class="invalid-feedback" id="invalid-message-password">Informe uma senha válida. <br> No mínimo 8 dígitos contendo 1 letra maiúscula, 1 letra minúscula, 1 caracter especial e 1 número.</em></div>
             </div>
 
-            <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center mb-3 mt-4'>
+            <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center mb-3 mt-5'>
                 <button type='submit' name='entrar' class='btn btn-outline-info col-12'>Entrar</button>
             </div>
             <div class='col-3 col-lg-2 col-xl-1 d-flex justify-content-center'>
