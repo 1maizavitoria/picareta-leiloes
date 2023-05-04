@@ -30,17 +30,18 @@
             <div class="col-12 px-5 mt-5 d-flex justify-content-center">
                 <?php 
                     include './../../components/grid/grid.php';
-                    $produtos = array(
-                        array("1", "SANTANDER"),
-                        array("2", "ITAU"),
-                        array("3", "PAN"),
-                    );
+                    $financeira = array();
+                    $selectFinanceira = executeQuery('SELECT * from financeira order by financeiraId desc');
+                    while($row = mysqli_fetch_assoc($selectFinanceira)){
+                        $financeira[] = array($row['financeiraId'], $row['descricaoFinanceira']);
+                    }
+                   
                 
                     $titulos = array('Financeira');
                     $editavel = true;
                     $urlClick = "cadastroFinanceiraForm.php?id=";
                 
-                    gerarGrid($titulos, $produtos, 10, $editavel, $urlClick);
+                    gerarGrid($titulos, $financeira, 10, $editavel, $urlClick);
                 ?>
             </div>
 
