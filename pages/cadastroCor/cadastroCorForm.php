@@ -51,8 +51,19 @@
         }
 
         if (isset($_POST['deletar'])) {
-            executeQuery("DELETE FROM cor WHERE corId = '$id'");
-            toastr('success', 'Cor excluída');
+            $corSelecionada = executeQuery("SELECT mc.modeloCorId FROM MODELOCOR mc INNER JOIN COR c on c.corId = mc.corId AND c.corId = '$id'");
+            if($corSelecionada -> num_rows > 0) {
+                $modeloCorId = $corSelecionada -> fetch_assoc();
+            }
+            if(isset($modeloCorId)){
+                toastr('error', 'Esta cor possui um modelo cor vinculado, não é possível excluí-lo.');
+                $redirect = false;
+
+
+            }else{
+                executeQuery("DELETE FROM cor WHERE corId = '$id'");
+                toastr('success', 'Cor excluída');
+            }
         }
 
         if ($redirect) {
