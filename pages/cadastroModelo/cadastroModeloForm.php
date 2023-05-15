@@ -94,20 +94,18 @@
                         $id = $_GET['id'];
 
                         if (isset($id) && $id != "") {
-
-                            $modeloSelecionado = executeQuery("SELECT mo.modeloId, mo.anoModelo, mo.descricao, ma.marcaId, ma.descricao as dsMarca FROM modelo mo INNER JOIN marca ma on mo.marcaId = ma.marcaId WHERE mo.modeloId = '$id'");
-
-                            $modeloMarca = executeQuery("SELECT ma.marcaId, ma.descricao FROM marca ma LEFT JOIN modelo mo ON mo.marcaId = ma.marcaId order by case when mo.modeloId = '$id' then 0 else 1 end");
+                            $modeloMarca = executeQuery("SELECT ma.marcaId, ma.descricao, mo.modeloId, mo.anoModelo, mo.descricao AS descModelo FROM marca ma LEFT JOIN modelo mo ON mo.marcaId = ma.marcaId ORDER BY CASE WHEN mo.modeloId = '$id' THEN 0 ELSE 1 END");
 
                             // echo "<script>console.log('".$id."');</script>";
 
-                            if($modeloSelecionado -> num_rows > 0) {
-                                $modelo = $modeloSelecionado -> fetch_assoc();
-                            }
-
                             $validateInput = "";
+                            $isFirstRow = true;
                             if ($modeloMarca -> num_rows > 0) {
                                 while($row = $modeloMarca -> fetch_assoc()) {
+                                    if ($isFirstRow) {
+                                        $modelo = $row;
+                                        $isFirstRow = false;
+                                    }
                                     if (!str_contains($validateInput, $row["descricao"])) {
                                         $validateInput = $validateInput . "<option value='" . $row["marcaId"] . "'>" . $row["descricao"] . "</option>";
                                     }
@@ -125,7 +123,7 @@
                                     </div>
 
                                     <div class='col-6 col-lg-4'>
-                                        <input type='text' id='model' name='descricao' class='form-control' placeholder='Modelo*' value='" . $modelo["descricao"] . "' onblur='validateInput(this)' required>
+                                        <input type='text' id='model' name='descricao' class='form-control' placeholder='Modelo*' value='" . $modelo["descModelo"] . "' onblur='validateInput(this)' required>
                                         <div class='invalid-feedback' id='invalid-message-name'>Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
                                     </div>
                                     <div class='col-3'>
