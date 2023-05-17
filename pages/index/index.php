@@ -43,7 +43,7 @@
         </div>
 
         <div class="text-center">
-                <img src="./images/carro1.jpeg" alt="Imagem">
+                <img src="./images/carro2.jpg" alt="Imagem">
         </div>
 
         <div class="col-md-12 mt-2">
