@@ -54,11 +54,20 @@
 
             if (isset($_POST['deletar'])) {
                 $modeloIdSelecionado = executeQuery("SELECT v.modeloId FROM veiculo v INNER JOIN modelo m ON m.modeloId = v.ModeloId WHERE m.modeloId = '$id'");
+                $modeloIdSelecionadoCor = executeQuery("SELECT mc.modeloId FROM modelocor mc INNER JOIN modelo m ON m.modeloId = mc.modeloId WHERE m.modeloId = '$id'");
+
                 if($modeloIdSelecionado -> num_rows > 0) {
-                    $modeloId = $modeloIdSelecionado -> fetch_assoc();
+                    $modeloIdVeiculo = $modeloIdSelecionado -> fetch_assoc();
                 }
-                if(isset($modeloId)){
-                    toastr('error', 'Este modelo possui um veículo vinculado, não é possível excluí-lo.');
+                if($modeloIdSelecionadoCor -> num_rows > 0) {
+                    $modeloIdCor = $modeloIdSelecionadoCor -> fetch_assoc();
+                }
+                
+                if(isset($modeloIdVeiculo) || isset($modeloIdCor)){
+                    if (isset($modeloIdVeiculo))
+                        toastr('error', 'Este modelo possui um veículo vinculado, não é possível excluí-lo.');
+                    else
+                        toastr('error', 'Este modelo possui um modelo cor vinculado, não é possível excluí-lo.');
                     $redirect = false;
                 }
                 else{

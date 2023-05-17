@@ -17,8 +17,7 @@
     $id = $_GET['id'];
     if($id != '') {
         if (!isset($_GET['marcaId'])) {
-            echo "<script>console.log('oi')</script>";
-            $modeloCor = executeQuery('SELECT mo.marcaId, ma.descricao as marcaDescricao, mo.descricao, mo.anoModelo, c.corId FROM MODELO MO INNER JOIN MARCA MA ON MA.marcaId = MO.modeloId INNER JOIN modelocor MC ON MC.modeloId = MO.modeloId INNER JOIN cor C ON C.corId = MC.corId WHERE mc.modeloCorId = ' . $_GET['id']);
+            $modeloCor = executeQuery('SELECT mo.marcaId, ma.descricao as marcaDescricao, mo.descricao, mo.anoModelo, c.corId FROM MODELO MO INNER JOIN MARCA MA ON MA.marcaId = MO.marcaId INNER JOIN modelocor MC ON MC.modeloId = MO.modeloId INNER JOIN cor C ON C.corId = MC.corId WHERE MC.modeloCorId = ' . $_GET['id']);
             $modeloCor = mysqli_fetch_assoc($modeloCor);
             header("Location: http://localhost/picareta_leiloes/pages/cadastroModeloCor/cadastroModeloCorForm.php?id=$id&marcaId=" . $modeloCor['marcaId'] . "&descricaoModelo=" . $modeloCor['descricao'] . "&anoModelo=" . $modeloCor['anoModelo'] . "&corId=" . $modeloCor['corId'] . "");
         }
@@ -65,8 +64,8 @@
 
 
             }else{
-                executeQuery("DELETE FROM marca WHERE marcaId = '$id'");
-                toastr('success', 'Marca excluída');
+                executeQuery("DELETE FROM modeloCor WHERE modeloCorId = '$id'");
+                toastr('success', 'Modelo cor excluido');
             }
         }
 
