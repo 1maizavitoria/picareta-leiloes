@@ -30,17 +30,17 @@
             <div class="col-12 px-5 mt-5 d-flex justify-content-center">
                 <?php 
                     include './../../components/grid/grid.php';
-                    $produtos = array(
-                        array("1", "15/04/2023"),
-                        array("2", "27/04/2023"),
-                        array("3", "01/05/2023"),
-                    );
-                
+
                     $titulos = array('Data');
                     $editavel = true;
                     $urlClick = "cadastroLeilaoForm.php?id=";
-                
-                    gerarGrid($titulos, $produtos, 10, $editavel, $urlClick);
+                    $leiloes = array();
+                    $selectLeilao = executeQuery('SELECT leilaoId, DATE_FORMAT(dataLeilao, "%d/%m/%Y %H:%i:%s") AS dataLeilao FROM leilao ORDER BY leilaoId DESC');
+                    while($row = mysqli_fetch_assoc($selectLeilao)){
+                        $leiloes[] = array($row['leilaoId'], $row['dataLeilao']);
+                    }
+
+                    gerarGrid($titulos, $leiloes, 10, $editavel, $urlClick);
                 ?>
             </div>
 
