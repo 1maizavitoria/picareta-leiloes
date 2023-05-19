@@ -17,38 +17,34 @@
     <h2 class="h1-responsive font-weight-bold text-center my-4">Leilões</h2>
 
     <div class="column align-items-center mid">
-        <div class="col-5 mx-auto mb-5">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Leilão Presencial/Online N.º1</h5>
-                </div>
-                <div class="card-body">
-                    <i class='fas fa-map-marker-alt'></i>
-                    <p class='card-text'>Rua Imaculada Conceição, 1155 - Prado Velho, Curitiba</p>
-                    <i class="fas fa-calendar-alt"></i>
-                    <p class='card-text'>18/07/2023</p>
-                    <div class="justify-content-center d-flex">
-                        <button onclick="window.location.href = './../../pages/lotes/lotes.php?id=0'"; class="btn btn-outline-success col-6">Acessar Leilão</button>
+        <?php
+        $leiloes = executeQuery("SELECT leilaoId, DATE_FORMAT(dataLeilao, '%d/%m/%Y %H:%i:%s') AS dataLeilao FROM leilao WHERE dataLeilao > NOW() ORDER BY leilaoId DESC");
+        $leiloes = mysqli_fetch_all($leiloes, MYSQLI_ASSOC);
+
+        if ($leiloes != null) {
+            foreach($leiloes as $leilao){
+                echo "<div class='col-5 mx-auto mb-5'>
+                    <div class='card'>
+                        <div class='card-body'>
+                            <h5 class='card-title'>Leilão Presencial/Online N.º" . $leilao["leilaoId"] . "</h5>
+                        </div>
+                        <div class='card-body'>
+                            <i class='fas fa-map-marker-alt'></i>
+                            <p class='card-text'>Rua Imaculada Conceição, 1155 - Prado Velho, Curitiba</p>
+                            <i class='fas fa-calendar-alt'></i>
+                            <p class='card-text'>" . $leilao["dataLeilao"] . "</p>
+                            <div class='justify-content-center d-flex'>
+                                <button onclick=\"window.location.href='./../../pages/lotes/lotes.php?id=" . $leilao["leilaoId"] . "'\" class='btn btn-outline-success col-6'>Acessar Leilão</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-5 mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Leilão Presencial/Online N.º2</h5>
-                </div>
-                <div class="card-body">
-                    <i class='fas fa-map-marker-alt'></i>
-                    <p class='card-text'>Rua Imaculada Conceição, 1155 - Prado Velho, Curitiba</p>
-                    <i class="fas fa-calendar-alt"></i>
-                    <p class='card-text'>18/07/2023</p>
-                    <div class="justify-content-center d-flex">
-                        <button onclick="window.location.href = './../../pages/lotes/lotes.php?id=0'"; class="btn btn-outline-success col-6">Acessar Leilão</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </div>";
+            }
+        } else {
+            echo "<h3 class='text-center mb-5 p-5'>Não há leilões disponíveis no momento.</h3>";
+        }
+
+        ?>
     </div>
 
     <?php
