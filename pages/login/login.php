@@ -74,8 +74,9 @@
         </div>
 
         <form class="col-12 d-flex flex-column justify-content-center align-items-center" action="" method="POST">
-            <div class="col-7 col-lg-3 mb-4">
-                <input type="email" name="email" class="form-control" placeholder="✉*" required>
+            <div class="col-7 col-lg-3 mb-5">
+                <input type="email" name="email" id="email" class="form-control" placeholder="✉*" onblur="validateInput(this)" required>
+                <div class="invalid-feedback" id="invalid-message-email">Informe um e-mail válido.<br> <em>Ex: nome@dominio.com</em></div>
             </div>
             <div class="col-7 col-lg-3 mb-5">
                 <input type="password" name="password" id="password" class="form-control" placeholder="🔑*"  onblur="validateInput(this)" required>
