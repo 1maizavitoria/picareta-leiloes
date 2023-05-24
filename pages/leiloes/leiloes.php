@@ -46,7 +46,7 @@
                             <i class='fas fa-calendar-alt'> Data</i>
                             <p class='card-text'>" . $leilao["dataLeilao"] . "</p>
                             <div class='justify-content-center d-flex'>
-                                <button onclick=\"window.location.href='./../../pages/lotes/lotes.php?id=" . $leilao["leilaoId"] . "'\" class='btn btn-outline-success col-6'>Acessar Leilão</button>
+                                <button onclick=\"window.location.href='./../../pages/lotes/lotes.php?leilaoId=" . $leilao["leilaoId"] . "'\" class='btn btn-outline-success col-6'>Acessar Leilão</button>
                             </div>
                         </div>
                     </div>
