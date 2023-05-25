@@ -16,12 +16,9 @@
 
     <h2 class="h1-responsive font-weight-bold text-center my-4">Leilões</h2>
 
-    <div class="column align-items-center mid">
+    <div class="row align-items-center mid mt-4">
         <?php
-        $leiloes = executeQuery("SELECT leilaoId, DATE_FORMAT(dataLeilao, '%d/%m/%Y %H:%i:%s') AS dataLeilao FROM leilao WHERE dataLeilao > NOW() ORDER BY leilaoId DESC");
-        if (isset($_SESSION['tipoUsuario']))
-            if ($_SESSION['tipoUsuario'] == 2)
-                $leiloes = executeQuery("SELECT leilaoId, DATE_FORMAT(dataLeilao, '%d/%m/%Y %H:%i:%s') AS dataLeilao FROM leilao ORDER BY leilaoId DESC");
+        $leiloes = executeQuery("SELECT leilaoId, DATE_FORMAT(dataLeilao, '%d/%m/%Y %H:%i:%s') AS dataLeilao, dataLeilao > NOW() as vigente FROM leilao  ORDER BY leilaoId DESC");
 
         $leiloes = mysqli_fetch_all($leiloes, MYSQLI_ASSOC);
 
@@ -32,7 +29,7 @@
 
         if ($leiloes != null) {
             foreach($leiloes as $leilao){
-                $estado = $agora > $leilao["dataLeilao"] ? "<span class='badge bg-danger'>Encerrado</span>" : "<span class='badge bg-success'>Em andamento</span>";
+                $estado = $leilao["vigente"] == 0 ? "<span class='badge bg-danger'>Encerrado</span>" : "<span class='badge bg-success'>Em andamento</span>";
 
                 echo "<div class='col-5 mx-auto mb-5'>
                     <div class='card'>
