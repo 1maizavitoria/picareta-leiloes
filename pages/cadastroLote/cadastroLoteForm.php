@@ -32,7 +32,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="brand" onblur="validateInput(this)" required>
+                        <select class="form-select" id="brand" name="marca" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Marca*</option>
                             <option value="1">FORD</option>
                             <option value="2">BMW</option>
@@ -43,7 +43,7 @@
                         <div class="invalid-feedback" id="invalid-message-brand">Informe uma marca válida.</div>
                     </div>
                     <div class="col-5 col-lg-4">
-                        <select class="form-select" id="model" onblur="validateInput(this)" required>
+                        <select class="form-select" id="model" name="modelo" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Modelo*</option>
                             <option value="1">FIESTA</option>
                             <option value="2">X1</option>
@@ -54,7 +54,7 @@
                         <div class="invalid-feedback" id="invalid-message-model">Informe um modelo válido.</div>
                     </div>
                     <div class="col-3 col-lg-2">
-                        <select class="form-select" id="year" onblur="validateInput(this)" required>
+                        <select class="form-select" id="year" name="ano" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Ano Modelo*</option>
                             <option value="2010">2010</option>
                             <option value="2012">2012</option>
@@ -68,7 +68,7 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="color" onblur="validateInput(this)" required>
+                        <select class="form-select" id="color" name="cor" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Cor*</option>
                             <option value="1">PRETO</option>
                             <option value="2">VERMELHO</option>
@@ -79,7 +79,7 @@
                         <div class="invalid-feedback" id="invalid-message-color">Informe uma cor válida.</div>
                     </div>
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="licensePlateSelect" onblur="validateInput(this)" required>
+                        <select class="form-select" id="licensePlateSelect" name="placa" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Placa*</option>
                             <option value="1">AAA-0000</option>
                             <option value="2">AAA-1111</option>
@@ -90,7 +90,7 @@
                         <div class="invalid-feedback" id="invalid-message-licensePlateSelect">Informe uma placa válida.</div>
                     </div>
                     <div class="col-4 col-lg-3">
-                        <select class="form-select" id="auctionDateSelect" onblur="validateInput(this)" required>
+                        <select class="form-select" id="auctionDateSelect" name="dataLeilao" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Data do leilão*</option>
                             <option value="23/03/2023">23/03/2023</option>
                             <option value="24/03/2023">24/03/2023</option>
@@ -104,7 +104,7 @@
 
                 <div class="row justify-content-center mb-5">
                 <div class="col-4 col-lg-3">
-                        <select class="form-select" id="financial" onblur="validateInput(this)" required>
+                        <select class="form-select" id="financial"  name="financeira" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Financeira*</option>
                             <option value="1">Santander</option>
                             <option value="2">Itaú</option>
@@ -113,17 +113,18 @@
                         <div class="invalid-feedback" id="invalid-message-financial">Informe uma Financeira válida.</div>
                     </div>
                     <div class="col-3">
-                        <input type="text" id="initialValue" class="form-control" placeholder="Valor Inicial*" onblur="validateInput(this)" required>
+                        <input type="text" id="initialValue" name='inicialValue' class="form-control" placeholder="Valor Inicial*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-initialValue">Informe um valor inicial válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                     <div class="col-3">
-                        <input type="text" id="incrementalValue" class="form-control" placeholder="Valor Incremento*" onblur="validateInput(this)" required>
+                        <input type="text" id="incrementalValue" name='incrementValue' class="form-control" placeholder="Valor Incremento*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-incrementalValue">Informe um valor incremento válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                 </div>
                 
                 <?php 
-                    if (isset($_GET["id"]))
+                    if (isset($_GET["id"])) {
+                 
                         $id = $_GET["id"];
 
                         if (isset($id) && $id != "") {
@@ -141,6 +142,43 @@
                             </div>
                             ";
                         }
+                    }
+
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+                        if (isset($_POST["inicialValue"])){
+                            $getMarca = trim($_POST["marca"]);
+                            $getModelo = trim($_POST["modelo"]);
+                            $getCor = trim($_POST["cor"]);
+                            $getPlaca = trim($_POST["placa"]);
+                            $getDataLeilao = trim($_POST["dataLeilao"]);
+                            $getfinanceira = trim($_POST["financeira"]);
+
+                            $getInicialValue = trim($_POST["inicialValue"]);
+                            $getIncrementValue = trim($_POST["incrementValue"]);
+
+                            // echo "inicialValue $getInicialValue";
+                            // echo "incrementValue $getIncrementValue";
+
+                            // echo "marca $getMarca";
+                            // echo "modelo $getModelo";
+                            // echo "cor $getCor";
+                            // echo "placa $getPlaca";
+                            // echo "getDataLeilao $getDataLeilao";
+                            // echo "getfinanceira $getfinanceira";
+
+                            executeQuery("
+                            INSERT INTO veiculo(
+                                chassi, placa, modeloId, hodometro, observacao, direcao, cambioAutomatico, vidroEletrico, tipoCombustivel, kitGnv, arCondicionado, kitMultimidia, valorDespesas, ipvaQuitado, documentoParaRodar, anoFabricacao, sinistro) VALUES 
+                                ('sada','$getPlaca', $getModelo ,'hodometro', 'none' , 'Hidraulica', '1','1','gasolina','sim','1','1','10.000','1','1', '2001','nao')"
+                            );
+                        }
+
+
+                    }
+                    
+
+                        
                 ?>
 
             </form>
