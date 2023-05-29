@@ -92,7 +92,7 @@ function validateInput(input) {
             validField = input.value != "";
             break;
         case "auctionDateSelect":
-            validField = input.value != "";
+            validField = `${input.value}` != "" ;
             break;
         case "financial":
             validField = input.value != "";
