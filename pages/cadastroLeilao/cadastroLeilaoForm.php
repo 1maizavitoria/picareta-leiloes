@@ -24,7 +24,6 @@
         if (!empty($dataLeilao)) {
             
             if(isset($_POST["adicionar"])) {
-                echo "<script>console.log('$dataLeilao')</script>";
                 if ($leilaoExistente -> num_rows > 0) {
                     toastr('error', 'Já existe um leilão cadastrado nessa data.');
                     $redirect = false;
@@ -60,8 +59,10 @@
             }
         }
 
-        if ($redirect)
-            header("Location: http://localhost/picareta_leiloes/pages/cadastroLeilao/cadastroLeilao.php");
+        if ($redirect){
+            // header("Location: http://localhost/picareta_leiloes/picareta_leiloes/pages/cadastroLeilao/cadastroLeilao.php");
+            echo "<script> window.locator.href = '/picareta_leiloes/picareta_leiloes/pages/cadastroLeilao/cadastroLeilao.php'</script>";
+        }
     }
     ?>
     

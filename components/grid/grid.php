@@ -10,7 +10,6 @@
 <body>
 
     <?php
-    global $urlAtual;
     global $paginaAtual;
     $urlAtualComFiltros = (empty($_SERVER['HTTPS']) ? 'http' : 'https') . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $urlAtual = substr($urlAtualComFiltros, 0, strpos($urlAtualComFiltros, '?'));
@@ -224,6 +223,7 @@
     function montarParametrosPaginacao($numeroPagina) {
         global $urlAtual;
         $resultado = "$urlAtual?id=$numeroPagina" . (isset($_GET["busca"]) ? "&busca=" . $_GET["busca"] : null);
+        $resultado = (isset($_GET["leilaoId"])) ? $resultado . "&leilaoId=" . $_GET["leilaoId"] : $resultado;
         return $resultado;
     }
 

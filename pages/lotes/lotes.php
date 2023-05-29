@@ -19,7 +19,7 @@
         <div class="right">
 
             <div class="d-flex justify-content-center mt-5">
-                <h2>Lotes do Leilão N.º1</h2>
+                <h2>Lotes do Leilão N.º<?php echo $_GET["leilaoId"] ?></h2>
             </div>
 
             <div class="col-10 px-5 my-3 d-flex justify-content-center">
