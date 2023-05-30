@@ -73,11 +73,6 @@
         //     echo "<script>console.log(".json_encode($row).");</script>";
         // }
 
-        if (!$veiculoExistente) {
-            // Tratar o erro, exibir uma mensagem de erro ou registrar o erro em um log
-            die("Erro na consulta SQL: " . mysqli_error());
-        }
-
         $veiculoExistente = mysqli_fetch_assoc($veiculoExistente);
         // $redirect = true;
 
@@ -85,9 +80,8 @@
         echo "<script>console.log(".json_encode($veiculoExistente).");</script>";
 
         if (isset($_POST['adicionar'])) {
-            if (mysqli_num_rows($veiculoExistente) > 0) {
-                // Veículo já cadastrado
-                toastr('error', 'Veículo com chassi ou placa já cadastrados.');
+            if($veiculoExistente != null) {
+                toastr('error', 'Veículo com chassi ou placa já cadastrados');
                 $redirect = false;
             } else
                 executeQuery("INSERT INTO veiculo (chassi, placa, modeloId, hodometro, observacao, direcao, cambioAutomatico, vidroEletrico, tipoCombustivel, kitGnv, arCondicionado, kitMultimidia, valorDespesas, ipvaQuitado, documentoParaRodar, anoFabricacao, sinistro) 
