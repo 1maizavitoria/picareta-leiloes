@@ -11,7 +11,7 @@
     
     <?php
     include './../../components/header/header.php';
-    $id = $_GET['id'];
+    $id = $_GET['leilaoId'];
     ?>
     
     <div class="content">
@@ -26,23 +26,61 @@
                 <?php 
                     include './../../components/grid/grid.php';
                     $marcas = array();
-                    $selectMarca = executeQuery('select * from leilao le inner join lote lo on lo.leilaoId 
-                    = le.leilaoId inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId');
-                    while($row = mysqli_fetch_assoc($selectMarca)){
-                        $marcas[] = array($row['marcaId'], $row['descricao']);
-                    }
+                    // $selectMarca = executeQuery('select * from leilao le inner join lote lo on lo.leilaoId 
+                    // = le.leilaoId inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId');
+                    // while($row = mysqli_fetch_assoc($selectMarca)){
+                    //     $marcas[] = array($row['marcaId'], $row['descricao']);
+                    // }
 
-                    $produtos = array(
-                        array("1", "MITSUBISHI", "ECLIPSE", "PRETO", "1998/1998", "R$45.000,00", "BRADESCO", "15/05/2023"),
+                    // $produtos = array(
+                    //     array("1", "MITSUBISHI", "ECLIPSE", "PRETO", "1998/1998", "R$45.000,00", "BRADESCO", "15/05/2023"),
            
-                    );
+                    // );
                 
-                    $titulos = array('Marca', 'Modelo do veículo', 'Cor', 'Ano do veículo', 'Valor atual', 'Financeira Responsável', 'Data resultado');
-                
+                    
+                    $fetchLotesByLeilao = executeQuery("SELECT * from `lote` WHERE `leilaoId`=$id");
+                    
+                    $leiloes = array();
+                    while($row = mysqli_fetch_assoc( $fetchLotesByLeilao)){
+                        $getVeiculoId = $row["veiculoId"];
+                        $fetchVeiculo = mysqli_fetch_assoc(executeQuery("SELECT * FROM `veiculo` WHERE veiculoId=$getVeiculoId"));
+
+                        $getModeloId = $fetchVeiculo["modeloId"];
+                        $fetchModelo = mysqli_fetch_assoc(executeQuery("SELECT * FROM `modelo` WHERE modeloId=$getModeloId"));
+
+                        $getMarcaId = $fetchModelo["marcaId"];
+                        $fetchMarca = mysqli_fetch_assoc(executeQuery("SELECT * FROM `marca` WHERE marcaId = $getMarcaId"));
+
+                        $fetchModeloCor = mysqli_fetch_assoc(executeQuery("SELECT * FROM `modelocor` WHERE modeloId = $getModeloId"));
+
+                        $getCorId = $fetchModeloCor["corId"];
+                        $fetchCor= mysqli_fetch_assoc(executeQuery("SELECT * FROM `cor` WHERE corId = $getCorId"));
+
+                        $getFinanceiraId = $row["financeiraId"];
+                        $fetchFinanceira = mysqli_fetch_assoc(executeQuery("SELECT * FROM `financeira` WHERE financeiraId = $getFinanceiraId"));
+
+                        $fetchLeilao = mysqli_fetch_assoc(executeQuery("SELECT * FROM `leilao` WHERE leilaoId = $id"));
+                        
+                        $getMarcaDescricao = $fetchMarca["descricao"];
+                        $getModeloDescricao = $fetchModelo["descricao"];
+                        $getCorDescricao = $fetchCor["Descricao"];
+                        $getAnoFabricacao = $fetchVeiculo["anoFabricacao"];
+                        $getAnoModelo = $fetchModelo["anoModelo"];
+                        $getValorAtual = $row["valorInicial"];
+                        $getFinanceiraDescricao = $fetchFinanceira["descricaoFinanceira"];
+                        $getDataLeilao = $fetchLeilao["dataLeilao"];
+
+                        
+                        $leiloes[] = array(1, $getMarcaDescricao, $getModeloDescricao,$getCorDescricao,"$getAnoModelo/$getAnoFabricacao",$getValorAtual,$getFinanceiraDescricao,$getDataLeilao);
+                        
+                    }
+                    
                     $editavel = false;
                     $urlClick = "./../../pages/loteVeiculo/loteVeiculo.php?id=";
-
-                    gerarGrid($titulos, $produtos, 12, $editavel,  $urlClick);
+                    
+                    // $titulos = array('Marca', 'Modelo do veículo', 'Cor', 'Ano do veículo', 'Valor atual', 'Financeira Responsável', 'Data resultado');
+                    $titulos = array('Marca', "Modelo do veículo", "Cor","Ano modelo / Ano veículo", 'Valor atual','Financeira Responsável', 'Data resultado');
+                    gerarGrid($titulos, $leiloes, 12, $editavel,  $urlClick);
                 ?>
             </div>
 
