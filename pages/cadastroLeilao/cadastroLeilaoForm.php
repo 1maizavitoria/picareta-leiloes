@@ -60,8 +60,7 @@
         }
 
         if ($redirect){
-            // header("Location: http://localhost/picareta_leiloes/picareta_leiloes/pages/cadastroLeilao/cadastroLeilao.php");
-            echo "<script> window.locator.href = '/picareta_leiloes/picareta_leiloes/pages/cadastroLeilao/cadastroLeilao.php'</script>";
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroLeilao/cadastroLeilao.php");
         }
     }
     ?>

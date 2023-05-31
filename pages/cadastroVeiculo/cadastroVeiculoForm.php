@@ -278,7 +278,7 @@
                     </div>
 
                     <div class="col-3">
-                        <input type="text" id="expenses" name="expenses" class="form-control" placeholder="Despesas" onblur="validateInput(this)">
+                        <input type="text" id="expenses" name="expenses" class="form-control" placeholder="Despesas" onblur="validateInput(this)" value="R$0,00">
                         <div class="invalid-feedback" id="invalid-message-expenses">Informe um valor de despesa válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                 </div>
@@ -287,25 +287,25 @@
                     <div class="form-check col-2">
                         <input class="form-check-input" id="transmission" name="transmission" type="checkbox" value="false">
                         <label class="form-check-label" for="transmission">
-                            Automático*
+                            Automático
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="window" name="window" type="checkbox" value="false">
                         <label class="form-check-label" for="window">
-                            Vidro elétrico*
+                            Vidro elétrico
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="gnv" name="gnv" type="checkbox" value="false">
                         <label class="form-check-label" for="gnv">
-                            GNV*
+                            GNV
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="air" name="air" type="checkbox" value="false">
                         <label class="form-check-label" for="air">
-                            Ar condicionado*
+                            Ar condicionado
                         </label>
                     </div>
                     
@@ -315,25 +315,25 @@
                     <div class="form-check col-2">
                         <input class="form-check-input" id="multimidia" name="multimidia" type="checkbox" value="false">
                         <label class="form-check-label" for="multimidia">
-                            Multimídia*
+                            Multimídia
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="ipva" name="ipva" type="checkbox" value="false">
                         <label class="form-check-label" for="ipva">
-                            IPVA quitado*
+                            IPVA quitado
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="readyRode" name="readyRode" type="checkbox" value="false">
                         <label class="form-check-label" for="readyRode">
-                            Pronto para rodar*
+                            Pronto para rodar
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="sinistro" name="sinistro" type="checkbox" value="false">
                         <label class="form-check-label" for="sinistro">
-                            Sinistro*
+                            Sinistro
                         </label>
                     </div>
                 </div>
