@@ -4,7 +4,7 @@ USE `PICARETALEILOES` ;
 -- Table `PICARETALEILOES`.`Marca`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Marca` (
-  `marcaId` INT NULL DEFAULT NULL,
+  `marcaId` INT NULL DEFAULT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`marcaId`, `descricao`),
   UNIQUE INDEX (`marcaId` ASC, `descricao` ASC));
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Modelo` (
 -- Table `PICARETALEILOES`.`Cor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Cor` (
-  `corId` INT NULL,
+  `corId` INT NULL AUTO_INCREMENT,
   `Descricao` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`corId`));
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Cor` (
 -- Table `PICARETALEILOES`.`ModeloCor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ModeloCor` (
-  `modeloCorId` INT NULL DEFAULT NULL,
+  `modeloCorId` INT NULL DEFAULT NULL AUTO_INCREMENT,
   `modeloId` INT NULL DEFAULT NULL,
   `corId` INT NULL DEFAULT NULL,
   PRIMARY KEY (`modeloCorId`, `modeloId`, `corId`),
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Financeira` (
 -- Table `PICARETALEILOES`.`Lote`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Lote` (
-  `loteId` INT NULL,
+  `loteId` INT NULL AUTO_INCREMENT,
   `leilaoId` INT NULL DEFAULT NULL,
   `valorInicial` DECIMAL NULL DEFAULT NULL,
   `valorIncremento` DECIMAL NULL DEFAULT NULL,
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Pessoa` (
 -- Table `PICARETALEILOES`.`Lance`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Lance` (
-  `lanceId` INT NULL,
+  `lanceId` INT NULL AUTO_INCREMENT,
   `sequencia` SMALLINT NULL DEFAULT NULL,
   `dataLance` DATETIME NULL DEFAULT NULL,
   `valorLance` DECIMAL NULL DEFAULT NULL,
