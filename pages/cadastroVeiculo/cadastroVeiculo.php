@@ -33,9 +33,9 @@
 
                     $veiculos = array();
                     $selectVeiculo = executeQuery("SELECT ma.descricao AS dsMarca, mo.descricao AS dsModelo, mo.anoModelo, co.descricao AS dsCor, ve.placa FROM veiculo ve 
-                    INNER JOIN modelo mo ON ve.modeloId = mo.modeloId 
+                    INNER JOIN modeloCor mc ON ve.modeloCorId = mc.modeloCorId 
+                    INNER JOIN modelo mo ON mc.modeloId = mo.modeloId 
                     INNER JOIN marca ma ON mo.marcaId = ma.marcaId 
-                    INNER JOIN modeloCor mc ON mo.modeloId = mc.modeloId 
                     INNER JOIN cor co ON mc.corId = co.corId");
 
                     while($row = mysqli_fetch_assoc($selectVeiculo)) {

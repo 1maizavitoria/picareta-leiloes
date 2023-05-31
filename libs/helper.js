@@ -1,4 +1,4 @@
-export { validateInput, formatCPF, formatRG, formatCEP, formatPhone, formatLicensePlate, formatMoney, checkAllFields, parameterURL };
+export { validateInput, formatCPF, formatRG, formatCEP, formatPhone, formatMoney, checkAllFields, parameterURL };
 
 function validateInput(input) {
     let regex;
@@ -62,7 +62,7 @@ function validateInput(input) {
             validField = input.value != "";
             break;
         case "licensePlate":
-            regex = /^[A-Z]{3}\-\d{4}$/;
+            regex = /^[A-Z]{3}[-\s]?[0-9A-Z]{4}$/;
             break;
         case "chassis":
             regex = /^[a-zA-Z0-9]{17}$/;
@@ -176,18 +176,6 @@ function formatPhone(phone) {
     });
     
     return formattedPhone;
-}
-
-function formatLicensePlate(plate) {
-    const cleanedPlate = plate.replace(/\W/g, '').toUpperCase();
-
-    let formattedPlate = cleanedPlate.replace(/^([A-Z]{3})(\d{0,4})$/, function(match, plate1, plate2) {
-      let formatted = plate1;
-      if (plate2) formatted += '-' + plate2;
-      return formatted;
-    });
-    
-    return formattedPlate;
 }
 
 function formatMoney(money) {

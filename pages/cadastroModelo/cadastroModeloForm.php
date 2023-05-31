@@ -133,7 +133,7 @@
 
                                     <div class='col-6 col-lg-4'>
                                         <input type='text' id='model' name='descricao' class='form-control' placeholder='Modelo*' value='" . $modelo["descModelo"] . "' onblur='validateInput(this)' required>
-                                        <div class='invalid-feedback' id='invalid-message-name'>Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
+                                        <div class='invalid-feedback' id='invalid-message-model'>Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
                                     </div>
                                     <div class='col-3'>
                                         <input type='number' id='year' name='year' maxLength='4' class='form-control' placeholder='Ano Modelo*' value='" . $modelo["anoModelo"] . "' onblur='validateInput(this)' required>
@@ -170,7 +170,7 @@
                                     </div>
                                     <div class='col-6 col-lg-4'>
                                         <input type='text' id='model' name='descricao' class='form-control' placeholder='Modelo*' onblur='validateInput(this)' required>
-                                        <div class='invalid-feedback' id='invalid-message-name'>Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
+                                        <div class='invalid-feedback' id='invalid-message-model'>Informe um nome de modelo válido.<br> <em>Ex: Astra</em></div>
                                     </div>
                                     <div class='col-3'>
                                         <input type='number' id='year' name='year' maxLength='4' class='form-control' placeholder='Ano Modelo*' onblur='validateInput(this)' required>
