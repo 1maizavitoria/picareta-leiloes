@@ -37,9 +37,9 @@
 
                     $lances = array();
                     $selectLances = executeQuery("SELECT ma.descricao AS dsMarca, mo.descricao AS dsModelo, mo.anoModelo, co.descricao AS dsCor, ve.anoFabricacao, fn.descricaoFinanceira AS dsFinanceira, la.dataLance, la.valorLance, le.dataleilao AS dtResultado FROM veiculo ve 
-                        INNER JOIN modelo mo ON ve.modeloId = mo.modeloId 
+                        INNER JOIN modeloCor mc ON ve.modeloCorId = mc.modeloCorId 
+                        INNER JOIN modelo mo ON mc.modeloId = mo.modeloId 
                         INNER JOIN marca ma ON mo.marcaId = ma.marcaId 
-                        INNER JOIN modeloCor mc ON mo.modeloId = mc.modeloId 
                         INNER JOIN cor co ON mc.corId = co.corId
                         INNER JOIN lote lo ON ve.veiculoId = lo.veiculoId
                         INNER JOIN financeira fn ON lo.financeiraId = fn.financeiraId
@@ -47,13 +47,8 @@
                         INNER JOIN leilao le ON lo.leilaoId = le.leilaoId");
 
                     while($row = mysqli_fetch_assoc($selectLances)) {
-                        echo "<script>console.log(".json_encode($row).");</script>";
                         $lances[] = array(NULL, $row['dsMarca'], $row['dsModelo'], $row['dsCor'], $row['anoFabricacao'],  'R$' . number_format($row['valorLance']), $row['dsFinanceira'], date('d/m/Y H:i:s', strtotime($row['dataLance'])), date('d/m/Y H:i:s', strtotime($row['dtResultado'])));
                     }
-
-                    // while($row = $selectLances -> fetch_assoc()) {
-                    //     // echo "<script>console.log(".json_encode($row).");</script>";
-                    // }
 
                     gerarGrid($titulos, $lances, 12, $editavel,  $urlClick);
                 ?>
