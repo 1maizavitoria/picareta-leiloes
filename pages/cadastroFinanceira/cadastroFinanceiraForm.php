@@ -93,8 +93,8 @@
                             echo "
                             <div class='row justify-content-center mb-5'>
                                 <div class='col-6 col-lg-4'>
-                                    <input type='text' id='financeira' name='financeira' class='form-control' placeholder='Financeira*' value='" . $marca["descricaoFinanceira"] . "' onblur='validateInput(this)' required>
-                                    <div class='invalid-feedback' id='invalid-message-financeira'>Informe um nome de financeira válido.<br> <em>Ex: Santander</em></div>
+                                    <input type='text' id='financial' name='financeira' class='form-control' placeholder='Financeira*' value='" . $marca["descricaoFinanceira"] . "' onblur='validateInput(this)' required>
+                                    <div class='invalid-feedback' id='invalid-message-financial'>Informe um nome de financeira válido.<br> <em>Ex: Santander</em></div>
                                 </div>
                             </div>
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
@@ -106,8 +106,8 @@
                             echo "
                             <div class='row justify-content-center mb-5'>
                                 <div class='col-6 col-lg-4'>
-                                    <input type='text' id='financeira' name='financeira' class='form-control' placeholder='Financeira*' onblur='validateInput(this)' required>
-                                    <div class='invalid-feedback' id='invalid-message-financeira'>Informe um nome de financeira válido.<br> <em>Ex: Santander</em></div>
+                                    <input type='text' id='financial' name='financeira' class='form-control' placeholder='Financeira*' onblur='validateInput(this)' required>
+                                    <div class='invalid-feedback' id='invalid-message-financial'>Informe um nome de financeira válido.<br> <em>Ex: Santander</em></div>
                                 </div>
                             </div>
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
