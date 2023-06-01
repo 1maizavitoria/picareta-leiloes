@@ -12,6 +12,20 @@
 
     <?php
     include './../../components/header/header.php';
+
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $leilaoId = $_POST['leilao'];
+        $valorInicial = $_POST['inicialValue'];
+        $valorIncremento = $_POST['incrementValue'];
+        $financeiraId = $_POST['financeira'];
+        $veiculoId = $_POST['veiculo'];
+
+        
+
+        if ($redirect)
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroLote/cadastroLote.php");
+    }
     ?>
     
     <div class="content">
@@ -31,67 +45,51 @@
             <form class="row d-flex justify-content-center" id="form" action="" method="POST">
 
                 <div class="row justify-content-center mb-5">
-                    <div class="col-4 col-lg-3">
-                        <select class="form-select" id="brand" name="marca" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Marca*</option>
-                            <!-- <option value="1">FORD</option>
-                            <option value="2">BMW</option>
-                            <option value="3">FIAT</option>
-                            <option value="4">VOLKSWAGEN</option>
-                            <option value="5">CHEVROLET</option> -->
-
+                <div class="col-4 col-lg-3">
+                        <select class="form-select" name="marca" id="brand" onblur="validateInput(this)" onchange='parameterURL("marcaId", this.value)' required>
                             <?php
-                                $getModels = executeQuery('SELECT * FROM `marca`');
-                                while($row = mysqli_fetch_assoc($getModels)){
-                                    $getId = $row["marcaId"];
-                                    $getName = $row["descricao"];
-
-                                    echo "<option value='$getId'>$getName</option>";
-                                }
+                            $marcaId = $_GET['marcaId'] ?? -1;
+                            $selected = $marcaId == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Marca*</option>";
+                            $selectMarcas = executeQuery('SELECT * FROM MARCA');
+                            while ($row = mysqli_fetch_assoc($selectMarcas)) {
+                                $selected = $marcaId == $row['marcaId'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['marcaId'] . ">" . $row['descricao'] . "</option>";
+                            }
                             ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-brand">Informe uma marca válida.</div>
                     </div>
-                    <div class="col-5 col-lg-4">
-                        <select class="form-select" id="model" name="modelo" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Modelo*</option>
-                            <!-- <option value="1">FIESTA</option>
-                            <option value="2">X1</option>
-                            <option value="3">UNO</option>
-                            <option value="4">GOL</option>
-                            <option value="5">ONIX</option> -->
-
-                            <?php
-                                $getModels = executeQuery('SELECT * FROM `modelo`');
-                                while($row = mysqli_fetch_assoc($getModels)){
-                                    $getId = $row["modeloId"];
-                                    $getName = $row["descricao"];
-
-                                    echo "<option value='$getId'>$getName</option>";
-                                }
+                    <div class="col-4 col-lg-4">
+                    <?php
+                        $marcaId = $_GET['marcaId'] ?? -1;
+                        $disabled = $marcaId == -1 ? "disabled" : "";
+                        echo "<select class='form-select' id='model' $disabled name='modelo' onblur='validateInput(this)' onchange='parameterURL(\"descricaoModelo\", this.value)' required>";
+                            $descricaoModelo = $_GET['descricaoModelo'] ?? -1;
+                            $selected = $descricaoModelo == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Modelo*</option>";
+                            $selectModelos = executeQuery('SELECT DISTINCT  descricao from MODELO where MARCAID = ' . $marcaId . '');
+                            while ($row = mysqli_fetch_assoc($selectModelos)) {
+                                $selected = $descricaoModelo == $row['descricao'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['descricao'] . ">" . $row['descricao'] . "</option>";
+                            }
                             ?>
-
-
                         </select>
                         <div class="invalid-feedback" id="invalid-message-model">Informe um modelo válido.</div>
                     </div>
-                    <div class="col-3 col-lg-2">
-                        <select class="form-select" id="year" name="ano" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Ano Modelo*</option>
-                            <!-- <option value="2010">2010</option>
-                            <option value="2012">2012</option>
-                            <option value="2014">2014</option>
-                            <option value="2016">2016</option>
-                            <option value="2020">2020</option> -->
-
-                            <?php
-                                $getModels = executeQuery('SELECT * FROM `modelo`');
-                                while($row = mysqli_fetch_assoc($getModels)){
-                                    $getId = $row["modeloId"];
-                                    $getName = $row["anoModelo"];
-
-                                    echo "<option value='$getName'>$getName</option>";
-                                }
+                    <div class="col-4 col-lg-2">
+                        <?php 
+                            $descricaoModelo = $_GET['descricaoModelo'] ?? -1;
+                            $disabled = $descricaoModelo == -1 ? "disabled" : "";
+                        echo "<select class='form-select' id='year' name='ano' $disabled onblur='validateInput(this)' onchange='parameterURL(\"anoModelo\", this.value)' required>";
+                            $anoModelo = $_GET['anoModelo'] ?? -1;
+                            $selected = $anoModelo == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Ano Modelo*</option>";
+                            $selectModelos = executeQuery('SELECT * FROM MODELO WHERE DESCRICAO = "' . $descricaoModelo . '"');
+                            while ($row = mysqli_fetch_assoc($selectModelos)) {
+                                $selected = $anoModelo == $row['anoModelo'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['anoModelo'] . ">" . $row['anoModelo'] . "</option>";
+                            }
                             ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-year">Informe um ano modelo válido.</div>
@@ -99,67 +97,58 @@
                 </div>
 
                 <div class="row justify-content-center mb-5">
-                    <div class="col-4 col-lg-3">
-                        <select class="form-select" id="color" name="cor" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Cor*</option>
-                            <!-- <option value="1">PRETO</option>
-                            <option value="2">VERMELHO</option>
-                            <option value="3">BRANCO</option>
-                            <option value="4">ROSA</option>
-                            <option value="5">PRATA</option> -->
-
-                            <?php
-                                $getModels = executeQuery('SELECT * FROM `cor`');
-                                while($row = mysqli_fetch_assoc($getModels)){
-                                    $getId = $row["corId"];
-                                    $getName = $row["Descricao"];
-
-                                    echo "<option value='$getId'>$getName</option>";
-                                }
+                <div class="col-4 col-lg-3">
+                    <?php 
+                        $anoModelo = $_GET['anoModelo'] ?? -1;
+                        $modeloCorId = $_GET['modeloCorId'] ?? -1;
+                        $disabled = $anoModelo == -1 ? "disabled" : "";
+                       echo "<select class='form-select' id='color' name='modeloCorId' $disabled onblur='validateInput(this)' onchange='parameterURL(\"modeloCorId\", this.value)' required>";
+                            $marcaId = $_GET['marcaId'] ?? -1;
+                            $descricaoModelo = $_GET['descricaoModelo'] ?? -1;
+                            $corId = $_GET['corId'] ?? -1;
+                            $selected = $corId == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Cor*</option>";
+                            $selectCoresModelo = executeQuery('SELECT mc.modeloCorId, c.descricao as descricaoCor FROM modelocor mc inner join modelo m on m.modeloId = mc.modeloId inner join cor c on mc.corId = c.corId where m.descricao = "' . $descricaoModelo . '" and m.marcaId = ' . $marcaId . ' and m.anoModelo = ' . $anoModelo . '');
+                            while ($row = mysqli_fetch_assoc($selectCoresModelo)) {
+                                $selected = $modeloCorId == $row['modeloCorId'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['modeloCorId'] . ">" . $row['descricaoCor'] . "</option>";
+                            }
                             ?>
-                            
                         </select>
                         <div class="invalid-feedback" id="invalid-message-color">Informe uma cor válida.</div>
                     </div>
-                    <div class="col-4 col-lg-3">
-                        <select class="form-select" id="licensePlateSelect" name="placa" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Placa*</option>
-                            <!-- <option value="1">AAA-0000</option>
-                            <option value="2">AAA-1111</option>
-                            <option value="3">AAA-2222</option>
-                            <option value="4">AAA-3333</option>
-                            <option value="5">AAA-4444</option> -->
-
-                            <?php
-                                $getModels = executeQuery('SELECT * FROM `veiculo`');
-                                while($row = mysqli_fetch_assoc($getModels)){
-                                    $getId = $row["veiculoId"];
-                                    $getName = $row["placa"];
-
-                                    echo "<option value='$getId'>$getName</option>";
-                                }
+                    <div class="col-3 col-lg-3">
+                    <?php 
+                        $modeloCorId = $_GET['modeloCorId'] ?? -1;
+                        $disabled = $modeloCorId == -1 ? "disabled" : "";
+                       echo "<select class='form-select' id='licensePlateSelect' name='veiculo' $disabled onblur='validateInput(this)' onchange='parameterURL(\"veiculoId\", this.value)' required>";
+                            $veiculoId = $_GET['veiculoId'] ?? -1;
+                            $selected = $veiculoId == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Placa*</option>";
+                            $selectPlacas = executeQuery('SELECT v.veiculoId, v.placa FROM veiculo v inner join modelocor mc on v.modeloCorId = mc.modeloCorId where mc.modeloCorId = ' . $modeloCorId . '');
+                            while ($row = mysqli_fetch_assoc($selectPlacas)) {
+                                $selected = $veiculoId == $row['veiculoId'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['veiculoId'] . ">" . $row['placa'] . "</option>";
+                            }
                             ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-licensePlateSelect">Informe uma placa válida.</div>
                     </div>
-                    <div class="col-4 col-lg-3">
-                        <select class="form-select" id="auctionDateSelect" name="dataLeilao" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Data do leilão*</option>
-                            <!-- <option value="23/03/2023">23/03/2023</option>
-                            <option value="24/03/2023">24/03/2023</option>
-                            <option value="25/03/2023">25/03/2023</option>
-                            <option value="26/03/2023">26/03/2023</option>
-                            <option value="27/03/2023">27/03/2023</option> -->
+                    <div class="col-5 col-lg-3">
+                    <?php 
+                            $loteId = $_GET['id'] == '' ? -1 : $_GET['id'];
+                            $lote  = executeQuery('SELECT * FROM lote where loteId = ' . $loteId . '');
+                            $lote = mysqli_fetch_assoc($lote);
 
-
-                            <?php
-                                $getModels = executeQuery('SELECT * FROM `leilao`');
-                                while($row = mysqli_fetch_assoc($getModels)){
-                                    $getId = $row["leilaoId"];
-                                    $getName = $row["dataLeilao"];
-
-                                    echo "<option value='$getId'>$getName</option>";
-                                }
+                            echo "<select class='form-select' id='auctionDateSelect' name='leilao' onblur='validateInput(this)' required>";
+                            
+                            $selected = $loteId == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Leilao*</option>";
+                            $selectLeiloes = executeQuery('SELECT leilaoId, DATE_FORMAT(dataLeilao, "%d/%m/%Y %H:%i:%s") as dataLeilao from leilao');
+                            while ($row = mysqli_fetch_assoc($selectLeiloes)) {
+                                $selected = $lote['leilaoId'] == $row['leilaoId'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['leilaoId'] . ">" . "L." . $row['leilaoId'] . " " . $row['dataLeilao'] . "</option>";
+                            }
                             ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-auctionDateSelect">Informe uma data do leilão válida.</div>
@@ -167,33 +156,50 @@
                 </div>
 
                 <div class="row justify-content-center mb-5">
-                <div class="col-4 col-lg-3">
-                        <select class="form-select" id="financial"  name="financeira" onblur="validateInput(this)" required>
-                            <option value="" disabled selected hidden>Financeira*</option>
-                            <!-- <option value="1">Santander</option>
-                            <option value="2">Itaú</option>
-                            <option value="3">Pan</option> -->
-
+                <div class="col-6 col-lg-3">
                             <?php
-                                $getModels = executeQuery('SELECT * FROM `financeira`');
-                                while($row = mysqli_fetch_assoc($getModels)){
-                                    $getId = $row["financeiraId"];
-                                    $getName = $row["descricaoFinanceira"];
+                                $loteId = $_GET['id'] == '' ? -1 : $_GET['id'];
+                                $lote  = executeQuery('SELECT * FROM lote where loteId = ' . $loteId . '');
+                                $lote = mysqli_fetch_assoc($lote);
 
-                                    echo "<option value='$getId'>$getName</option>";
-                                }
+                                echo "<select class='form-select' id='financial' name='financeira' onblur='validateInput(this)' required>";
+                            
+                            $selected = $loteId == -1 ? "selected" : "";
+                            echo "<option value='' disabled $selected hidden>Financeira*</option>";
+                            $selectFinanceiras = executeQuery('SELECT * from financeira');
+                            while ($row = mysqli_fetch_assoc($selectFinanceiras)) {
+                                $selected = $lote['financeiraId'] == $row['financeiraId'] ? "selected" : "";
+                                echo "<option $selected value=" . $row['financeiraId'] . ">" . $row['descricaoFinanceira'] . "</option>";
+                            }
                             ?>
 
                             
                         </select>
                         <div class="invalid-feedback" id="invalid-message-financial">Informe uma Financeira válida.</div>
                     </div>
-                    <div class="col-3">
-                        <input type="text" id="initialValue" name='inicialValue' class="form-control" placeholder="Valor Inicial*" onblur="validateInput(this)" required>
+                    <div class="col-3 col-lg-3">
+                        <input type="text" id="initialValue" name='inicialValue' class="form-control" placeholder="Valor Inicial*" value="<?php 
+                            $loteId = $_GET['id'] == '' ? -1 : $_GET['id'];
+                            $lote  = executeQuery('SELECT * FROM lote where loteId = ' . $loteId . '');
+                            $lote = mysqli_fetch_assoc($lote);
+
+                            if ($loteId != -1) {
+                                echo "R$" . $lote['valorInicial'];
+                            }
+                         ?>"
+                          onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-initialValue">Informe um valor inicial válido.<br> <em>Ex: R$1000</em></div>
                     </div>
-                    <div class="col-3">
-                        <input type="text" id="incrementalValue" name='incrementValue' class="form-control" placeholder="Valor Incremento*" onblur="validateInput(this)" required>
+                    <div class="col-3 col-lg-3">
+                        <input type="text" id="incrementalValue" name='incrementValue' class="form-control" placeholder="Valor Incremento*" value="<?php 
+                            $loteId = $_GET['id'] == '' ? -1 : $_GET['id'];
+                            $lote  = executeQuery('SELECT * FROM lote where loteId = ' . $loteId . '');
+                            $lote = mysqli_fetch_assoc($lote);
+
+                            if ($loteId != -1) {
+                                echo "R$" . $lote['valorIncremento'];
+                            }
+                         ?>" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-incrementalValue">Informe um valor incremento válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                 </div>
@@ -220,62 +226,16 @@
                             ";
                         }
                     }
-
-                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-                        if(isset($_POST["deletar"])){
-                            executeQuery("DELETE FROM `lote` WHERE `loteId` = '$id'");
-                        }
-
-                        if (isset($_POST["adicionar"])){
-
-                            $getMarca = trim($_POST["marca"]);
-
-                            $getModelo = trim($_POST["modelo"]);
-
-
-                            $getCor = trim($_POST["cor"]);
-
-                            $getPlaca = trim($_POST["placa"]);
-
-                            $getDataLeilao = trim($_POST["dataLeilao"]);
-
-                            $getfinanceira = trim($_POST["financeira"]);
-
-                            $getInicialValue = trim($_POST["inicialValue"]);
-
-
-                            $getIncrementValue = trim($_POST["incrementValue"]);
-
-                            // echo "inicialValue $getInicialValue";
-                            // echo "incrementValue $getIncrementValue";
-                            // echo "marca $getMarca";
-                            // echo "modelo $getModelo";
-                            // echo "cor $getCor";
-                            // echo "placa $getPlaca";
-                            // echo "getDataLeilao $getDataLeilao";
-                            // echo "getfinanceira $getfinanceira";
-
-                            executeQuery("
-                            INSERT INTO `lote`( leilaoId, valorInicial, valorIncremento, financeiraId, veiculoId) VALUES
-                             ('$getDataLeilao','$getInicialValue','$getIncrementValue','$getfinanceira','$getPlaca')"
-                            );
-                        }
-
-                        if (isset($_POST["salvar"])){
-
-                            $getMarca = trim($_POST["marca"]);
-                            $getModelo = trim($_POST["modelo"]);
-                            $getCor = trim($_POST["cor"]);
-                            $getPlaca = trim($_POST["placa"]);
-                            $getDataLeilao = trim($_POST["dataLeilao"]);
-                            $getfinanceira = trim($_POST["financeira"]);
-                            $getInicialValue = trim($_POST["inicialValue"]);
-                            $getIncrementValue = trim($_POST["incrementValue"]);
-
-                            executeQuery("UPDATE `lote` SET `leilaoId`='$getDataLeilao',`valorInicial`='$getInicialValue',`valorIncremento`='$getIncrementValue',`financeiraId`='$getfinanceira',`veiculoId`='$getPlaca' WHERE `loteId` = '$id'");
+                    $id = $_GET['id'];
+                    if($id != '') {
+                        if (!isset($_GET['marcaId'])) {
+                            $lote = executeQuery('SELECT mo.marcaId, ma.descricao as marcaDescricao, mo.descricao, mo.anoModelo, mc.modeloCorId, ve.veiculoId FROM lote lo INNER JOIN veiculo ve on ve.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = ve.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId where lo.loteId =  ' . $_GET['id']);
+                            $lote = mysqli_fetch_assoc($lote);
+                            header("Location: http://localhost/picareta_leiloes/pages/cadastroLote/cadastroLoteForm.php?id=$id&marcaId=" . $lote['marcaId'] . "&descricaoModelo=" . $lote['descricao'] . "&anoModelo=" . $lote['anoModelo'] . "&modeloCorId=" . $lote['modeloCorId'] . "&veiculoId=" . $lote['veiculoId'] . "");
                         }
                     }
+
+                    
 
                 ?>
             </form>

@@ -31,36 +31,17 @@
                 <?php 
                     include './../../components/grid/grid.php';
                     
-                    $cadLote = array();
-                    $getLote = executeQuery('SELECT * FROM `lote`');
+                    $lotes = array();
+                    $selectLote = executeQuery('select lo.loteId as loteId, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo, c.descricao as descricaoCor, CONCAT(v.anoFabricacao,"/",mo.anoModelo) as anoModeloFabricacao,  CONCAT("R$", lo.valorInicial) as valorInicial, v.placa, DATE_FORMAT(le.dataLeilao, "%d/%m/%Y %H:%i:%s") as dataLeilao, f.descricaoFinanceira  from leilao le inner join lote lo on lo.leilaoId = le.leilaoId inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId inner join cor c on c.corId = mc.corId left join lance la on la.loteId = lo.loteId inner join financeira f on f.financeiraId = lo.financeiraId');
 
-                    $titulos = array('Marca', 'Modelo', 'Ano Modelo', 'Cor', 'Placa', 'Valor', 'Data Leilão');
-                    while($row = mysqli_fetch_assoc($getLote)){
-
-                        $getVeiculo = $row["veiculoId"];
-                        $searchVeiculo = mysqli_fetch_assoc(executeQuery("SELECT * FROM `veiculo` WHERE `veiculoId`=$getVeiculo"));
-
-                        $getModeloId = $searchVeiculo["modeloId"];
-                        $searchModelo =  mysqli_fetch_assoc(executeQuery("SELECT * FROM `modelo` WHERE `modeloId`=$getModeloId"));
-                        
-                        $getMarcaId = $searchModelo["marcaId"];
-                        $searchMarca = mysqli_fetch_assoc(executeQuery("SELECT * FROM `marca` WHERE `marcaId`=$getMarcaId"));
-
-
-                        $getLeilaoId = $row["leilaoId"];
-                        $searchLeilao = mysqli_fetch_assoc(executeQuery("SELECT * FROM `leilao` WHERE `leilaoId`=$getLeilaoId"));
-
-                        // $getModeloId = $row["modeloId"];
-                        // $getModelo = mysqli_fetch_assoc(executeQuery("SELECT * FROM `modelo` WHERE `modeloId`=$getModeloId"));
-
-                        // $getMarcaId = $getModelo["marcaId"];
-                        // $getMarca= mysqli_fetch_assoc(executeQuery("SELECT * FROM `marca` WHERE `marcaId`=$getMarcaId"));
-
-                        $cadLote[] = array($row["loteId"],$searchMarca["descricao"], $searchModelo["descricao"], $searchModelo["anoModelo"], "null", $searchVeiculo["placa"], $row["valorInicial"] , $searchLeilao['dataLeilao']);
+                    while($row = mysqli_fetch_assoc($selectLote)){
+                        $lotes[] = array($row['loteId'], $row['descricaoMarca'], $row['descricaoModelo'], $row['anoModeloFabricacao'], $row['descricaoCor'], $row['placa'], $row['valorInicial'], $row['descricaoFinanceira'], $row['dataLeilao']);
                     }
+
+                    $titulos = array('Marca', 'Modelo', 'Ano Fabricação/Ano Modelo', 'Cor', 'Placa', 'Valor Inicial', 'Financeira', 'Data Leilão');
                     $editavel = true;
                     $urlClick = "cadastroLoteForm.php?id=";
-                    gerarGrid($titulos, $cadLote, 10, $editavel, $urlClick);
+                    gerarGrid($titulos, $lotes, 10, $editavel, $urlClick);
                 ?>
             </div>
 

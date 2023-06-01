@@ -26,7 +26,7 @@
                     include './../../components/grid/grid.php';
                     $id = $_GET['leilaoId'];
                     $lotes = array();
-                    $selectLote = executeQuery('select lo.loteId as loteId, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo, c.descricao as descricaoCor, CONCAT(mo.anoModelo,"/",v.anoFabricacao) as anoModeloFabricacao,  CONCAT("R$", COALESCE(la.valorLance, lo.valorInicial)) as valorAtual, f.descricaoFinanceira, DATE_FORMAT(le.dataLeilao, "%d/%m/%Y %H:%i:%s") as dataLeilao  from leilao le inner join lote lo on lo.leilaoId = le.leilaoId inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId inner join cor c on c.corId = mc.corId left join lance la on la.loteId = lo.loteId inner join financeira f on f.financeiraId = lo.financeiraId where le.leilaoId = ' . $id . '');
+                    $selectLote = executeQuery('select lo.loteId as loteId, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo, c.descricao as descricaoCor, CONCAT(mo.anoFabricacao,"/",v.anoModelo) as anoModeloFabricacao,  CONCAT("R$", COALESCE(la.valorLance, lo.valorInicial)) as valorAtual, f.descricaoFinanceira, DATE_FORMAT(le.dataLeilao, "%d/%m/%Y %H:%i:%s") as dataLeilao  from leilao le inner join lote lo on lo.leilaoId = le.leilaoId inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId inner join cor c on c.corId = mc.corId left join lance la on la.loteId = lo.loteId inner join financeira f on f.financeiraId = lo.financeiraId where le.leilaoId = ' . $id . '');
 
                     while($row = mysqli_fetch_assoc($selectLote)){
                         $lotes[] = array($row['loteId'], $row['descricaoMarca'], $row['descricaoModelo'], $row['descricaoCor'], $row['anoModeloFabricacao'], $row['valorAtual'], $row['descricaoFinanceira'], $row['dataLeilao']);
@@ -35,7 +35,7 @@
                     $editavel = false;
                     $urlClick = "./../../pages/loteVeiculo/loteVeiculo.php?id=";
                     
-                    $titulos = array('Marca', "Modelo do veículo", "Cor","Ano modelo / Ano veículo", 'Valor atual','Financeira Responsável', 'Data resultado');
+                    $titulos = array('Marca', "Modelo do veículo", "Cor","Ano Fabricação/Ano Modelo", 'Valor atual','Financeira Responsável', 'Data resultado');
                     gerarGrid($titulos, $lotes, 12, $editavel,  $urlClick);
                 ?>
             </div>
