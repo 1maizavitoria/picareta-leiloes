@@ -15,13 +15,15 @@
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $loteId = $_GET['id'] == '' ? -1 : $_GET['id'];
         $leilaoId = $_POST['leilao'];
         $valorInicial = $_POST['inicialValue'];
         $valorIncremento = $_POST['incrementValue'];
         $financeiraId = $_POST['financeira'];
         $veiculoId = $_POST['veiculo'];
 
-        
+
+        $redirect = false;
 
         if ($redirect)
             header("Location: http://localhost/picareta_leiloes/pages/cadastroLote/cadastroLote.php");
