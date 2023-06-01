@@ -11,7 +11,6 @@
     
     <?php
     include './../../components/header/header.php';
-    $id = $_GET['id'];
     ?>
     
     <div class="content">
