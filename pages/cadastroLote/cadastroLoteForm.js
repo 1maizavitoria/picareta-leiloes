@@ -1,7 +1,8 @@
-import { validateInput, checkAllFields, formatLicensePlate, formatMoney } from '../../libs/helper.js';
+import { validateInput, checkAllFields, formatMoney, parameterURL } from '../../libs/helper.js';
 
 window.validateInput = validateInput;
 window.checkAllFields = checkAllFields;
+window.parameterURL = parameterURL;
 
 document.addEventListener('DOMContentLoaded', function() {
     listenInitialValue();

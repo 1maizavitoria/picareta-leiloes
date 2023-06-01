@@ -49,43 +49,27 @@
         $documentoParaRodar = isset($_POST['readyRode']) ? 1 : 0;
         $sinistro = isset($_POST['sinistro']) ? 1 : 0;
         $despesas = $_POST['expenses'];
-
-        // $veiculoExistente = executeQuery("SELECT * FROM veiculo ve 
-        // INNER JOIN modelo mo ON ve.modeloId = mo.modeloId 
-        // INNER JOIN marca ma ON mo.marcaId = ma.marcaId 
-        // INNER JOIN modeloCor mc ON mo.modeloId = mc.modeloId 
-        // INNER JOIN cor co ON mc.corId = co.corId
-        // WHERE mo.marcaId = '$marca' 
-        // AND ve.modeloId = '$modelo' AND mo.anoModelo = '$anoModelo'
-        // AND co.corId = '$cor' AND ve.placa = '$placa'
-        // AND ve.chassi = '$chassi' AND ve.hodometro = '$hodometro'
-        // AND ve.observacao = '$complemento' AND ve.direcao = '$direcao'
-        // AND ve.tipoCombustivel = '$combustivel' AND ve.anoFabricacao = '$anoFabricacao'
-        // AND ve.cambioAutomatico = '$transmissao' AND ve.vidroEletrico = '$vidroEletrico'
-        // AND ve.kitGnv = '$gnv' AND ve.arCondicionado = '$arCondidioncado'
-        // AND ve.kitMultimidia = '$multimidia' AND ve.ipvaQuitado = '$ipva'
-        // AND ve.documentoParaRodar = '$documentoParaRodar' AND ve.sinistro = '$sinistro'
-        // AND ve.valorDespesas = '$despesas'");
-
         $veiculoExistente = executeQuery("SELECT ve.chassi, ve.placa FROM veiculo ve WHERE ve.chassi = '$chassi' OR ve.placa = '$placa'");
 
-        // while($row = mysqli_fetch_assoc($veiculoExistente)) {
-        //     echo "<script>console.log(".json_encode($row).");</script>";
-        // }
+        $modeloCorId = executeQuery("SELECT modeloCorId FROM modelocor WHERE modeloId = '$modelo[0]' AND corId = '$cor[0]'");
+        $modeloCorId = mysqli_fetch_assoc($modeloCorId);
+        $modeloCorId = implode($modeloCorId);
+        echo "<script>console.log(".json_encode($modeloCorId).");</script>";
 
         $veiculoExistente = mysqli_fetch_assoc($veiculoExistente);
-        // $redirect = true;
-
-        // echo "<script>console.log('oi');</script>";
-        echo "<script>console.log(".json_encode($veiculoExistente).");</script>";
+        $redirect = true;
 
         if (isset($_POST['adicionar'])) {
             if($veiculoExistente != null) {
                 toastr('error', 'Veículo com chassi ou placa já cadastrados');
                 $redirect = false;
             } else
-                executeQuery("INSERT INTO veiculo (chassi, placa, modeloId, hodometro, observacao, direcao, cambioAutomatico, vidroEletrico, tipoCombustivel, kitGnv, arCondicionado, kitMultimidia, valorDespesas, ipvaQuitado, documentoParaRodar, anoFabricacao, sinistro) 
-                VALUES ('$chassi', '$placa', '$modelo', '$hodometro', '$complemento', '$direcao', '$transmissao', '$vidroEletrico', '$combustivel', '$gnv', '$arCondidioncado', '$multimidia', '$despesas', '$ipva', '$documentoParaRodar', '$anoFabricacao', '$sinistro')");
+                executeQuery("INSERT INTO veiculo (chassi, placa, modeloCorId, hodometro, observacao, direcao, cambioAutomatico, vidroEletrico, tipoCombustivel, kitGnv, arCondicionado, kitMultimidia, valorDespesas, ipvaQuitado, documentoParaRodar, anoFabricacao, sinistro) 
+                VALUES ('$chassi', '$placa', '$modeloCorId[0]', '$hodometro', '$complemento', '$direcao', '$transmissao', '$vidroEletrico', '$combustivel', '$gnv', '$arCondidioncado', '$multimidia', '$despesas', '$ipva', '$documentoParaRodar', '$anoFabricacao', '$sinistro')");
+        }
+
+        if ($redirect) {
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculo.php");
         }
 
     }
@@ -190,7 +174,6 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-4 col-lg-3">
-                        <!-- <select class="form-select" id="color" name="color" onblur="validateInput(this)" onchange='parameterURL("corId", this.value)' required> -->
                             <?php
                                 
                                 $modeloId = -1;
@@ -278,7 +261,7 @@
                     </div>
 
                     <div class="col-3">
-                        <input type="text" id="expenses" name="expenses" class="form-control" placeholder="Despesas" onblur="validateInput(this)">
+                        <input type="text" id="expenses" name="expenses" class="form-control" placeholder="Despesas" onblur="validateInput(this)" value="R$0,00">
                         <div class="invalid-feedback" id="invalid-message-expenses">Informe um valor de despesa válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                 </div>
@@ -287,25 +270,25 @@
                     <div class="form-check col-2">
                         <input class="form-check-input" id="transmission" name="transmission" type="checkbox" value="false">
                         <label class="form-check-label" for="transmission">
-                            Automático*
+                            Automático
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="window" name="window" type="checkbox" value="false">
                         <label class="form-check-label" for="window">
-                            Vidro elétrico*
+                            Vidro elétrico
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="gnv" name="gnv" type="checkbox" value="false">
                         <label class="form-check-label" for="gnv">
-                            GNV*
+                            GNV
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="air" name="air" type="checkbox" value="false">
                         <label class="form-check-label" for="air">
-                            Ar condicionado*
+                            Ar condicionado
                         </label>
                     </div>
                     
@@ -315,25 +298,25 @@
                     <div class="form-check col-2">
                         <input class="form-check-input" id="multimidia" name="multimidia" type="checkbox" value="false">
                         <label class="form-check-label" for="multimidia">
-                            Multimídia*
+                            Multimídia
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="ipva" name="ipva" type="checkbox" value="false">
                         <label class="form-check-label" for="ipva">
-                            IPVA quitado*
+                            IPVA quitado
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="readyRode" name="readyRode" type="checkbox" value="false">
                         <label class="form-check-label" for="readyRode">
-                            Pronto para rodar*
+                            Pronto para rodar
                         </label>
                     </div>
                     <div class="form-check col-2">
                         <input class="form-check-input" id="sinistro" name="sinistro" type="checkbox" value="false">
                         <label class="form-check-label" for="sinistro">
-                            Sinistro*
+                            Sinistro
                         </label>
                     </div>
                 </div>

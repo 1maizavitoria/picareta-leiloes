@@ -35,8 +35,7 @@
                     while($row = mysqli_fetch_assoc($selectFinanceira)){
                         $financeira[] = array($row['financeiraId'], $row['descricaoFinanceira']);
                     }
-                   
-                
+                               
                     $titulos = array('Financeira');
                     $editavel = true;
                     $urlClick = "cadastroFinanceiraForm.php?id=";
