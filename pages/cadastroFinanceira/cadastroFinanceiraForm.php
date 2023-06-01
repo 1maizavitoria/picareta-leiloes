@@ -51,8 +51,14 @@
         }
 
         if (isset($_POST['deletar'])) {
-            executeQuery("DELETE FROM financeira WHERE financeiraId = '$id'");
-            toastr('success', 'Financeira excluída');
+            $existeLoteVinculado = executeQuery("SELECT * FROM financeira f INNER JOIN lote l on l.financeiraId = f.financeiraId WHERE f.financeiraId = '$id'");
+            if ($existeLoteVinculado -> num_rows > 0) {
+                $redirect = false;
+                toastr('error', 'Não é possível excluir a financeira pois existem lotes vinculados a ela.');
+            } else {
+                executeQuery("DELETE FROM financeira WHERE financeiraId = '$id'");
+                toastr('success', 'Financeira excluída');
+            }
         }
 
         if ($redirect) {
