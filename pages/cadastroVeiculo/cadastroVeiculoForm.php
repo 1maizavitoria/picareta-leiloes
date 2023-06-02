@@ -256,7 +256,7 @@
                         <div class="invalid-feedback" id="invalid-message-fuel">Informe um combustível válido.</div>
                     </div>
                     <div class="col-2">
-                        <input type="number" id="yearFab" name="yearFab" maxLength="4" class="form-control" placeholder="Ano Fabricação*" onblur="validateInput(this)" required>
+                        <input type="number" id="year" name="yearFab" maxLength="4" class="form-control" placeholder="Ano Fabricação*" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-year">Informe um ano fabricação válido.<br> <em>Ex: 2020</em></div>
                     </div>
 
