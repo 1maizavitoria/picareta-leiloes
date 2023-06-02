@@ -27,6 +27,21 @@
 
         if ($redirect)
             header("Location: http://localhost/picareta_leiloes/pages/cadastroLote/cadastroLote.php");
+
+        if(isset($_POST["deletar"])){
+            executeQuery("DELETE FROM lote WHERE `loteId` = '$loteId'");
+            $redirect = true;
+        }
+        if(isset($_POST["adicionar"])){
+            executeQuery("INSERT INTO lote( leilaoId, valorInicial, valorIncremento, financeiraId, veiculoId) VALUES ('$leilaoId','$valorInicial','$valorIncremento','$financeiraId','$veiculoId')");
+            $redirect = true;
+        }
+        if(isset($_POST["salvar"])){
+            executeQuery("UPDATE lote SET leilaoId='$leilaoId',valorInicial='$valorInicial',valorIncremento='$valorIncremento',financeiraId='$financeiraId',veiculoId='$veiculoId' WHERE `loteId` = '$loteId'");
+            $redirect = true;
+        }
+
+
     }
     ?>
     
