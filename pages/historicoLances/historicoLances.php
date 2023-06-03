@@ -36,7 +36,7 @@
                     $urlClick = "https://www.google.com?id=";
 
                     $lances = array();
-                    $selectLances = executeQuery("SELECT ma.descricao AS dsMarca, mo.descricao AS dsModelo, mo.anoModelo, co.descricao AS dsCor, ve.anoFabricacao, fn.descricaoFinanceira AS dsFinanceira, la.dataLance, la.valorLance, le.dataleilao AS dtResultado FROM veiculo ve 
+                    $selectLances = executeQuery("SELECT ma.descricao AS dsMarca, mo.descricao AS dsModelo, co.descricao AS dsCor, CONCAT(ve.anoFabricacao,'/', mo.anoModelo) as anoModeloFabricacao, fn.descricaoFinanceira AS dsFinanceira, la.dataLance, la.valorLance, le.dataleilao AS dtResultado FROM veiculo ve 
                         INNER JOIN modeloCor mc ON ve.modeloCorId = mc.modeloCorId 
                         INNER JOIN modelo mo ON mc.modeloId = mo.modeloId 
                         INNER JOIN marca ma ON mo.marcaId = ma.marcaId 
@@ -47,7 +47,7 @@
                         INNER JOIN leilao le ON lo.leilaoId = le.leilaoId");
 
                     while($row = mysqli_fetch_assoc($selectLances)) {
-                        $lances[] = array(NULL, $row['dsMarca'], $row['dsModelo'], $row['dsCor'], $row['anoFabricacao'],  'R$' . number_format($row['valorLance']), $row['dsFinanceira'], date('d/m/Y H:i:s', strtotime($row['dataLance'])), date('d/m/Y H:i:s', strtotime($row['dtResultado'])));
+                        $lances[] = array(NULL, $row['dsMarca'], $row['dsModelo'], $row['dsCor'], $row['anoModeloFabricacao'],  'R$' . number_format($row['valorLance']), $row['dsFinanceira'], date('d/m/Y H:i:s', strtotime($row['dataLance'])), date('d/m/Y H:i:s', strtotime($row['dtResultado'])));
                     }
 
                     gerarGrid($titulos, $lances, 12, $editavel,  $urlClick);

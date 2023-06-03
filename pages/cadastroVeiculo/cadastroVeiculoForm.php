@@ -15,14 +15,27 @@
     include './../../components/toastr/toastr.php';
 
     $id = $_GET['id'];
+
     if($id != '') {
         if (!isset($_GET['marcaId'])) {
-            $veiculo = executeQuery('SELECT mo.modeloId, mo.marcaId, ma.descricao as dsMarca, mo.descricao AS dsModelo, mo.anoModelo, c.corId FROM modelo mo INNER JOIN marca ma ON MA.marcaId = MO.marcaId INNER JOIN modelocor mc ON mc.modeloId = mo.modeloId INNER JOIN cor co ON co.corId = mc.corId WHERE mc.modeloCorId = ' . $_GET['id']);
+            // $veiculo = executeQuery('SELECT mo.modeloId, mo.marcaId, ma.descricao as dsMarca, mo.descricao AS dsModelo, mo.anoModelo, c.corId FROM modelo mo INNER JOIN marca ma ON MA.marcaId = MO.marcaId INNER JOIN modelocor mc ON mc.modeloId = mo.modeloId INNER JOIN cor co ON co.corId = mc.corId WHERE mc.modeloCorId = ' . $_GET['id']);
+
+            $veiculo = executeQuery("SELECT mo.modeloId, mo.marcaId, ma.descricao AS dsMarca, mo.descricao AS dsModelo, mo.anoModelo, co.corId, co.descricao AS dsCor, ve.chassi, ve.placa, ve.hodometro, ve.observacao, ve.direcao, ve.cambioAutomatico, ve.vidroEletrico, ve.tipoCombustivel, ve.kitGnv, ve.arCondicionado, ve.kitMultimidia, ve.valorDespesas, ve.ipvaQuitado, ve.documentoParaRodar, ve.anoFabricacao, ve.sinistro FROM veiculo ve 
+            INNER JOIN modelocor mc ON ve.modeloCorId = mc.modeloCorId
+            INNER JOIN cor co ON mc.corId = co.corId
+            INNER JOIN modelo mo ON mc.modeloId = mo.modeloId
+            INNER JOIN marca ma ON mo.marcaId = ma.marcaId WHERE ve.veiculoId = " . $_GET['id']);
+
+            // while($row = mysqli_fetch_assoc($veiculo)) {
+            //     echo "<script>console.log(".json_encode($veiculo).");</script>";
+            // }
+
             $veiculo = mysqli_fetch_assoc($veiculo);
 
-            echo "<script>console.log(id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['descricao'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&corId=" . $veiculo['corId'] . ");</script>";
+            // echo "<script>console.log(id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['descricao'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&corId=" . $veiculo['corId'] . ");</script>";
 
-            header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculoForm.php?id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['descricao'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&corId=" . $veiculo['corId'] . "");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        //id=&marcaId=1&descricaoModelo=PALIO+GS&modelIdAndYear=1a2019&colorId=1yVERMELHO+ALPISTE+DE+URUBU   &modelIdAndYear=1a2019&colorId=1yVERMELHO%20ALPISTE%20DE%20URUBU
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculoForm.php?id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['dsModelo'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&dsCor=" . $veiculo['dsCor'] . "&chassi=" . $veiculo['chassi'] . "&placa=" . $veiculo['placa'] . "&hodometro=" . $veiculo['hodometro'] . "&observacao=" . $veiculo['observacao'] . "&direcao=" . $veiculo['direcao'] . "&cambioAutomatico=" . $veiculo['cambioAutomatico'] . "&vidroEletrico=" . $veiculo['vidroEletrico'] . "&tipoCombustivel=" . $veiculo['tipoCombustivel'] . "&kitGnv=" . $veiculo['kitGnv'] . "&arCondicionado=" . $veiculo['arCondicionado'] . "&kitMultimidia=" . $veiculo['kitMultimidia'] . "&valorDespesas=" . $veiculo['valorDespesas'] . "&ipvaQuitado=" . $veiculo['ipvaQuitado'] . "&documentoParaRodar=" . $veiculo['documentoParaRodar'] . "&anoFabricacao=" . $veiculo['anoFabricacao'] . "&sinistro=" . $veiculo['sinistro'] ."&modelIdAndYear=" . $veiculo['modeloId'] . "a" . $veiculo['anoModelo'] . "&colorId=" . $veiculo['corId'] . "y" . $veiculo['dsCor']);
         }
     }
 
@@ -36,20 +49,21 @@
         $placa = $_POST['licensePlate'];
         $chassi = $_POST['chassis'];
         $hodometro = $_POST['odometer'];
-        $complemento = $_POST['complement'];
+        $complemento = $_POST['complement'] ?? '';
         $direcao = $_POST['steering'];
         $combustivel = $_POST['fuel'];
         $anoFabricacao = $_POST['yearFab'];
         $transmissao = isset($_POST['transmission']) ? 1 : 0;
         $vidroEletrico = isset($_POST['window']) ? 1 : 0;
         $gnv = isset($_POST['gnv']) ? 1 : 0;
-        $arCondidioncado = isset($_POST['air']) ? 1 : 0;
+        $arCondicionado = isset($_POST['air']) ? 1 : 0;
         $multimidia = isset($_POST['multimidia']) ? 1 : 0;
         $ipva = isset($_POST['ipva']) ? 1 : 0;
         $documentoParaRodar = isset($_POST['readyRode']) ? 1 : 0;
         $sinistro = isset($_POST['sinistro']) ? 1 : 0;
-        $despesas = $_POST['expenses'];
-        $veiculoExistente = executeQuery("SELECT ve.chassi, ve.placa FROM veiculo ve WHERE ve.chassi = '$chassi' OR ve.placa = '$placa'");
+        $cambioAutomatico = isset($_POST['transmission']) ? 1 : 0;
+        $despesas = floatval(str_replace(",", ".", str_replace("R$", "", $_POST['expenses'])));
+        $veiculoExistente = executeQuery("SELECT ve.veiculoId, ve.chassi, ve.placa FROM veiculo ve WHERE ve.chassi = '$chassi' OR ve.placa = '$placa'");
 
         $modeloCorId = executeQuery("SELECT modeloCorId FROM modelocor WHERE modeloId = '$modelo[0]' AND corId = '$cor[0]'");
         $modeloCorId = mysqli_fetch_assoc($modeloCorId);
@@ -64,11 +78,41 @@
                 toastr('error', 'Veículo com chassi ou placa já cadastrados');
                 $redirect = false;
             } else
-                executeQuery("INSERT INTO veiculo (chassi, placa, modeloCorId, hodometro, observacao, direcao, cambioAutomatico, vidroEletrico, tipoCombustivel, kitGnv, arCondicionado, kitMultimidia, valorDespesas, ipvaQuitado, documentoParaRodar, anoFabricacao, sinistro) 
-                VALUES ('$chassi', '$placa', '$modeloCorId[0]', '$hodometro', '$complemento', '$direcao', '$transmissao', '$vidroEletrico', '$combustivel', '$gnv', '$arCondidioncado', '$multimidia', '$despesas', '$ipva', '$documentoParaRodar', '$anoFabricacao', '$sinistro')");
+                executeQuery("INSERT INTO veiculo (chassi, placa, modeloCorId,  hodometro, observacao, direcao, cambioAutomatico, vidroEletrico, tipoCombustivel, kitGnv, arCondicionado, kitMultimidia, valorDespesas, ipvaQuitado, documentoParaRodar, anoFabricacao, sinistro) 
+                VALUES ('$chassi', '$placa', '$modeloCorId', $hodometro, '$complemento', '$direcao', '$transmissao', '$vidroEletrico', '$combustivel', '$gnv', '$arCondicionado', '$multimidia', '$despesas', '$ipva', '$documentoParaRodar', '$anoFabricacao', '$sinistro')");
         }
 
-        if ($redirect) {
+        if (isset($_POST['salvar'])) {
+            if($veiculoExistente != null && $veiculoExistente['veiculoId'] != $_GET['id']) {
+                toastr('error', 'Veículo já cadastrado');
+                $redirect = false;
+            } else
+                executeQuery("UPDATE veiculo SET chassi = '$chassi', placa = '$placa', modeloCorId = '$modeloCorId',  hodometro = '$hodometro', observacao = '$complemento', direcao = '$direcao', cambioAutomatico = '$cambioAutomatico', vidroEletrico = '$vidroEletrico', tipoCombustivel = '$combustivel', kitGnv = '$gnv', arCondicionado = '$arCondicionado', kitMultimidia = '$multimidia', valorDespesas = '$despesas', ipvaQuitado = '$ipva', documentoParaRodar = '$documentoParaRodar', anoFabricacao = '$anoFabricacao', sinistro = '$sinistro' WHERE veiculoId = '$id'");
+
+                echo "<script>console.log(".json_encode($id).");</script>";
+
+        }
+
+        if (isset($_POST['deletar'])) {
+
+            echo "<script>console.log('deletado');</script>";
+
+            $veiculoSelecionado = executeQuery("SELECT v.veiculoId FROM veiculo v INNER JOIN lote lo ON v.veiculoId = lo.veiculoId WHERE v.veiculoId = '$id'");
+            if($veiculoSelecionado -> num_rows > 0) {
+                $veiculoId = $veiculoSelecionado -> fetch_assoc();
+            }
+            
+            if(isset($veiculoId)){
+                toastr('error', 'Este veículo está vinculado a um lote, não é possível excluí-lo.');
+                $redirect = false;
+
+            } else{
+                executeQuery("DELETE FROM veiculo WHERE veiculoId = '$id'");
+                toastr('success', 'Veículo excluido');
+            }
+        }
+
+        if (false) {
             header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculo.php");
         }
 
@@ -108,7 +152,7 @@
 
                                 while ($row = mysqli_fetch_assoc($dadosMarca)) {
                                     $selected = $marcaId == $row['marcaId'] ? "selected" : "";
-                                    echo "<option $selected value=" . $row['marcaId'] . ">" . $row['dsMarca'] . "</option>";
+                                    echo "<option $selected value='" . $row['marcaId'] . "'>" . $row['dsMarca'] . "</option>";
                                 }
 
                             ?>
@@ -131,7 +175,7 @@
                                 $selectModelos = executeQuery("SELECT DISTINCT descricao FROM modelo WHERE marcaId = $marcaId");
                                 while ($row = mysqli_fetch_assoc($selectModelos)) {
                                     $selected = $descricaoModelo == $row['descricao'] ? "selected" : "";
-                                    echo "<option $selected value=" . $row['descricao'] . ">" . $row['descricao'] . "</option>";
+                                    echo "<option $selected value='" . $row['descricao'] . "'>" . $row['descricao'] . "</option>";
                                 }               
                             ?>
 
@@ -142,6 +186,11 @@
                             <?php
                                 $dsAnoModelo = "Ano Modelo*";
                                 $required = "required";
+
+                                if(isset($_GET['anoModelo'])) {
+                                    $dsAnoModelo = $_GET['anoModelo'] ?? "Ano Modelo*";
+                                    $required = "";
+                                }
 
                                 if(isset($_GET['modelIdAndYear'])) {
                                     $modelo = $_GET['modelIdAndYear'] ?? -1;
@@ -162,7 +211,7 @@
                                
                                 while ($row = mysqli_fetch_assoc($selectModelos)) {
                                     $selected = $anoModelo == $row['anoModelo'] ? "selected" : "";
-                                    echo "<option $selected value=" . $row['modeloId'] ."a". $row['anoModelo'] . ">" . $row['anoModelo'] . "</option>";
+                                    echo "<option $selected value='" . $row['modeloId'] ."a". $row['anoModelo'] . "'>" . $row['anoModelo'] . "</option>";
                                 }
 
 
@@ -180,9 +229,18 @@
                                 $dsColor = "Cor*";
                                 $required = "required";
 
+                                if(isset($_GET['modeloId'])) {
+                                    $modeloId = $_GET['modeloId'];
+                                }
+
                                 if(isset($_GET['modelIdAndYear'])) {
                                     $modelo = $_GET['modelIdAndYear'] ?? -1;
                                     $modeloId = explode('a', $modelo)[0];
+                                }
+
+                                if(isset($_GET['dsCor'])) {
+                                    $dsColor = $_GET['dsCor'] ?? "Cor*";
+                                    $required = "";
                                 }
 
                                 if(isset($_GET['colorId'])) {
@@ -192,10 +250,12 @@
                                 }
 
                                 $marcaId = $_GET['marcaId'] ?? -1;
-                                $descricaoModelo = $_GET['descricaoModelo'] ?? -1;
 
                                 $anoModelo = $_GET['anoModelo'] ?? -1;
                                 $corId = $_GET['corId'] ?? -1;
+
+                                $modelIdAndYear = $_GET['modelIdAndYear'] ?? -1;
+                                $disabled = $modelIdAndYear == -1 && $modeloId == -1 ? "disabled" : "";
 
                                 echo "<select class='form-select' id='color' $disabled name='color' onblur='validateInput(this)' onchange='parameterURL(\"colorId\", this.value)' $required>";
 
@@ -204,7 +264,7 @@
 
                                 while ($row = mysqli_fetch_assoc($selectCoresModelo)) {
                                     $selected = $corId == $row['corId'] ? "selected" : "";
-                                    echo "<option $selected value=" . $row['corId'] ."y". $row['dsCor'] . ">" . $row['dsCor'] . "</option>";
+                                    echo "<option $selected value='" . $row['corId'] ."y". $row['dsCor'] . "'>" . $row['dsCor'] . "</option>";
                                 }
                                 
                             ?>
@@ -212,22 +272,46 @@
                         <div class="invalid-feedback" id="invalid-message-color">Informe uma cor válida.</div>
                     </div>
                     <div class="col-3 col-lg-2">
-                        <input type="text" id="licensePlate" name="licensePlate" maxLength="8" class="form-control" placeholder="Placa*" onblur="validateInput(this)" required>
+                        
+                        <?php
+                                $placa = $_GET['placa'] ?? "";
+
+                                echo "<input type='text' id='licensePlate' name='licensePlate' maxLength='8' class='form-control' placeholder='Placa*' value='".$placa."' onblur='validateInput(this)' required>";
+                        ?>
+
                         <div class="invalid-feedback" id="invalid-message-licensePlate">Informe uma placa válida.<br> <em>Ex: AAA-0000</em></div>
                     </div>
                     <div class="col-5 col-lg-4">
-                        <input type="text" id="chassis" name="chassis" maxLength="17" class="form-control" placeholder="Chassi*" onblur="validateInput(this)" required>
+
+                        <?php
+                                $chassi = $_GET['chassi'] ?? "";
+
+                                echo "<input type'text' id='chassis' name='chassis' maxLength='17' class='form-control' placeholder='Chassi*' value='".$chassi."' onblur='validateInput(this)' required>";
+                        ?>
+
                         <div class="invalid-feedback" id="invalid-message-chassis">Informe um número de chassi válido.<br> <em>Ex: 9BWHE21JX24060960</em></div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center mb-5">
                     <div class="col-3 col-lg-3">
-                        <input type="number" id="odometer" name="odometer" class="form-control" placeholder="Hodômetro*" onblur="validateInput(this)" required>
+
+                        <?php
+                                $hodometro = $_GET['hodometro'] ?? "";
+
+                                echo "<input type='number' id='odometer' name='odometer' class='form-control' placeholder='Hodômetro*' value='".$hodometro."' onblur='validateInput(this)' required>";
+                        ?>
+
                         <div class="invalid-feedback" id="invalid-message-odometer">Informe uma quilometragem válida.<br> <em>Ex: 1000</em></div>
                     </div>
                     <div class="col-9 col-lg-6">
-                        <input type="text" id="complement" name="complement" class="form-control" placeholder="Observações" onblur="validateInput(this)">
+
+                        <?php
+                                $observacao = $_GET['observacao'] ?? "";
+
+                                echo "<input type='text' id='complement' name='complement' class='form-control' placeholder='Observações' value='".$observacao."' onblur='validateInput(this)'>";
+                        ?>
+
                         <div class="invalid-feedback" id="invalid-message-complement">Informe observações válidas.<br> <em>Ex: Falta a chave</em></div>
                     </div>
                 </div>
@@ -236,57 +320,136 @@
                     <div class="col-3 col-lg-2">
                         <select class="form-select" id="steering" name="steering" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Direção*</option>
-                            <option value="1">Mecânica</option>
-                            <option value="2">Hidráulica</option>
-                            <option value="3">Assistida</option>
-                            <option value="4">Elétrica</option>
+
+                            <?php
+
+                                $option = ['Mecânica', 'Hidráulica', 'Assistida', 'Elétrica'];
+
+                                $value = ['1', '2', '3', '4'];
+                                $direcao = $_GET['direcao'] ?? "";
+
+                                if(in_array($direcao, $value)) {
+                                    $index = array_search($direcao, $value);
+                                    echo "<option selected value=$direcao>$option[$index]</option>";
+                                }
+
+                                for($i = 0; $i < count($value); $i++) {
+                                    if($value[$i] != $direcao) {
+                                        echo "<option value=$value[$i]>$option[$i]</option>";
+                                    }
+                                }
+                            ?>
                         </select>
                         <div class="invalid-feedback" id="invalid-message-steering">Informe uma direção válida.</div>
                     </div>
                     <div class="col-3 col-lg-2">
                         <select class="form-select" id="fuel" name="fuel" onblur="validateInput(this)" required>
                             <option value="" disabled selected hidden>Combustível*</option>
-                            <option value="1">Álcool</option>
-                            <option value="2">Gasolina</option>
-                            <option value="3">Flex</option>
-                            <option value="4">Diesel</option>
-                            <option value="5">Híbrido</option>
-                            <option value="6">Elétrico</option>
+
+                            <?php
+
+                                $option = ['Álcool', 'Gasolina', 'Flex', 'Diesel', 'Híbrido', 'Elétrico'];
+
+                                $value = ['1', '2', '3', '4', '5', '6'];
+                                $tipoCombustivel = $_GET['tipoCombustivel'] ?? "";
+
+                                if(in_array($tipoCombustivel, $value)) {
+                                    $index = array_search($tipoCombustivel, $value);
+                                    echo "<option selected value='$tipoCombustivel'>$option[$index]</option>";
+                                }
+
+                                for($i = 0; $i < count($value); $i++) {
+                                    if($value[$i] != $tipoCombustivel) {
+                                        echo "<option value=$value[$i]>$option[$i]</option>";
+                                    }
+                                }
+                            ?>
+
                         </select>
                         <div class="invalid-feedback" id="invalid-message-fuel">Informe um combustível válido.</div>
                     </div>
                     <div class="col-2">
-                        <input type="number" id="yearFab" name="yearFab" maxLength="4" class="form-control" placeholder="Ano Fabricação*" onblur="validateInput(this)" required>
+
+                        <?php
+                                $anoFabricacao = $_GET['anoFabricacao'] ?? "";
+
+                                echo "<input type='number' id='year' name='yearFab' maxLength='4' class='form-control' placeholder='Ano Fabricação*' value='".$anoFabricacao."' onblur='validateInput(this)' required>";
+                        ?>
+
+
                         <div class="invalid-feedback" id="invalid-message-year">Informe um ano fabricação válido.<br> <em>Ex: 2020</em></div>
                     </div>
 
                     <div class="col-3">
-                        <input type="text" id="expenses" name="expenses" class="form-control" placeholder="Despesas" onblur="validateInput(this)" value="R$0,00">
+
+                        <?php
+                            $valorDespesas = $_GET['valorDespesas'] ?? "";
+
+                            echo "<input type='text' id='expenses' name='expenses' class='form-control' placeholder='Despesas' value='".$valorDespesas."' onblur='validateInput(this)' required>";
+
+                        ?>
+
+
                         <div class="invalid-feedback" id="invalid-message-expenses">Informe um valor de despesa válido.<br> <em>Ex: R$1000</em></div>
                     </div>
                 </div>
 
                 <div class="row justify-content-center mb-5">
                     <div class="form-check col-2">
-                        <input class="form-check-input" id="transmission" name="transmission" type="checkbox" value="false">
+                        <?php
+
+                            $cambioAutomatico = $_GET['cambioAutomatico'] ?? "";
+                            $checked = $cambioAutomatico == '1' ? 'checked' : "";
+
+                            echo "<input class='form-check-input' id='transmission' name='transmission' type='checkbox' $checked>";
+
+                        ?>
+
                         <label class="form-check-label" for="transmission">
                             Automático
                         </label>
                     </div>
                     <div class="form-check col-2">
-                        <input class="form-check-input" id="window" name="window" type="checkbox" value="false">
+
+                        <?php
+
+                            $vidroEletrico = $_GET['vidroEletrico'] ?? "";
+                            $checked = $vidroEletrico == '1' ? 'checked' : "";
+
+                            echo "<input class='form-check-input' id='window' name='window' type='checkbox' $checked>";
+
+                        ?>
+
                         <label class="form-check-label" for="window">
                             Vidro elétrico
                         </label>
                     </div>
                     <div class="form-check col-2">
-                        <input class="form-check-input" id="gnv" name="gnv" type="checkbox" value="false">
+
+                        <?php
+
+                            $kitGnv = $_GET['kitGnv'] ?? "";
+                            $checked = $kitGnv == '1' ? 'checked' : "";
+
+                            echo "<input class='form-check-input' id='gnv' name='gnv' type='checkbox' $checked>";
+
+                        ?>
+
                         <label class="form-check-label" for="gnv">
                             GNV
                         </label>
                     </div>
                     <div class="form-check col-2">
-                        <input class="form-check-input" id="air" name="air" type="checkbox" value="false">
+
+                        <?php
+
+                            $arCondicionado = $_GET['arCondicionado'] ?? "";
+                            $checked = $arCondicionado == '1' ? 'checked' : "";
+
+                            echo "<input class='form-check-input' id='air' name='air' type='checkbox' $checked>";
+
+                        ?>
+
                         <label class="form-check-label" for="air">
                             Ar condicionado
                         </label>
@@ -296,25 +459,61 @@
 
                 <div class="row justify-content-center mb-5">
                     <div class="form-check col-2">
-                        <input class="form-check-input" id="multimidia" name="multimidia" type="checkbox" value="false">
+
+                        <?php
+
+                            $kitMultimidia = $_GET['kitMultimidia'] ?? "";
+                            $checked = $kitMultimidia == '1' ? 'checked' : "";
+
+                            echo "<input class='form-check-input' id='multimidia' name='multimidia' type='checkbox' $checked>";
+
+                        ?>
+
                         <label class="form-check-label" for="multimidia">
                             Multimídia
                         </label>
                     </div>
                     <div class="form-check col-2">
-                        <input class="form-check-input" id="ipva" name="ipva" type="checkbox" value="false">
+
+                        <?php
+
+                            $ipvaQuitado = $_GET['ipvaQuitado'] ?? "";
+                            $checked = $ipvaQuitado == '1' ? 'checked' : "";
+
+                            echo "<input class='form-check-input' id='ipva' name='ipva' type='checkbox' $checked>";
+
+                        ?>
+
                         <label class="form-check-label" for="ipva">
                             IPVA quitado
                         </label>
                     </div>
                     <div class="form-check col-2">
-                        <input class="form-check-input" id="readyRode" name="readyRode" type="checkbox" value="false">
+
+                        <?php
+
+                            $documentoParaRodar = $_GET['documentoParaRodar'] ?? "";
+                            $checked = $documentoParaRodar == '1' ? 'checked' : "";
+
+                            echo "<input class='form-check-input' id='readyRode' name='readyRode' type='checkbox' $checked>";
+
+                        ?>
+
                         <label class="form-check-label" for="readyRode">
                             Pronto para rodar
                         </label>
                     </div>
                     <div class="form-check col-2">
-                        <input class="form-check-input" id="sinistro" name="sinistro" type="checkbox" value="false">
+
+                        <?php
+
+                            $sinistro = $_GET['sinistro'] ?? "";
+                            $checked = $sinistro == '1' ? 'checked' : "";
+
+                            echo "<input class='form-check-input' id='sinistro' name='sinistro' type='checkbox' $checked>";
+
+                        ?>
+
                         <label class="form-check-label" for="sinistro">
                             Sinistro
                         </label>
@@ -376,8 +575,8 @@
                         if (isset($id) && $id != "") {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto my-3 d-flex justify-content-around'>
-                                <button type='submit' value='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
-                                <button type='submit' value='salvar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Salvar</button>
+                                <button type='submit' value='deletar' name='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
+                                <button type='submit' value='salvar' name='salvar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Salvar</button>
                             </div>
                             ";
                         } else {
