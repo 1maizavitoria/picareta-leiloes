@@ -17,17 +17,15 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $loteId = $_GET['id'] == '' ? -1 : $_GET['id'];
         $leilaoId = $_POST['leilao'];
-        $valorInicial = $_POST['inicialValue'];
-        $valorIncremento = $_POST['incrementValue'];
+        $valorInicial = floatval(str_replace(",", ".", str_replace("R$", "", $_POST['inicialValue'])));
+        $valorIncremento = floatval(str_replace(",", ".", str_replace("R$", "", $_POST['incrementValue'])));
         $financeiraId = $_POST['financeira'];
         $veiculoId = $_POST['veiculo'];
 
 
         $redirect = false;
 
-        if ($redirect)
-            header("Location: http://localhost/picareta_leiloes/pages/cadastroLote/cadastroLote.php");
-
+        
         if(isset($_POST["deletar"])){
             executeQuery("DELETE FROM lote WHERE `loteId` = '$loteId'");
             $redirect = true;
@@ -40,8 +38,10 @@
             executeQuery("UPDATE lote SET leilaoId='$leilaoId',valorInicial='$valorInicial',valorIncremento='$valorIncremento',financeiraId='$financeiraId',veiculoId='$veiculoId' WHERE `loteId` = '$loteId'");
             $redirect = true;
         }
-
-
+        
+        
+        if ($redirect)
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroLote/cadastroLote.php");
     }
     ?>
     
@@ -88,7 +88,7 @@
                             $selectModelos = executeQuery('SELECT DISTINCT  descricao from MODELO where MARCAID = ' . $marcaId . '');
                             while ($row = mysqli_fetch_assoc($selectModelos)) {
                                 $selected = $descricaoModelo == $row['descricao'] ? "selected" : "";
-                                echo "<option $selected value=" . $row['descricao'] . ">" . $row['descricao'] . "</option>";
+                                echo "<option $selected value='" . $row['descricao'] . "'>" . $row['descricao'] . "</option>";
                             }
                             ?>
                         </select>
@@ -105,7 +105,7 @@
                             $selectModelos = executeQuery('SELECT * FROM MODELO WHERE DESCRICAO = "' . $descricaoModelo . '"');
                             while ($row = mysqli_fetch_assoc($selectModelos)) {
                                 $selected = $anoModelo == $row['anoModelo'] ? "selected" : "";
-                                echo "<option $selected value=" . $row['anoModelo'] . ">" . $row['anoModelo'] . "</option>";
+                                echo "<option $selected value='" . $row['anoModelo'] . "'>" . $row['anoModelo'] . "</option>";
                             }
                             ?>
                         </select>
@@ -128,7 +128,7 @@
                             $selectCoresModelo = executeQuery('SELECT mc.modeloCorId, c.descricao as descricaoCor FROM modelocor mc inner join modelo m on m.modeloId = mc.modeloId inner join cor c on mc.corId = c.corId where m.descricao = "' . $descricaoModelo . '" and m.marcaId = ' . $marcaId . ' and m.anoModelo = ' . $anoModelo . '');
                             while ($row = mysqli_fetch_assoc($selectCoresModelo)) {
                                 $selected = $modeloCorId == $row['modeloCorId'] ? "selected" : "";
-                                echo "<option $selected value=" . $row['modeloCorId'] . ">" . $row['descricaoCor'] . "</option>";
+                                echo "<option $selected value='" . $row['modeloCorId'] . "'>" . $row['descricaoCor'] . "</option>";
                             }
                             ?>
                         </select>
@@ -145,7 +145,7 @@
                             $selectPlacas = executeQuery('SELECT v.veiculoId, v.placa FROM veiculo v inner join modelocor mc on v.modeloCorId = mc.modeloCorId where mc.modeloCorId = ' . $modeloCorId . '');
                             while ($row = mysqli_fetch_assoc($selectPlacas)) {
                                 $selected = $veiculoId == $row['veiculoId'] ? "selected" : "";
-                                echo "<option $selected value=" . $row['veiculoId'] . ">" . $row['placa'] . "</option>";
+                                echo "<option $selected value='" . $row['veiculoId'] . "'>" . $row['placa'] . "</option>";
                             }
                             ?>
                         </select>
@@ -164,7 +164,7 @@
                             $selectLeiloes = executeQuery('SELECT leilaoId, DATE_FORMAT(dataLeilao, "%d/%m/%Y %H:%i:%s") as dataLeilao from leilao');
                             while ($row = mysqli_fetch_assoc($selectLeiloes)) {
                                 $selected = $lote['leilaoId'] == $row['leilaoId'] ? "selected" : "";
-                                echo "<option $selected value=" . $row['leilaoId'] . ">" . "L." . $row['leilaoId'] . " " . $row['dataLeilao'] . "</option>";
+                                echo "<option $selected value='" . $row['leilaoId'] . "'>" . "L." . $row['leilaoId'] . " " . $row['dataLeilao'] . "</option>";
                             }
                             ?>
                         </select>
@@ -186,7 +186,7 @@
                             $selectFinanceiras = executeQuery('SELECT * from financeira');
                             while ($row = mysqli_fetch_assoc($selectFinanceiras)) {
                                 $selected = $lote['financeiraId'] == $row['financeiraId'] ? "selected" : "";
-                                echo "<option $selected value=" . $row['financeiraId'] . ">" . $row['descricaoFinanceira'] . "</option>";
+                                echo "<option $selected value='" . $row['financeiraId'] . "'>" . $row['descricaoFinanceira'] . "</option>";
                             }
                             ?>
 
@@ -201,7 +201,7 @@
                             $lote = mysqli_fetch_assoc($lote);
 
                             if ($loteId != -1) {
-                                echo "R$" . $lote['valorInicial'];
+                                echo "R$" . str_replace(".", ",", $lote['valorInicial']);
                             }
                          ?>"
                           onblur="validateInput(this)" required>
@@ -214,7 +214,7 @@
                             $lote = mysqli_fetch_assoc($lote);
 
                             if ($loteId != -1) {
-                                echo "R$" . $lote['valorIncremento'];
+                                echo "R$" . str_replace(".", ",", $lote['valorIncremento']);
                             }
                          ?>" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-incrementalValue">Informe um valor incremento válido.<br> <em>Ex: R$1000</em></div>
@@ -225,6 +225,7 @@
                     if (isset($_GET["id"])) {
                  
                         $id = $_GET["id"];
+                        echo "<script>console.log('$id')</script>";
 
                         if (isset($id) && $id != "") {
                             echo "
@@ -237,7 +238,7 @@
                         } else {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto d-flex justify-content-around'>
-                                <button type='button' value='cancelar' name='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.history.back()\">Cancelar</button>
+                                <button type='button' value='cancelar' name='cancelar' class='btn btn-outline-danger col-5' onclick=\"window.location.href='http://localhost/picareta_leiloes/pages/cadastroLote/cadastroLote.php'\">Cancelar</button>
                                 <button type='submit' value='adicionar' name='adicionar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Adicionar</button>
                             </div>
                             ";
