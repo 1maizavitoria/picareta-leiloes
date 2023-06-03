@@ -32,10 +32,51 @@
             </div>
     </div>
         <div class="card mx-5">
-            <div class="card-body col-12">
+            <div class="card-body col-12"> 
         <?php
-        $selectLote = executeQuery("SELECT CASE WHEN v.arCondicionado = 1 THEN 'Sim' ELSE 'Não' end as arCondicionado, CASE WHEN v.vidroEletrico = 1 THEN 'Sim' ELSE 'Não' end as vidroEletrico,  v.hodometro, v.anoFabricacao, fi.descricaoFinanceira as financeira, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo from lote lo inner join financeira fi on fi.financeiraId = lo.financeiraId  inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId where lo.loteId = '$id'");
+        $selectLote = executeQuery("SELECT lo.valorIncremento, lo.valorInicial, v.kitGnv, v.documentoParaRodar, v.kitMultimidia, v.sinistro, v.ipvaQuitado, v.cambioAutomatico, v.direcao, v.tipoCombustivel, v.valorDespesas, CASE WHEN v.arCondicionado = 1 THEN 'Sim' ELSE 'Não' end as arCondicionado, CASE WHEN v.vidroEletrico = 1 THEN 'Sim' ELSE 'Não' end as vidroEletrico,  v.hodometro, v.anoFabricacao, fi.descricaoFinanceira as financeira, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo from lote lo inner join financeira fi on fi.financeiraId = lo.financeiraId  inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId where lo.loteId = '$id'");
         $selectLote = mysqli_fetch_assoc($selectLote);
+        $tipoCombustivel; 
+        $direcao;
+        switch($selectLote["tipoCombustivel"]){
+            case 1 : 
+                $tipoCombustivel = "Álcool";
+                break;
+            case 2 :
+                $tipoCombustivel = "Gasolina";
+                break;
+            case 3 :
+                $tipoCombustivel = "Flex";
+                break;
+            case 4 : 
+                $tipoCombustivel = "Diesel";
+                break;
+            case 5 : 
+                $tipoCombustivel = "Híbrido";
+                break;
+            case 6 : 
+                $tipoCombustivel = "Elétrico";
+                break;
+        }
+        
+        switch($selectLote["direcao"]){
+            case 1 : 
+                $direcao = "Mecânica";
+                break;
+            case 2 :
+                $direcao = "Hidráulica";
+                break;
+
+            case 3 :
+                $direcao = "Assistida";
+                break;
+
+            case 4 : 
+                $direcao = "Elétrica";
+                break;
+
+        }
+ 
         echo'
                 <div class="card-header text-center text-uppercase"><h2>' . $selectLote["descricaoMarca"] . ' <span class="text-blue">' . $selectLote["descricaoModelo"] . '</span></h2> </div>
                 <div class="row">
@@ -71,7 +112,7 @@
                         <div class="row">
                             <div class="col-4">
                                 <h4 class="font-label">Lance Atual</h4>
-                                <h2 class="font-info" style="font-size: 20px;">R$45.000,00</h2>
+                                <h2 class="font-info" style="font-size: 20px;">R$' . number_format($selectLote["valorInicial"], 2, ',', '.') . '</h2>
                             </div>
                             <div class="col-4">
                                 <h4 class="font-label">Financeira</h4>
@@ -89,27 +130,27 @@
 
                             <div class="col-4">
                                 <h4 class="font-label">Câmbio</h4>
-                                <h3 class="font-info">Manual</h3>
+                                <h3 class="font-info">' . ($selectLote["cambioAutomatico"] ? "Automático" : "Manual" ) . '</h3>
                             </div>
 
                             <div class="col-4">
                                 <h4 class="font-label">Combustível</h4>
-                                <h3 class="font-info">Gasolina</h3>
+                                <h3 class="font-info">' . $tipoCombustivel .'</h3>
                             </div>
 
                             <div class="col-4">
                                 <h4 class="font-label">Direção</h4>
-                                <h3 class="font-info">Hidráulica</h3>
+                                <h3 class="font-info">' . $direcao .'</h3>
                             </div>
 
                             <div class="col-4">
                                 <h4 class="font-label">Despesas Administrativas</h4>
-                                <h3 class="font-info">R$1.450,00</h3>
+                                <h3 class="font-info">R$' . number_format($selectLote["valorDespesass"], 2, ',', '.') . '</h3>
                             </div>
 
                             <div class="col-4">
                                 <h4 class="font-label">Ar Condicionado</h4>
-                                <h3 class="font-info">Sim</h3>
+                                <h3 class="font-info">' . $selectLote["arCondicionado"] . '</h3>
                             </div>
                             <div class="col-4">
                                 <h4 class="font-label">Vidro Elétrico</h4>
@@ -118,20 +159,27 @@
 
                             <div class="col-4">
                                 <h4 class="font-label">Sinistro</h4>
-                                <h3 class="font-info">Não</h3>
+                                <h3 class="font-info">' . ($selectLote["sinistro"] ? "Sim" : "Não" ) . '</h3>
                             </div>
 
                             <div class="col-4">
                                 <h4 class="font-label">IPVA Quitado</h4>
-                                <h3 class="font-info">Sim</h3>
+                                <h3 class="font-info">' . ($selectLote["ipvaQuitado"] ? "Sim" : "Não" ) . '</h3>
                             </div>
                             <div class="col-4">
                                 <h4 class="font-label">Doc p/ Rodar</h4>
-                                <h3 class="font-info">Sim</h3>
+                                <h3 class="font-info">' . ($selectLote["documentoParaRodar"] ? "Sim" : "Não" ) . '</h3>
                             </div>
-
+                            <div class="col-4">
+                                <h4 class="font-label">Multimídia</h4>
+                                <h3 class="font-info">' . ($selectLote["kitMultimidia"] ? "Sim" : "Não" ) . '</h3>
+                            </div>
+                            <div class="col-4">
+                                <h4 class="font-label">GNV</h4>
+                                <h3 class="font-info">' . ($selectLote["kitGnv"] ? "Sim" : "Não" ) . '</h3>
+                            </div>
                             <div class="mt-3 float-right text-center">
-                                <button class="btn btn-success"> Incrementar R$500,00</button>
+                                <button class="btn btn-success"> Incrementar R$' . number_format($selectLote["valorIncremento"], 2, ',', '.') . '</button>
                             </div>
 
                             <div class="card mt-3">
