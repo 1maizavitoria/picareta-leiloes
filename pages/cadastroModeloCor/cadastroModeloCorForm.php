@@ -118,7 +118,7 @@
                             $selectModelos = executeQuery('SELECT DISTINCT  descricao from MODELO where MARCAID = ' . $marcaId . '');
                             while ($row = mysqli_fetch_assoc($selectModelos)) {
                                 $selected = $descricaoModelo == $row['descricao'] ? "selected" : "";
-                                echo "<option $selected value=" . $row['descricao'] . ">" . $row['descricao'] . "</option>";
+                                echo "<option $selected value='" . $row['descricao'] . "'>" . $row['descricao'] . "</option>";
                             }
                             ?>
                         </select>
