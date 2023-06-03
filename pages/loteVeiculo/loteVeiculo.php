@@ -34,10 +34,11 @@
         <div class="card mx-5">
             <div class="card-body col-12"> 
         <?php
-        $selectLote = executeQuery("SELECT lo.valorIncremento, lo.valorInicial, v.kitGnv, v.documentoParaRodar, v.kitMultimidia, v.sinistro, v.ipvaQuitado, v.cambioAutomatico, v.direcao, v.tipoCombustivel, v.valorDespesas, CASE WHEN v.arCondicionado = 1 THEN 'Sim' ELSE 'Não' end as arCondicionado, CASE WHEN v.vidroEletrico = 1 THEN 'Sim' ELSE 'Não' end as vidroEletrico,  v.hodometro, v.anoFabricacao, fi.descricaoFinanceira as financeira, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo from lote lo inner join financeira fi on fi.financeiraId = lo.financeiraId  inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId where lo.loteId = '$id'");
+        $selectLote = executeQuery("SELECT mo.anoModelo, lo.valorIncremento, lo.valorInicial, v.kitGnv, v.documentoParaRodar, v.kitMultimidia, v.sinistro, v.ipvaQuitado, v.cambioAutomatico, v.direcao, v.tipoCombustivel, v.valorDespesas, CASE WHEN v.arCondicionado = 1 THEN 'Sim' ELSE 'Não' end as arCondicionado, CASE WHEN v.vidroEletrico = 1 THEN 'Sim' ELSE 'Não' end as vidroEletrico,  v.hodometro, v.anoFabricacao, fi.descricaoFinanceira as financeira, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo from lote lo inner join financeira fi on fi.financeiraId = lo.financeiraId  inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId where lo.loteId = '$id'");
         $selectLote = mysqli_fetch_assoc($selectLote);
         $tipoCombustivel; 
         $direcao;
+        $lanceAtual = executeQuery("select la.valorLance ");
         switch($selectLote["tipoCombustivel"]){
             case 1 : 
                 $tipoCombustivel = "Álcool";
@@ -121,11 +122,11 @@
                             
                             <div class="col-4">
                                 <h4 class="font-label"> Ano/Modelo </h4>
-                                <h3 class="font-info">' . $selectLote["anoFabricacao"] . '/1998</h3>
+                                <h3 class="font-info">' . $selectLote["anoFabricacao"] . '/' . $selectLote["anoModelo"] .'</h3>
                             </div>
                             <div class="col-4">
                                 <h4 class="font-label">Odômetro</h4>
-                                <h3 class="font-info">' . $selectLote["hodometro"] . '</h3>
+                                <h3 class="font-info">' . number_format($selectLote["hodometro"], 0, ',', '.') . '</h3>
                             </div>
 
                             <div class="col-4">
@@ -145,7 +146,7 @@
 
                             <div class="col-4">
                                 <h4 class="font-label">Despesas Administrativas</h4>
-                                <h3 class="font-info">R$' . number_format($selectLote["valorDespesass"], 2, ',', '.') . '</h3>
+                                <h3 class="font-info">R$' . number_format($selectLote["valorDespesas"], 2, ',', '.') . '</h3>
                             </div>
 
                             <div class="col-4">
@@ -185,21 +186,16 @@
                             <div class="card mt-3">
                                 <div class="card-body">';
                         include './../../components/grid/grid.php';
-                        $produtos = array(
-                            array("5", "R$45.000,00", "231442"),
-                            array("4", "R$44.500,00", "284875"),
-                            array("3", "R$44.000,00", "231442"),
-                            array("2", "R$43.500,00", "284875"),
-                            array("1", "R$43.000,00", "231442"),
-                        
-                        );
-                    
                         $titulos = array('Lance', 'Usuário');
-                    
                         $editavel = false;
-                        $urlClick = "";
-
-                        gerarGrid($titulos, $produtos, 5, $editavel,  $urlClick);'
+                        $urlClick = null;
+                        $lances = array();
+                        $selectlances = executeQuery("select la.valorLance, la.loginId from lance la where la.loteId = '$id' order by sequencia desc ");
+                        while($row = mysqli_fetch_assoc($selectlances)){
+                            $lances[] = array($row['valorLance'], $row['loginId']);
+                        }
+    
+                        gerarGrid($titulos, $lances, 10, $editavel, $urlClick);'
                                 </div>';
                                 ?>
                             </div>
