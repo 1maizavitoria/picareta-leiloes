@@ -34,7 +34,8 @@
 
             // echo "<script>console.log(id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['descricao'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&corId=" . $veiculo['corId'] . ");</script>";
 
-            header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculoForm.php?id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['dsModelo'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&dsCor=" . $veiculo['dsCor'] . "&chassi=" . $veiculo['chassi'] . "&placa=" . $veiculo['placa'] . "&hodometro=" . $veiculo['hodometro'] . "&observacao=" . $veiculo['observacao'] . "&direcao=" . $veiculo['direcao'] . "&cambioAutomatico=" . $veiculo['cambioAutomatico'] . "&vidroEletrico=" . $veiculo['vidroEletrico'] . "&tipoCombustivel=" . $veiculo['tipoCombustivel'] . "&kitGnv=" . $veiculo['kitGnv'] . "&arCondicionado=" . $veiculo['arCondicionado'] . "&kitMultimidia=" . $veiculo['kitMultimidia'] . "&valorDespesas=" . $veiculo['valorDespesas'] . "&ipvaQuitado=" . $veiculo['ipvaQuitado'] . "&documentoParaRodar=" . $veiculo['documentoParaRodar'] . "&anoFabricacao=" . $veiculo['anoFabricacao'] . "&sinistro=" . $veiculo['sinistro'] ."");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        //id=&marcaId=1&descricaoModelo=PALIO+GS&modelIdAndYear=1a2019&colorId=1yVERMELHO+ALPISTE+DE+URUBU   &modelIdAndYear=1a2019&colorId=1yVERMELHO%20ALPISTE%20DE%20URUBU
+            header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculoForm.php?id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['dsModelo'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&dsCor=" . $veiculo['dsCor'] . "&chassi=" . $veiculo['chassi'] . "&placa=" . $veiculo['placa'] . "&hodometro=" . $veiculo['hodometro'] . "&observacao=" . $veiculo['observacao'] . "&direcao=" . $veiculo['direcao'] . "&cambioAutomatico=" . $veiculo['cambioAutomatico'] . "&vidroEletrico=" . $veiculo['vidroEletrico'] . "&tipoCombustivel=" . $veiculo['tipoCombustivel'] . "&kitGnv=" . $veiculo['kitGnv'] . "&arCondicionado=" . $veiculo['arCondicionado'] . "&kitMultimidia=" . $veiculo['kitMultimidia'] . "&valorDespesas=" . $veiculo['valorDespesas'] . "&ipvaQuitado=" . $veiculo['ipvaQuitado'] . "&documentoParaRodar=" . $veiculo['documentoParaRodar'] . "&anoFabricacao=" . $veiculo['anoFabricacao'] . "&sinistro=" . $veiculo['sinistro'] ."&modelIdAndYear=" . $veiculo['modeloId'] . "a" . $veiculo['anoModelo'] . "&colorId=" . $veiculo['corId'] . "y" . $veiculo['dsCor']);
         }
     }
 
@@ -48,20 +49,20 @@
         $placa = $_POST['licensePlate'];
         $chassi = $_POST['chassis'];
         $hodometro = $_POST['odometer'];
-        $complemento = $_POST['complement'];
+        $complemento = $_POST['complement'] ?? '';
         $direcao = $_POST['steering'];
         $combustivel = $_POST['fuel'];
         $anoFabricacao = $_POST['yearFab'];
         $transmissao = isset($_POST['transmission']) ? 1 : 0;
         $vidroEletrico = isset($_POST['window']) ? 1 : 0;
         $gnv = isset($_POST['gnv']) ? 1 : 0;
-        $arCondidioncado = isset($_POST['air']) ? 1 : 0;
+        $arCondicionado = isset($_POST['air']) ? 1 : 0;
         $multimidia = isset($_POST['multimidia']) ? 1 : 0;
         $ipva = isset($_POST['ipva']) ? 1 : 0;
         $documentoParaRodar = isset($_POST['readyRode']) ? 1 : 0;
         $sinistro = isset($_POST['sinistro']) ? 1 : 0;
+        $cambioAutomatico = isset($_POST['transmission']) ? 1 : 0;
         $despesas = floatval(str_replace(",", ".", str_replace("R$", "", $_POST['expenses'])));
-
         $veiculoExistente = executeQuery("SELECT ve.veiculoId, ve.chassi, ve.placa FROM veiculo ve WHERE ve.chassi = '$chassi' OR ve.placa = '$placa'");
 
         $modeloCorId = executeQuery("SELECT modeloCorId FROM modelocor WHERE modeloId = '$modelo[0]' AND corId = '$cor[0]'");
@@ -78,7 +79,7 @@
                 $redirect = false;
             } else
                 executeQuery("INSERT INTO veiculo (chassi, placa, modeloCorId,  hodometro, observacao, direcao, cambioAutomatico, vidroEletrico, tipoCombustivel, kitGnv, arCondicionado, kitMultimidia, valorDespesas, ipvaQuitado, documentoParaRodar, anoFabricacao, sinistro) 
-                VALUES ('$chassi', '$placa', '$hodometro', $modeloCorId, '$complemento', '$direcao', '$transmissao', '$vidroEletrico', '$combustivel', '$gnv', '$arCondidioncado', '$multimidia', '$despesas', '$ipva', '$documentoParaRodar', '$anoFabricacao', '$sinistro')");
+                VALUES ('$chassi', '$placa', '$modeloCorId', $hodometro, '$complemento', '$direcao', '$transmissao', '$vidroEletrico', '$combustivel', '$gnv', '$arCondicionado', '$multimidia', '$despesas', '$ipva', '$documentoParaRodar', '$anoFabricacao', '$sinistro')");
         }
 
         if (isset($_POST['salvar'])) {
@@ -86,7 +87,7 @@
                 toastr('error', 'Veículo já cadastrado');
                 $redirect = false;
             } else
-                executeQuery("UPDATE veiculo SET chassi = '$chassi', placa = '$placa', modeloCorId = '$modeloCorId',  hodometro = '$hodometro', observacao = '$observacao', direcao = '$direcao', cambioAutomatico = '$cambioAutomatico', vidroEletrico = '$vidroEletrico', tipoCombustivel = '$tipoCombustivel', kitGnv = '$kitGnv', arCondicionado = '$arCondicionado', kitMultimidia = '$kitMultimidia', valorDespesas = '$valorDespesas', ipvaQuitado = '$ipvaQuitado', documentoParaRodar = '$documentoParaRodar', anoFabricacao = '$anoFabricacao', sinistro = '$sinistro' WHERE veiculoId = '$id'");
+                executeQuery("UPDATE veiculo SET chassi = '$chassi', placa = '$placa', modeloCorId = '$modeloCorId',  hodometro = '$hodometro', observacao = '$complemento', direcao = '$direcao', cambioAutomatico = '$cambioAutomatico', vidroEletrico = '$vidroEletrico', tipoCombustivel = '$combustivel', kitGnv = '$gnv', arCondicionado = '$arCondicionado', kitMultimidia = '$multimidia', valorDespesas = '$despesas', ipvaQuitado = '$ipva', documentoParaRodar = '$documentoParaRodar', anoFabricacao = '$anoFabricacao', sinistro = '$sinistro' WHERE veiculoId = '$id'");
 
                 echo "<script>console.log(".json_encode($id).");</script>";
 
@@ -111,7 +112,7 @@
             }
         }
 
-        if ($redirect) {
+        if (false) {
             header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculo.php");
         }
 
@@ -151,7 +152,7 @@
 
                                 while ($row = mysqli_fetch_assoc($dadosMarca)) {
                                     $selected = $marcaId == $row['marcaId'] ? "selected" : "";
-                                    echo "<option $selected value=" . $row['marcaId'] . ">" . $row['dsMarca'] . "</option>";
+                                    echo "<option $selected value='" . $row['marcaId'] . "'>" . $row['dsMarca'] . "</option>";
                                 }
 
                             ?>
@@ -174,7 +175,7 @@
                                 $selectModelos = executeQuery("SELECT DISTINCT descricao FROM modelo WHERE marcaId = $marcaId");
                                 while ($row = mysqli_fetch_assoc($selectModelos)) {
                                     $selected = $descricaoModelo == $row['descricao'] ? "selected" : "";
-                                    echo "<option $selected value=" . $row['descricao'] . ">" . $row['descricao'] . "</option>";
+                                    echo "<option $selected value='" . $row['descricao'] . "'>" . $row['descricao'] . "</option>";
                                 }               
                             ?>
 
@@ -210,7 +211,7 @@
                                
                                 while ($row = mysqli_fetch_assoc($selectModelos)) {
                                     $selected = $anoModelo == $row['anoModelo'] ? "selected" : "";
-                                    echo "<option $selected value=" . $row['modeloId'] ."a". $row['anoModelo'] . ">" . $row['anoModelo'] . "</option>";
+                                    echo "<option $selected value='" . $row['modeloId'] ."a". $row['anoModelo'] . "'>" . $row['anoModelo'] . "</option>";
                                 }
 
 
@@ -263,7 +264,7 @@
 
                                 while ($row = mysqli_fetch_assoc($selectCoresModelo)) {
                                     $selected = $corId == $row['corId'] ? "selected" : "";
-                                    echo "<option $selected value=" . $row['corId'] ."y". $row['dsCor'] . ">" . $row['dsCor'] . "</option>";
+                                    echo "<option $selected value='" . $row['corId'] ."y". $row['dsCor'] . "'>" . $row['dsCor'] . "</option>";
                                 }
                                 
                             ?>
@@ -354,7 +355,7 @@
 
                                 if(in_array($tipoCombustivel, $value)) {
                                     $index = array_search($tipoCombustivel, $value);
-                                    echo "<option selected value=$tipoCombustivel>$option[$index]</option>";
+                                    echo "<option selected value='$tipoCombustivel'>$option[$index]</option>";
                                 }
 
                                 for($i = 0; $i < count($value); $i++) {
