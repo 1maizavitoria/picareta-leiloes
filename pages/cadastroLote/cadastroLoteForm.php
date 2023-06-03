@@ -12,6 +12,7 @@
 
     <?php
     include './../../components/header/header.php';
+    include './../../components/toastr/toastr.php';
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -23,20 +24,35 @@
         $veiculoId = $_POST['veiculo'];
 
 
-        $redirect = false;
+        $redirect = true;
 
         
         if(isset($_POST["deletar"])){
-            executeQuery("DELETE FROM lote WHERE `loteId` = '$loteId'");
-            $redirect = true;
+            $lanceExistente = executeQuery("SELECT * FROM lance WHERE loteId = '$loteId'");
+            if(mysqli_num_rows($lanceExistente) > 0){
+                toastr('error', 'Já foi dado lance nesse lote, não é possivel remove-lo.');
+                $redirect = false;
+            }
+            else
+                executeQuery("DELETE FROM lote WHERE `loteId` = '$loteId'");
         }
         if(isset($_POST["adicionar"])){
-            executeQuery("INSERT INTO lote( leilaoId, valorInicial, valorIncremento, financeiraId, veiculoId) VALUES ('$leilaoId','$valorInicial','$valorIncremento','$financeiraId','$veiculoId')");
-            $redirect = true;
+            $veiculoExistente = executeQuery("SELECT * FROM lote WHERE veiculoId = '$veiculoId'");
+            if(mysqli_num_rows($veiculoExistente) > 0){
+                toastr('error', 'Veiculo já cadastrado em um lote.');
+                $redirect = false;
+            }
+            else
+                executeQuery("INSERT INTO lote( leilaoId, valorInicial, valorIncremento, financeiraId, veiculoId) VALUES ('$leilaoId','$valorInicial','$valorIncremento','$financeiraId','$veiculoId')");
         }
         if(isset($_POST["salvar"])){
-            executeQuery("UPDATE lote SET leilaoId='$leilaoId',valorInicial='$valorInicial',valorIncremento='$valorIncremento',financeiraId='$financeiraId',veiculoId='$veiculoId' WHERE `loteId` = '$loteId'");
-            $redirect = true;
+            $veiculoExistente = executeQuery("SELECT * FROM lote WHERE veiculoId = '$veiculoId'");
+            if(mysqli_num_rows($veiculoExistente) > 0){
+                toastr('error', 'Veiculo já cadastrado em um lote.');
+                $redirect = false;
+            }
+            else
+                executeQuery("UPDATE lote SET leilaoId='$leilaoId',valorInicial='$valorInicial',valorIncremento='$valorIncremento',financeiraId='$financeiraId',veiculoId='$veiculoId' WHERE `loteId` = '$loteId'");
         }
         
         
