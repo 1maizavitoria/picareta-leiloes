@@ -32,7 +32,7 @@
                     include './../../components/grid/grid.php';
 
                     $veiculos = array();
-                    $selectVeiculo = executeQuery("SELECT ma.descricao AS dsMarca, mo.descricao AS dsModelo, mo.anoModelo, co.descricao AS dsCor, ve.placa FROM veiculo ve 
+                    $selectVeiculo = executeQuery("SELECT ma.descricao AS dsMarca, mo.descricao AS dsModelo, mo.anoModelo, co.descricao AS dsCor, ve.placa, ve.veiculoId FROM veiculo ve 
                     INNER JOIN modeloCor mc ON ve.modeloCorId = mc.modeloCorId 
                     INNER JOIN modelo mo ON mc.modeloId = mo.modeloId 
                     INNER JOIN marca ma ON mo.marcaId = ma.marcaId 
@@ -41,7 +41,7 @@
                     while($row = mysqli_fetch_assoc($selectVeiculo)) {
                         echo "<script>console.log(".json_encode($row).");</script>";
 
-                        $veiculos[] = array(NULL, $row['dsMarca'], $row['dsModelo'], $row['anoModelo'], $row['dsCor'], $row['placa']);
+                        $veiculos[] = array($row['veiculoId'], $row['dsMarca'], $row['dsModelo'], $row['anoModelo'], $row['dsCor'], $row['placa']);
                     }
                 
                     $titulos = array('Marca', 'Modelo', 'Ano Modelo', 'Cor', 'Placa');
