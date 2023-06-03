@@ -38,7 +38,9 @@
         $selectLote = mysqli_fetch_assoc($selectLote);
         $tipoCombustivel; 
         $direcao;
-        $lanceAtual = executeQuery("select la.valorLance ");
+        $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.lanceId = (SELECT MAX(lanceId)FROM lance WHERE loteId = '$id' ) ");
+        $lanceAtual = mysqli_fetch_assoc($lanceAtual);
+        $lanceAtual = $lanceAtual["valorLance"] != null ? $lanceAtual["valorLance"] : $selectLote["valorInicial"];
         switch($selectLote["tipoCombustivel"]){
             case 1 : 
                 $tipoCombustivel = "Álcool";
@@ -113,7 +115,7 @@
                         <div class="row">
                             <div class="col-4">
                                 <h4 class="font-label">Lance Atual</h4>
-                                <h2 class="font-info" style="font-size: 20px;">R$' . number_format($selectLote["valorInicial"], 2, ',', '.') . '</h2>
+                                <h2 class="font-info" style="font-size: 20px;">R$' . number_format($lanceAtual, 2, ',', '.') . '</h2>
                             </div>
                             <div class="col-4">
                                 <h4 class="font-label">Financeira</h4>
@@ -186,12 +188,14 @@
                             <div class="card mt-3">
                                 <div class="card-body">';
                         include './../../components/grid/grid.php';
+
+
                         $titulos = array('Lance', 'Usuário');
                         $editavel = false;
-                        $urlClick = null;
+                        $urlClick = "cadastroMarcaForm.php?id=";
                         $lances = array();
-                        $selectlances = executeQuery("select la.valorLance, la.loginId from lance la where la.loteId = '$id' order by sequencia desc ");
-                        while($row = mysqli_fetch_assoc($selectlances)){
+                        $selectLances = executeQuery("select * from lance la where la.loteId = '$id'");
+                        while($row = mysqli_fetch_assoc($selectLances)){
                             $lances[] = array($row['valorLance'], $row['loginId']);
                         }
     
