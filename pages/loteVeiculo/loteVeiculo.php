@@ -38,7 +38,7 @@
         $selectLote = mysqli_fetch_assoc($selectLote);
         $tipoCombustivel; 
         $direcao;
-        $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.lanceId = (SELECT MAX(lanceId)FROM lance WHERE loteId = '$id' ) ");
+        $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.sequencia = (SELECT MAX(sequencia)FROM lance WHERE loteId = '$id' ) ");
         $lanceAtual = mysqli_fetch_assoc($lanceAtual);
         $lanceAtual = $lanceAtual["valorLance"] != null ? $lanceAtual["valorLance"] : $selectLote["valorInicial"];
         switch($selectLote["tipoCombustivel"]){
@@ -127,8 +127,8 @@
                                 <h3 class="font-info">' . $selectLote["anoFabricacao"] . '/' . $selectLote["anoModelo"] .'</h3>
                             </div>
                             <div class="col-4">
-                                <h4 class="font-label">Odômetro</h4>
-                                <h3 class="font-info">' . number_format($selectLote["hodometro"], 0, ',', '.') . '</h3>
+                                <h4 class="font-label">Hodômetro</h4>
+                                <h3 class="font-info">' . number_format($selectLote["hodometro"], 0, ',', '.') . ' Km' . '</h3>
                             </div>
 
                             <div class="col-4">
@@ -192,15 +192,15 @@
 
                         $titulos = array('Lance', 'Usuário');
                         $editavel = false;
-                        $urlClick = "cadastroMarcaForm.php?id=";
                         $lances = array();
-                        $selectLances = executeQuery("select * from lance la where la.loteId = '$id'");
+                        $selectLances = executeQuery("select REPLACE(CONCAT('R$', la.valorLance), '.', ',') as valorLance, sequencia, loginId from lance la where la.loteId = '$id' order by la.sequencia desc");
                         while($row = mysqli_fetch_assoc($selectLances)){
-                            $lances[] = array($row['valorLance'], $row['loginId']);
+                            $lances[] = array($row['sequencia'], $row['valorLance'], $row['loginId'] == $_SESSION['loginId'] ? $row['loginId'] . " (Eu)" : $row['loginId']);
                         }
-    
-                        gerarGrid($titulos, $lances, 10, $editavel, $urlClick);'
-                                </div>';
+                        
+                        
+                        gerarGrid($titulos, $lances, 5, $editavel, null);
+                                
                                 ?>
                             </div>
 
