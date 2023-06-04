@@ -177,7 +177,6 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Lance` (
   UNIQUE INDEX (`sequencia` ASC, `lanceId` ASC),
   INDEX `fk_Lance_Lote1_idx` (`loteId` ASC, `leilaoId` ASC),
   INDEX `fk_Lance_Pessoa1_idx` (`loginId` ASC),
-  UNIQUE INDEX `lanceId_UNIQUE` (`lanceId` ASC),
   CONSTRAINT `fk_Lance_Lote1`
     FOREIGN KEY (`loteId` , `leilaoId`)
     REFERENCES `PICARETALEILOES`.`Lote` (`loteId` , `leilaoId`)
