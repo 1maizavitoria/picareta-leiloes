@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ImagemVeiculo` (
   `veiculoId` INT NOT NULL,
   `imagem` BLOB NULL,
   `tipoImagem` SMALLINT NULL,
-  PRIMARY KEY (`veiculoId`),
+  PRIMARY KEY (`veiculoId`, `imagem`),
   INDEX `fk_ImagemVeiculo_Veiculo1_idx` (`veiculoId` ASC),
   CONSTRAINT `fk_ImagemVeiculo_Veiculo1`
     FOREIGN KEY (`veiculoId`)

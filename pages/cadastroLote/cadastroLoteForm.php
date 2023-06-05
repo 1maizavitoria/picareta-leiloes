@@ -24,6 +24,96 @@
         $veiculoId = $_POST['veiculo'];
 
 
+        $frontalBlob = null;
+
+        if (isset($_FILES['frontal']) && strtolower(pathinfo($_FILES['frontal']['name'], PATHINFO_EXTENSION) != null)) {
+
+            $tipoImagem = strtolower(pathinfo($_FILES['frontal']['name'], PATHINFO_EXTENSION));
+            if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
+                toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
+            } else {
+                $imagemTemp = $_FILES['frontal']['tmp_name'];
+                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+            }
+        }
+        $traseiraBlob = null;
+
+        if (isset($_FILES['traseira']) && strtolower(pathinfo($_FILES['traseira']['name'], PATHINFO_EXTENSION) != null)) {
+
+            $tipoImagem = strtolower(pathinfo($_FILES['traseira']['name'], PATHINFO_EXTENSION));
+            if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
+                toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
+            } else {
+                $imagemTemp = $_FILES['traseira']['tmp_name'];
+                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+            }
+        }
+        $lateralEsquerdaBlob = null;
+
+        if (isset($_FILES['lateralEsquerda']) && strtolower(pathinfo($_FILES['lateralEsquerda']['name'], PATHINFO_EXTENSION) != null)) {
+
+            $tipoImagem = strtolower(pathinfo($_FILES['lateralEsquerda']['name'], PATHINFO_EXTENSION));
+            if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
+                toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
+            } else {
+                $imagemTemp = $_FILES['lateralEsquerda']['tmp_name'];
+                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+            }
+        }
+
+        $lateralDireitaBlob = null;
+
+        if (isset($_FILES['lateralDireita']) && strtolower(pathinfo($_FILES['lateralDireita']['name'], PATHINFO_EXTENSION) != null)) {
+
+            $tipoImagem = strtolower(pathinfo($_FILES['lateralDireita']['name'], PATHINFO_EXTENSION));
+            if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
+                toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
+            } else {
+                $imagemTemp = $_FILES['lateralDireita']['tmp_name'];
+                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+            }
+        }
+
+        $interiorBlob = null;
+
+        if (isset($_FILES['interior']) && strtolower(pathinfo($_FILES['interior']['name'], PATHINFO_EXTENSION) != null)) {
+
+            $tipoImagem = strtolower(pathinfo($_FILES['interior']['name'], PATHINFO_EXTENSION));
+            if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
+                toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
+            } else {
+                $imagemTemp = $_FILES['interior']['tmp_name'];
+                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+            }
+        }
+
+        $painelBlob = null;
+        
+        if (isset($_FILES['painel']) && strtolower(pathinfo($_FILES['painel']['name'], PATHINFO_EXTENSION) != null)) {
+
+            $tipoImagem = strtolower(pathinfo($_FILES['painel']['name'], PATHINFO_EXTENSION));
+            if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
+                toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
+            } else {
+                $imagemTemp = $_FILES['painel']['tmp_name'];
+                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+            }
+        }
+
+        $motorBlob = null;
+        
+        if (isset($_FILES['motor']) && strtolower(pathinfo($_FILES['motor']['name'], PATHINFO_EXTENSION) != null)) {
+
+            $tipoImagem = strtolower(pathinfo($_FILES['motor']['name'], PATHINFO_EXTENSION));
+            if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
+                toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
+            } else {
+                $imagemTemp = $_FILES['motor']['tmp_name'];
+                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+            }
+        }
+
+
         $redirect = true;
 
         
@@ -42,8 +132,17 @@
                 toastr('error', 'Veiculo já cadastrado em um lote.');
                 $redirect = false;
             }
-            else
+            else{
                 executeQuery("INSERT INTO lote( leilaoId, valorInicial, valorIncremento, financeiraId, veiculoId) VALUES ('$leilaoId','$valorInicial','$valorIncremento','$financeiraId','$veiculoId')");
+                executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$frontalBlob', 1)");
+                executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$traseiraBlob', 2)");
+                executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$lateralEsquerdaBlob', 3)");
+                executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$lateralDireitaBlob', 4)");
+                executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$interiorBlob', 5)");
+                executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$painelBlob', 6)");
+                executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$motorBlob', 7)");
+
+            }
         }
         if(isset($_POST["salvar"])){
             $veiculoExistente = executeQuery("SELECT * FROM lote WHERE veiculoId = '$veiculoId'");
@@ -51,8 +150,16 @@
                 toastr('error', 'Veiculo já cadastrado em um lote.');
                 $redirect = false;
             }
-            else
+            else{
                 executeQuery("UPDATE lote SET leilaoId='$leilaoId',valorInicial='$valorInicial',valorIncremento='$valorIncremento',financeiraId='$financeiraId',veiculoId='$veiculoId' WHERE `loteId` = '$loteId'");
+                executeQuery("UPDATE lote SET imagem='$frontalBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 1");
+                executeQuery("UPDATE lote SET imagem='$traseiraBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 2");
+                executeQuery("UPDATE lote SET imagem='$lateralEsquerdaBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 3");
+                executeQuery("UPDATE lote SET imagem='$lateralDireitaBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 4");
+                executeQuery("UPDATE lote SET imagem='$interiorBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 5");
+                executeQuery("UPDATE lote SET imagem='$painelBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 6");
+                executeQuery("UPDATE lote SET imagem='$motorBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 7");
+            }
         }
         
         
@@ -234,6 +341,54 @@
                             }
                          ?>" onblur="validateInput(this)" required>
                         <div class="invalid-feedback" id="invalid-message-incrementalValue">Informe um valor incremento válido.<br> <em>Ex: R$1000</em></div>
+                    </div>
+                    
+                </div>
+                 <div class="row justify-content-center mb-5 gap-4">
+                    <div class="col-3 col-lg-2 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="frontal" id="frontal" accept="image/*">
+                            <label class="custom-file-label" for="frontal">Frontal</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="traseira" id="traseira" accept="image/*">
+                            <label class="custom-file-label" for="traseira">Traseira</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="lateralEsquerda" id="lateralEsquerda" accept="image/*">
+                            <label class="custom-file-label" for="lateralEsquerda">Lateral Esquerda</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="lateralDireita" id="lateralDireita" accept="image/*">
+                            <label class="custom-file-label" for="lateralDireita">Lateral Direita</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mb-5 gap-4">
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="interior" id="interior" accept="image/*">
+                            <label class="custom-file-label" for="interior">Interior</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="painel" id="painel" accept="image/*">
+                            <label class="custom-file-label" for="painel">Painel</label>
+                        </div>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="motor" id="motor" accept="image/*">
+                            <label class="custom-file-label" for="motor">Motor</label>
+                        </div>
                     </div>
                 </div>
                 
