@@ -34,7 +34,7 @@
 
             // echo "<script>console.log(id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['descricao'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&corId=" . $veiculo['corId'] . ");</script>";
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        //id=&marcaId=1&descricaoModelo=PALIO+GS&modelIdAndYear=1a2019&colorId=1yVERMELHO+ALPISTE+DE+URUBU   &modelIdAndYear=1a2019&colorId=1yVERMELHO%20ALPISTE%20DE%20URUBU
+            //id=&marcaId=1&descricaoModelo=PALIO+GS&modelIdAndYear=1a2019&colorId=1yVERMELHO+ALPISTE+DE+URUBU   &modelIdAndYear=1a2019&colorId=1yVERMELHO%20ALPISTE%20DE%20URUBU
             header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculoForm.php?id=$id&marcaId=" . $veiculo['marcaId'] . "&descricaoModelo=" . $veiculo['dsModelo'] . "&anoModelo=" . $veiculo['anoModelo'] . "&modeloId=" . $veiculo['modeloId'] . "&dsCor=" . $veiculo['dsCor'] . "&chassi=" . $veiculo['chassi'] . "&placa=" . $veiculo['placa'] . "&hodometro=" . $veiculo['hodometro'] . "&observacao=" . $veiculo['observacao'] . "&direcao=" . $veiculo['direcao'] . "&cambioAutomatico=" . $veiculo['cambioAutomatico'] . "&vidroEletrico=" . $veiculo['vidroEletrico'] . "&tipoCombustivel=" . $veiculo['tipoCombustivel'] . "&kitGnv=" . $veiculo['kitGnv'] . "&arCondicionado=" . $veiculo['arCondicionado'] . "&kitMultimidia=" . $veiculo['kitMultimidia'] . "&valorDespesas=" . $veiculo['valorDespesas'] . "&ipvaQuitado=" . $veiculo['ipvaQuitado'] . "&documentoParaRodar=" . $veiculo['documentoParaRodar'] . "&anoFabricacao=" . $veiculo['anoFabricacao'] . "&sinistro=" . $veiculo['sinistro'] ."&modelIdAndYear=" . $veiculo['modeloId'] . "a" . $veiculo['anoModelo'] . "&colorId=" . $veiculo['corId'] . "y" . $veiculo['dsCor']);
         }
     }
@@ -112,7 +112,7 @@
             }
         }
 
-        if (false) {
+        if ($redirect) {
             header("Location: http://localhost/picareta_leiloes/pages/cadastroVeiculo/cadastroVeiculo.php");
         }
 
@@ -575,7 +575,33 @@
                         if (isset($id) && $id != "") {
                             echo "
                             <div class='col-6 col-lg-3 mx-auto my-3 d-flex justify-content-around'>
-                                <button type='submit' value='deletar' name='deletar' class='btn btn-outline-danger col-5'>Deletar</button>
+                                
+                            <!-- Button trigger modal -->
+                                <button type='button' class='btn btn-outline-danger col-5' data-toggle='modal' data-target='#exampleModal'>
+                                Deletar
+                                </button>
+
+                                <!-- Modal -->
+                                <div class='modal fade' id='exampleModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                <div class='modal-dialog' role='document'>
+                                    <div class='modal-content'>
+                                    <div class='modal-header'>
+                                        <h5 class='modal-title' id='exampleModalLabel'>Excluir Veículo</h5>
+                                        <button type='button' class='close' data-dismiss='modal' aria-label='Cancelar'>
+                                        <span aria-hidden='true'>&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class='modal-body'>
+                                        Tem certeza que deseja excluir o veículo selecionado?
+                                    </div>
+                                    <div class='modal-footer'>
+                                        <button type='submit' value='deletar' name='deletar' class='btn btn-outline-danger'>Deletar</button>
+                                        <button type='button' class='btn btn-primary' data-dismiss='modal'>Cancelar</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                
                                 <button type='submit' value='salvar' name='salvar' class='btn btn-outline-success col-5' onclick=\"checkAllFields('form')\">Salvar</button>
                             </div>
                             ";
