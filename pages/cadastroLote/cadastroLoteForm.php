@@ -32,8 +32,11 @@
             if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
             } else {
+                toastr("success", "pica.");
                 $imagemTemp = $_FILES['frontal']['tmp_name'];
-                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+                $frontalBlob = addslashes(file_get_contents($imagemTemp));
+                toastr("success", $frontalBlob);
+
             }
         }
         $traseiraBlob = null;
@@ -45,7 +48,7 @@
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
             } else {
                 $imagemTemp = $_FILES['traseira']['tmp_name'];
-                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+                $traseiraBlob = addslashes(file_get_contents($imagemTemp));
             }
         }
         $lateralEsquerdaBlob = null;
@@ -57,7 +60,7 @@
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
             } else {
                 $imagemTemp = $_FILES['lateralEsquerda']['tmp_name'];
-                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+                $lateralEsquerdaBlob = addslashes(file_get_contents($imagemTemp));
             }
         }
 
@@ -70,7 +73,7 @@
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
             } else {
                 $imagemTemp = $_FILES['lateralDireita']['tmp_name'];
-                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+                $lateralDireitaBlob = addslashes(file_get_contents($imagemTemp));
             }
         }
 
@@ -83,7 +86,7 @@
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
             } else {
                 $imagemTemp = $_FILES['interior']['tmp_name'];
-                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+                $interiorBlob = addslashes(file_get_contents($imagemTemp));
             }
         }
 
@@ -96,7 +99,7 @@
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
             } else {
                 $imagemTemp = $_FILES['painel']['tmp_name'];
-                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+                $painelBlob = addslashes(file_get_contents($imagemTemp));
             }
         }
 
@@ -109,7 +112,7 @@
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
             } else {
                 $imagemTemp = $_FILES['motor']['tmp_name'];
-                $imagemBlob = addslashes(file_get_contents($imagemTemp));
+                $motorBlob = addslashes(file_get_contents($imagemTemp));
             }
         }
 
@@ -347,26 +350,26 @@
                  <div class="row justify-content-center mb-5 gap-4">
                     <div class="col-3 col-lg-2 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="frontal" id="frontal" accept="image/*">
-                            <label class="custom-file-label" for="frontal">Frontal</label>
+                            <input type="file" class="custom-file-input" name="frontal" id="frontalFoto" accept="image/*">
+                            <label class="custom-file-label" for="frontalFoto">Frontal</label>
                         </div>
                     </div>
                     <div class="col-3 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="traseira" id="traseira" accept="image/*">
-                            <label class="custom-file-label" for="traseira">Traseira</label>
+                            <input type="file" class="custom-file-input" name="traseira" id="traseiraFoto" accept="image/*">
+                            <label class="custom-file-label" for="traseiraFoto">Traseira</label>
                         </div>
                     </div>
                     <div class="col-3 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="lateralEsquerda" id="lateralEsquerda" accept="image/*">
-                            <label class="custom-file-label" for="lateralEsquerda">Lateral Esquerda</label>
+                            <input type="file" class="custom-file-input" name="lateralEsquerda" id="lateralEsquerdaFoto" accept="image/*">
+                            <label class="custom-file-label" for="lateralEsquerdaFoto">Lateral Esquerda</label>
                         </div>
                     </div>
                     <div class="col-3 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="lateralDireita" id="lateralDireita" accept="image/*">
-                            <label class="custom-file-label" for="lateralDireita">Lateral Direita</label>
+                            <input type="file" class="custom-file-input" name="lateralDireita" id="lateralDireitaFoto" accept="image/*">
+                            <label class="custom-file-label" for="lateralDireitaFoto">Lateral Direita</label>
                         </div>
                     </div>
                 </div>
@@ -374,20 +377,20 @@
                 <div class="row justify-content-center mb-5 gap-4">
                     <div class="col-3 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="interior" id="interior" accept="image/*">
-                            <label class="custom-file-label" for="interior">Interior</label>
+                            <input type="file" class="custom-file-input" name="interior" id="interiorFoto" accept="image/*">
+                            <label class="custom-file-label" for="interiorFoto">Interior</label>
                         </div>
                     </div>
                     <div class="col-3 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="painel" id="painel" accept="image/*">
-                            <label class="custom-file-label" for="painel">Painel</label>
+                            <input type="file" class="custom-file-input" name="painel" id="painelFoto" accept="image/*">
+                            <label class="custom-file-label" for="painelFoto">Painel</label>
                         </div>
                     </div>
                     <div class="col-3 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="motor" id="motor" accept="image/*">
-                            <label class="custom-file-label" for="motor">Motor</label>
+                            <input type="file" class="custom-file-input" name="motor" id="motorFoto" accept="image/*">
+                            <label class="custom-file-label" for="motorFoto">Motor</label>
                         </div>
                     </div>
                 </div>
