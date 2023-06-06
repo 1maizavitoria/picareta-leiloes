@@ -399,7 +399,6 @@
                     if (isset($_GET["id"])) {
                  
                         $id = $_GET["id"];
-                        echo "<script>console.log('$id')</script>";
 
                         if (isset($id) && $id != "") {
                             echo "

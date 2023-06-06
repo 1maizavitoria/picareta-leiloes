@@ -13,6 +13,26 @@
     <?php
     include './../../components/header/header.php';
     $id = $_GET['id'];
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if(isset($_POST["incrementar"])) {
+            $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.lanceId = (SELECT MAX(lanceId)FROM lance WHERE loteId = '$id' ) ");
+            $lanceAtual = mysqli_fetch_assoc($lanceAtual);
+            $lanceAtual = $lanceAtual["valorLance"] != null ? $lanceAtual["valorLance"] : $selectLote["valorInicial"];
+            $lote = executeQuery("SELECT lo.leilaoId, lo.loteId, lo.valorIncremento from lote lo  where lo.loteId = '$id'");
+            $lote = mysqli_fetch_assoc($lote);
+            $loteId = $lote["loteId"];
+            $leilaoId = $lote["leilaoId"];
+            $valorIncremento = $lote["valorIncremento"];
+            $valorLance = $lanceAtual + $valorIncremento;
+            $loginId = $_SESSION['loginId'];
+    
+            executeQuery("INSERT INTO lance( dataLance, leilaoId, valorLance, loteId, loginId) VALUES (CURRENT_TIMESTAMP() ,'$leilaoId','$valorLance','$loteId','$loginId')");
+            header("Location: http://localhost/picareta_leiloes/pages/loteVeiculo/loteVeiculo.php?id=$id");
+
+        }
+
+    }
     ?>
 
     <div class="h-100">
@@ -34,11 +54,11 @@
         <div class="card mx-5">
             <div class="card-body col-12"> 
         <?php
-        $selectLote = executeQuery("SELECT mo.anoModelo, lo.valorIncremento, lo.valorInicial, v.kitGnv, v.documentoParaRodar, v.kitMultimidia, v.sinistro, v.ipvaQuitado, v.cambioAutomatico, v.direcao, v.tipoCombustivel, v.valorDespesas, CASE WHEN v.arCondicionado = 1 THEN 'Sim' ELSE 'Não' end as arCondicionado, CASE WHEN v.vidroEletrico = 1 THEN 'Sim' ELSE 'Não' end as vidroEletrico,  v.hodometro, v.anoFabricacao, fi.descricaoFinanceira as financeira, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo from lote lo inner join financeira fi on fi.financeiraId = lo.financeiraId  inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId where lo.loteId = '$id'");
+        $selectLote = executeQuery("SELECT lo.leilaoId, mo.anoModelo, lo.valorIncremento, lo.valorInicial, v.kitGnv, v.documentoParaRodar, v.kitMultimidia, v.sinistro, v.ipvaQuitado, v.cambioAutomatico, v.direcao, v.tipoCombustivel, v.valorDespesas, CASE WHEN v.arCondicionado = 1 THEN 'Sim' ELSE 'Não' end as arCondicionado, CASE WHEN v.vidroEletrico = 1 THEN 'Sim' ELSE 'Não' end as vidroEletrico,  v.hodometro, v.anoFabricacao, fi.descricaoFinanceira as financeira, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo from lote lo inner join financeira fi on fi.financeiraId = lo.financeiraId  inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId where lo.loteId = '$id'");
         $selectLote = mysqli_fetch_assoc($selectLote);
         $tipoCombustivel; 
         $direcao;
-        $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.sequencia = (SELECT MAX(sequencia)FROM lance WHERE loteId = '$id' ) ");
+        $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.lanceId = (SELECT MAX(lanceId)FROM lance WHERE loteId = '$id' ) ");
         $lanceAtual = mysqli_fetch_assoc($lanceAtual);
         $lanceAtual = $lanceAtual["valorLance"] != null ? $lanceAtual["valorLance"] : $selectLote["valorInicial"];
         switch($selectLote["tipoCombustivel"]){
@@ -182,8 +202,34 @@
                                 <h3 class="font-info">' . ($selectLote["kitGnv"] ? "Sim" : "Não" ) . '</h3>
                             </div>
                             <div class="mt-3 float-right text-center">
-                                <button class="btn btn-success"> Incrementar R$' . number_format($selectLote["valorIncremento"], 2, ',', '.') . '</button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal"> Incrementar R$' . number_format($selectLote["valorIncremento"], 2, ',', '.') . '</button>
                             </div>
+                            <form class="row d-flex justify-content-center" id="form" action="" method="POST">
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Dar lance</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Cancelar">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Tem certeza que deseja dar um lance?
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cancelar</button>
+                                <button class="btn btn-success" name="incrementar"> Incrementar R$' . number_format($selectLote["valorIncremento"], 2, ',', '.') . '</button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+
+                        </div>
+                            
+                            </form>
 
                             <div class="card mt-3">
                                 <div class="card-body">';
@@ -193,7 +239,7 @@
                         $titulos = array('Lance', 'Usuário');
                         $editavel = false;
                         $lances = array();
-                        $selectLances = executeQuery("select REPLACE(CONCAT('R$', la.valorLance), '.', ',') as valorLance, sequencia, loginId from lance la where la.loteId = '$id' order by la.sequencia desc");
+                        $selectLances = executeQuery("select REPLACE(CONCAT('R$', la.valorLance), '.', ',') as valorLance, sequencia, loginId from lance la where la.loteId = '$id' order by la.valorLance desc");
                         while($row = mysqli_fetch_assoc($selectLances)){
                             $lances[] = array($row['sequencia'], $row['valorLance'], $row['loginId'] == $_SESSION['loginId'] ? $row['loginId'] . " (Eu)" : $row['loginId']);
                         }
