@@ -349,7 +349,7 @@
                  <div class="row justify-content-center mb-5 gap-4">
                     <div class="col-3 col-lg-2 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="frontal" id="frontalFoto" accept="image/*" required>
+                            <input type="file" class="custom-file-input" name="frontal" id="frontalFoto" accept="image/*" <?php echo     isset($_GET['id']) ? '' : 'required';  ?> >
                             <label class="custom-file-label" for="frontalFoto">Frontal</label>
                         </div>
                     </div>

@@ -77,14 +77,8 @@
         $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.lanceId = (SELECT MAX(lanceId)FROM lance WHERE loteId = '$id' ) ");
         $lanceAtual = mysqli_fetch_assoc($lanceAtual);
         $lanceAtual = ($lanceAtual == null ? $selectLote["valorInicial"] : $lanceAtual["valorLance"]);
-        $imagenss = array();
-        $imagens = executeQuery("SELECT iv.imagem FROM imagemVeiculo iv WHERE iv.tipoImagem in(1,2, 3, 4, 5, 6,  7) and iv.veiculoId = 5 ");
-        $imagens = mysqli_fetch_array($imagens, MYSQLI_NUM);
-
-        // while($row = mysqli_fetch_assoc($imagens)){
-        //     $imagenss[] = array($row['imagem']);
-        // }
-        echo '<script> console.log('. json_encode($imagenss). ') </script>';
+        $imagens = executeQuery("SELECT iv.imagem FROM imagemVeiculo iv WHERE iv.tipoImagem in(1,2, 3, 4, 5, 6,  7) and iv.veiculoId = ". $selectLote["veiculoId"]. " ");
+       
  
         switch($selectLote["tipoCombustivel"]){
             case 1 : 
@@ -136,18 +130,24 @@
                             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                         </ol>
                         <div class="carousel-inner">';
+                        $existeFoto = false;
                         foreach ($imagens as $imagem) {
-                            echo '<div class="carousel-item active">
-                            <img  class=" d-block w-100 h-100" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '""  >
-                            </div>';
-                        }'
-                           
-                            <div class="carousel-item">
-                            <img  class=" d-block w-100 h-100" src="./../loteVeiculo/images/aaa.jpg"  >
-                            </div>
-                            <div class="carousel-item">
-                            <img  class=" d-block w-100 h-100" src="./../loteVeiculo/images/eclipse-direita.jpg"  >
-                            </div>
+                            if($imagem["imagem"] != null){
+
+                                if(!$existeFoto){
+                                    echo '<div class="carousel-item active">
+                                    <img  class="d-block rounded img-fluid" width="1000" height="1200" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '"  >
+                                    </div>';
+                                    $existeFoto = true;
+                                }else{      
+                                    echo '<div class="carousel-item ">
+                                    <img  class=" d-block rounded img-fluid" width="1000" height="1200" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '"  >
+                                    </div>';
+                                }
+
+                            }
+                        }'';
+                        echo'
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
