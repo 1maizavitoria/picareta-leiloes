@@ -26,7 +26,35 @@
                     include './../../components/grid/grid.php';
                     $id = $_GET['leilaoId'];
                     $lotes = array();
-                    $selectLote = executeQuery('select lo.loteId as loteId, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo, c.descricao as descricaoCor, CONCAT(v.anoFabricacao,"/",mo.anoModelo) as anoModeloFabricacao,  REPLACE(CONCAT("R$", COALESCE(la.valorLance, lo.valorInicial)), ".", ",") as valorAtual, f.descricaoFinanceira, DATE_FORMAT(le.dataLeilao, "%d/%m/%Y %H:%i:%s") as dataLeilao  from leilao le inner join lote lo on lo.leilaoId = le.leilaoId inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId inner join cor c on c.corId = mc.corId left join lance la on la.loteId = lo.loteId inner join financeira f on f.financeiraId = lo.financeiraId where le.leilaoId = ' . $id . ' order by la.lanceId desc limit 1');
+                    $selectLote = executeQuery('SELECT
+                    lo.loteId AS loteId,
+                    ma.descricao AS descricaoMarca,
+                    mo.descricao AS descricaoModelo,
+                    c.descricao AS descricaoCor,
+                    CONCAT(v.anoFabricacao, "/", mo.anoModelo) AS anoModeloFabricacao,
+                    REPLACE(CONCAT("R$", COALESCE(la.valorLance, lo.valorInicial)), ".", ",") AS valorAtual,
+                    f.descricaoFinanceira,
+                    DATE_FORMAT(le.dataLeilao, "%d/%m/%Y %H:%i:%s") AS dataLeilao
+                FROM
+                    leilao le
+                    INNER JOIN lote lo ON lo.leilaoId = le.leilaoId
+                    INNER JOIN veiculo v ON v.veiculoId = lo.veiculoId
+                    INNER JOIN modelocor mc ON mc.modeloCorId = v.modeloCorId
+                    INNER JOIN modelo mo ON mo.modeloId = mc.modeloId
+                    INNER JOIN marca ma ON ma.marcaId = mo.marcaId
+                    INNER JOIN cor c ON c.corId = mc.corId
+                    LEFT JOIN (
+                        SELECT loteId, valorLance
+                        FROM lance
+                        ORDER BY dataLance DESC
+                        LIMIT 1
+                    ) la ON la.loteId = lo.loteId
+                    INNER JOIN financeira f ON f.financeiraId = lo.financeiraId
+                WHERE
+                    le.leilaoId = ' . $_GET["leilaoId"] . '
+                ORDER BY
+                    lo.loteId DESC
+                ');
 
                     while($row = mysqli_fetch_assoc($selectLote)){
                         $lotes[] = array($row['loteId'], $row['descricaoMarca'], $row['descricaoModelo'], $row['descricaoCor'], $row['anoModeloFabricacao'], $row['valorAtual'], $row['descricaoFinanceira'], $row['dataLeilao']);
