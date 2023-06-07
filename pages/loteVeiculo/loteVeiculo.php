@@ -41,7 +41,6 @@
                 toastr('error', 'Você precisa ser um usuário comum para dar um lance.');
             } else if ($cadastroCompleto == null) {
                 toastr('error', 'Você precisa completar seu cadastro para dar um lance.');
-            }
             } else {
                 executeQuery("INSERT INTO lance( dataLance, leilaoId, valorLance, loteId, loginId) VALUES (CURRENT_TIMESTAMP() ,'$leilaoId','$valorLance','$loteId','$loginId')");
                 header("Location: http://localhost/picareta_leiloes/pages/loteVeiculo/loteVeiculo.php?id=$id");
@@ -49,6 +48,7 @@
     
 
         }
+    }
     ?>
 
     <div class="h-100">
