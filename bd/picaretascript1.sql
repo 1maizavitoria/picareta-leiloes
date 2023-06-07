@@ -1,13 +1,14 @@
+
 USE `PICARETALEILOES` ;
 
 -- -----------------------------------------------------
 -- Table `PICARETALEILOES`.`Marca`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Marca` (
-  `marcaId` INT NULL DEFAULT NULL AUTO_INCREMENT,
+  `marcaId` INT NULL AUTO_INCREMENT,
   `descricao` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`marcaId`, `descricao`),
-  UNIQUE INDEX (`marcaId` ASC, `descricao` ASC));
+  UNIQUE INDEX (`marcaId` ASC, `descricao` ASC) );
 
 
 -- -----------------------------------------------------
@@ -19,8 +20,8 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Modelo` (
   `anoModelo` SMALLINT NULL DEFAULT NULL,
   `descricao` VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (`modeloId`, `marcaId`, `anoModelo`),
-  UNIQUE INDEX (`anoModelo` ASC, `modeloId` ASC),
-  INDEX `FK_Modelo_Marca` (`marcaId` ASC),
+  UNIQUE INDEX (`anoModelo` ASC, `modeloId` ASC) ,
+  INDEX `FK_Modelo_Marca` (`marcaId` ASC) ,
   CONSTRAINT `FK_Modelo_Marca`
     FOREIGN KEY (`marcaId`)
     REFERENCES `PICARETALEILOES`.`Marca` (`marcaId`));
@@ -39,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Cor` (
 -- Table `PICARETALEILOES`.`ModeloCor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ModeloCor` (
-  `modeloCorId` INT NULL DEFAULT NULL AUTO_INCREMENT,
+  `modeloCorId` INT NULL AUTO_INCREMENT,
   `modeloId` INT NULL DEFAULT NULL,
   `corId` INT NULL DEFAULT NULL,
   PRIMARY KEY (`modeloCorId`, `modeloId`, `corId`),
-  INDEX `FK_Modelo_ModeloCor` (`modeloId` ASC),
-  INDEX `FK_ModeloCor_Cor` (`corId` ASC),
+  INDEX `FK_Modelo_ModeloCor` (`modeloId` ASC) ,
+  INDEX `FK_ModeloCor_Cor` (`corId` ASC) ,
   CONSTRAINT `FK_Modelo_ModeloCor`
     FOREIGN KEY (`modeloId`)
     REFERENCES `PICARETALEILOES`.`Modelo` (`modeloId`),
@@ -58,8 +59,8 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ModeloCor` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Veiculo` (
   `veiculoId` INT NULL DEFAULT NULL AUTO_INCREMENT,
-  `chassi` VARCHAR(17) NULL DEFAULT NULL,
-  `placa` VARCHAR(7) NULL DEFAULT NULL,
+  `chassi` VARCHAR(1) NULL DEFAULT NULL,
+  `placa` VARCHAR(6) NULL DEFAULT NULL,
   `hodometro` INT NULL DEFAULT NULL,
   `observacao` VARCHAR(256) NULL DEFAULT NULL,
   `direcao` SMALLINT NULL DEFAULT NULL,
@@ -69,14 +70,14 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Veiculo` (
   `kitGnv` TINYINT NULL DEFAULT NULL,
   `arCondicionado` TINYINT NULL DEFAULT NULL,
   `kitMultimidia` TINYINT NULL DEFAULT NULL,
-  `valorDespesas` DECIMAL(10,2) NULL DEFAULT NULL,
+  `valorDespesas` DECIMAL NULL DEFAULT NULL,
   `ipvaQuitado` TINYINT NULL DEFAULT NULL,
   `documentoParaRodar` TINYINT NULL DEFAULT NULL,
   `anoFabricacao` SMALLINT NULL DEFAULT NULL,
   `sinistro` TINYINT NULL DEFAULT NULL,
   `modeloCorId` INT NOT NULL,
   PRIMARY KEY (`veiculoId`, `placa`, `chassi`, `modeloCorId`),
-  INDEX `fk_Veiculo_ModeloCor1_idx` (`modeloCorId` ASC),
+  INDEX `fk_Veiculo_ModeloCor1_idx` (`modeloCorId` ASC) ,
   CONSTRAINT `fk_Veiculo_ModeloCor1`
     FOREIGN KEY (`modeloCorId`)
     REFERENCES `PICARETALEILOES`.`ModeloCor` (`modeloCorId`)
@@ -108,15 +109,15 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Financeira` (
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Lote` (
   `loteId` INT NULL AUTO_INCREMENT,
   `leilaoId` INT NULL DEFAULT NULL,
-  `valorInicial` DECIMAL(10,2) NULL DEFAULT NULL,
-  `valorIncremento` DECIMAL(10,2) NULL DEFAULT NULL,
+  `valorInicial` DECIMAL NULL DEFAULT NULL,
+  `valorIncremento` DECIMAL NULL DEFAULT NULL,
   `financeiraId` INT NULL DEFAULT NULL,
   `veiculoId` INT NOT NULL,
   PRIMARY KEY (`loteId`, `leilaoId`, `financeiraId`, `veiculoId`),
-  INDEX `FK_Lote_Leilao` (`leilaoId` ASC),
-  INDEX `FK_Lote_Financeira` (`financeiraId` ASC),
-  UNIQUE INDEX `loteId_UNIQUE` (`loteId` ASC),
-  INDEX `fk_Lote_Veiculo1_idx` (`veiculoId` ASC),
+  INDEX `FK_Lote_Leilao` (`leilaoId` ASC) ,
+  INDEX `FK_Lote_Financeira` (`financeiraId` ASC) ,
+  UNIQUE INDEX `loteId_UNIQUE` (`loteId` ASC) ,
+  INDEX `fk_Lote_Veiculo1_idx` (`veiculoId` ASC) ,
   CONSTRAINT `FK_Lote_Leilao`
     FOREIGN KEY (`leilaoId`)
     REFERENCES `PICARETALEILOES`.`Leilao` (`leilaoId`),
@@ -167,16 +168,16 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Pessoa` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Lance` (
   `lanceId` INT NULL AUTO_INCREMENT,
-  `sequencia` SMALLINT NULL DEFAULT NULL,
   `dataLance` DATETIME NULL DEFAULT NULL,
-  `valorLance` DECIMAL(10,2) NULL DEFAULT NULL,
+  `valorLance` DECIMAL NULL DEFAULT NULL,
   `loteId` INT NOT NULL,
   `leilaoId` INT NOT NULL,
   `loginId` INT NOT NULL,
-  PRIMARY KEY (`lanceId`, `sequencia`, `loteId`, `leilaoId`, `loginId`),
-  UNIQUE INDEX (`sequencia` ASC, `lanceId` ASC),
-  INDEX `fk_Lance_Lote1_idx` (`loteId` ASC, `leilaoId` ASC),
-  INDEX `fk_Lance_Pessoa1_idx` (`loginId` ASC),
+  PRIMARY KEY (`lanceId`, `loteId`, `leilaoId`, `loginId`),
+  UNIQUE INDEX (`lanceId` ASC) ,
+  INDEX `fk_Lance_Lote1_idx` (`loteId` ASC, `leilaoId` ASC) ,
+  INDEX `fk_Lance_Pessoa1_idx` (`loginId` ASC) ,
+  UNIQUE INDEX `lanceId_UNIQUE` (`lanceId` ASC) ,
   CONSTRAINT `fk_Lance_Lote1`
     FOREIGN KEY (`loteId` , `leilaoId`)
     REFERENCES `PICARETALEILOES`.`Lote` (`loteId` , `leilaoId`)
@@ -201,13 +202,30 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Endereco` (
   `uf` VARCHAR(2) NULL DEFAULT NULL,
   `loginId` INT NOT NULL,
   PRIMARY KEY (`loginId`),
-  INDEX `fk_Endereco_Pessoa1_idx` (`loginId` ASC),
+  INDEX `fk_Endereco_Pessoa1_idx` (`loginId` ASC) ,
   CONSTRAINT `fk_Endereco_Pessoa1`
     FOREIGN KEY (`loginId`)
     REFERENCES `PICARETALEILOES`.`Pessoa` (`loginId`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+
+-- -----------------------------------------------------
+-- Table `PICARETALEILOES`.`ImagensLote`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ImagensLote` (
+  `loteId` SMALLINT NULL DEFAULT NULL,
+  `tipoImagem` SMALLINT NULL DEFAULT NULL,
+  `imagem` BLOB NULL DEFAULT NULL,
+  `leilaoId` INT NOT NULL,
+  UNIQUE INDEX (`tipoImagem` ASC) ,
+  PRIMARY KEY (`loteId`, `tipoImagem`, `leilaoId`),
+  INDEX `fk_ImagensLote_Lote1_idx` (`leilaoId` ASC) ,
+  CONSTRAINT `fk_ImagensLote_Lote1`
+    FOREIGN KEY (`leilaoId`)
+    REFERENCES `PICARETALEILOES`.`Lote` (`leilaoId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
@@ -216,9 +234,9 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Endereco` (
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ImagemVeiculo` (
   `veiculoId` INT NOT NULL,
   `imagem` BLOB NULL,
-  `tipoImagem` SMALLINT NULL,
+  `tipoImagem` SMALLINT NOT NULL COMMENT '1 - frontal\n2 - traseira\n3 - lateral esquerda\n4 - lateral direita\n5 - interior \n6 - painel \n7 - motor',
   PRIMARY KEY (`veiculoId`, `tipoImagem`),
-  INDEX `fk_ImagemVeiculo_Veiculo1_idx` (`veiculoId` ASC),
+  INDEX `fk_ImagemVeiculo_Veiculo1_idx` (`veiculoId` ASC) ,
   CONSTRAINT `fk_ImagemVeiculo_Veiculo1`
     FOREIGN KEY (`veiculoId`)
     REFERENCES `PICARETALEILOES`.`Veiculo` (`veiculoId`)

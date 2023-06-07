@@ -44,7 +44,7 @@
                         INNER JOIN lote lo ON ve.veiculoId = lo.veiculoId
                         INNER JOIN financeira fn ON lo.financeiraId = fn.financeiraId
                         INNER JOIN lance la ON lo.loteId = la.loteId
-                        INNER JOIN leilao le ON lo.leilaoId = le.leilaoId");
+                        INNER JOIN leilao le ON lo.leilaoId = le.leilaoId where la.loginId = " . $_SESSION['loginId'] . "");
 
                     while($row = mysqli_fetch_assoc($selectLances)) {
                         $lances[] = array(NULL, $row['dsMarca'], $row['dsModelo'], $row['dsCor'], $row['anoModeloFabricacao'],  'R$' . number_format($row['valorLance']), $row['dsFinanceira'], date('d/m/Y H:i:s', strtotime($row['dataLance'])), date('d/m/Y H:i:s', strtotime($row['dtResultado'])));
