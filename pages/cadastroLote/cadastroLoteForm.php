@@ -27,7 +27,7 @@
         $frontalBlob = null;
 
         if (isset($_FILES['frontal']) && strtolower(pathinfo($_FILES['frontal']['name'], PATHINFO_EXTENSION) != null)) {
-
+            
             $tipoImagem = strtolower(pathinfo($_FILES['frontal']['name'], PATHINFO_EXTENSION));
             if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
@@ -36,7 +36,7 @@
                 $imagemTemp = $_FILES['frontal']['tmp_name'];
                 $frontalBlob = addslashes(file_get_contents($imagemTemp));
                 toastr("success", $frontalBlob);
-
+                
             }
         }
         $traseiraBlob = null;
@@ -130,13 +130,14 @@
                 executeQuery("DELETE FROM lote WHERE `loteId` = '$loteId'");
         }
         if(isset($_POST["adicionar"])){
-            $veiculoExistente = executeQuery("SELECT * FROM lote WHERE veiculoId = '$veiculoId'");
+            $veiculoExistente = executeQuery("SELECT * FROM lote WHERE veiculoId = '$veiculoId' and leilaoId = '$leilaoId'");
             if(mysqli_num_rows($veiculoExistente) > 0){
                 toastr('error', 'Veiculo já cadastrado em um lote.');
                 $redirect = false;
             }
             else{
                 executeQuery("INSERT INTO lote( leilaoId, valorInicial, valorIncremento, financeiraId, veiculoId) VALUES ('$leilaoId','$valorInicial','$valorIncremento','$financeiraId','$veiculoId')");
+                echo "<script>console.log('$frontalBlob')</script>";
                 executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$frontalBlob', 1)");
                 executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$traseiraBlob', 2)");
                 executeQuery("INSERT INTO imagemveiculo (veiculoId, imagem, tipoImagem) VALUES ('$veiculoId', '$lateralEsquerdaBlob', 3)");
@@ -148,20 +149,20 @@
             }
         }
         if(isset($_POST["salvar"])){
-            $veiculoExistente = executeQuery("SELECT * FROM lote WHERE veiculoId = '$veiculoId'");
+            $veiculoExistente = executeQuery("SELECT * FROM lote WHERE veiculoId = '$veiculoId' and loteId != '$loteId'");
             if(mysqli_num_rows($veiculoExistente) > 0){
                 toastr('error', 'Veiculo já cadastrado em um lote.');
                 $redirect = false;
             }
             else{
                 executeQuery("UPDATE lote SET leilaoId='$leilaoId',valorInicial='$valorInicial',valorIncremento='$valorIncremento',financeiraId='$financeiraId',veiculoId='$veiculoId' WHERE `loteId` = '$loteId'");
-                executeQuery("UPDATE lote SET imagem='$frontalBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 1");
-                executeQuery("UPDATE lote SET imagem='$traseiraBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 2");
-                executeQuery("UPDATE lote SET imagem='$lateralEsquerdaBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 3");
-                executeQuery("UPDATE lote SET imagem='$lateralDireitaBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 4");
-                executeQuery("UPDATE lote SET imagem='$interiorBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 5");
-                executeQuery("UPDATE lote SET imagem='$painelBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 6");
-                executeQuery("UPDATE lote SET imagem='$motorBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 7");
+                executeQuery("UPDATE imagemveiculo SET imagem='$frontalBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 1");
+                executeQuery("UPDATE imagemveiculo SET imagem='$traseiraBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 2");
+                executeQuery("UPDATE imagemveiculo SET imagem='$lateralEsquerdaBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 3");
+                executeQuery("UPDATE imagemveiculo SET imagem='$lateralDireitaBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 4");
+                executeQuery("UPDATE imagemveiculo SET imagem='$interiorBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 5");
+                executeQuery("UPDATE imagemveiculo SET imagem='$painelBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 6");
+                executeQuery("UPDATE imagemveiculo SET imagem='$motorBlob' WHERE `veiculoId` = '$veiculoId' and `tipoImagem` = 7");
             }
         }
         
@@ -185,7 +186,7 @@
                 <h2>Cadastro de Lote</h2>
             </div>
 
-            <form class="row d-flex justify-content-center" id="form" action="" method="POST">
+            <form class="row d-flex justify-content-center" id="form" action="" method="POST" enctype="multipart/form-data">
 
                 <div class="row justify-content-center mb-5">
                 <div class="col-4 col-lg-3">
@@ -350,7 +351,7 @@
                  <div class="row justify-content-center mb-5 gap-4">
                     <div class="col-3 col-lg-2 col-lg-2">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="frontal" id="frontalFoto" accept="image/*">
+                            <input type="file" class="custom-file-input" name="frontal" id="frontalFoto" accept="image/*" required>
                             <label class="custom-file-label" for="frontalFoto">Frontal</label>
                         </div>
                     </div>
