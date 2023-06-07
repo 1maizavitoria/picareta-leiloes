@@ -31,6 +31,7 @@
             $loginId = $_SESSION['loginId'] ?? -1;
             $tipoUsuario = $_SESSION['tipoUsuario'] ?? -1;
 
+       
             $cadastroCompleto = executeQuery("SELECT * FROM pessoa WHERE loginId = $loginId");
             $cadastroCompleto = mysqli_fetch_assoc($cadastroCompleto);
 
@@ -69,13 +70,16 @@
         <div class="card mx-5">
             <div class="card-body col-12"> 
         <?php
-        $selectLote = executeQuery("SELECT lo.leilaoId, le.dataLeilao > NOW() as vigente, mo.anoModelo, lo.valorIncremento, lo.valorInicial, v.kitGnv, v.documentoParaRodar, v.kitMultimidia, v.sinistro, v.ipvaQuitado, v.cambioAutomatico, v.direcao, v.tipoCombustivel, v.valorDespesas, CASE WHEN v.arCondicionado = 1 THEN 'Sim' ELSE 'Não' end as arCondicionado, CASE WHEN v.vidroEletrico = 1 THEN 'Sim' ELSE 'Não' end as vidroEletrico,  v.hodometro, v.anoFabricacao, fi.descricaoFinanceira as financeira, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo from lote lo inner join financeira fi on fi.financeiraId = lo.financeiraId  inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId inner join leilao le on le.leilaoId = lo.leilaoId where lo.loteId = '$id'");
+        $selectLote = executeQuery("SELECT lo.leilaoId, le.dataLeilao > NOW() as vigente, mo.anoModelo, lo.veiculoId, lo.valorIncremento, lo.valorInicial, v.kitGnv, v.documentoParaRodar, v.kitMultimidia, v.sinistro, v.ipvaQuitado, v.cambioAutomatico, v.direcao, v.tipoCombustivel, v.valorDespesas, CASE WHEN v.arCondicionado = 1 THEN 'Sim' ELSE 'Não' end as arCondicionado, CASE WHEN v.vidroEletrico = 1 THEN 'Sim' ELSE 'Não' end as vidroEletrico,  v.hodometro, v.anoFabricacao, fi.descricaoFinanceira as financeira, ma.descricao as descricaoMarca, mo.descricao as descricaoModelo from lote lo inner join financeira fi on fi.financeiraId = lo.financeiraId  inner join veiculo v on v.veiculoId = lo.veiculoId inner join modelocor mc on mc.modeloCorId = v.modeloCorId inner join modelo mo on mo.modeloId = mc.modeloId inner join marca ma on ma.marcaId = mo.marcaId inner join leilao le on le.leilaoId = lo.leilaoId where lo.loteId = '$id'");
         $selectLote = mysqli_fetch_assoc($selectLote);
         $tipoCombustivel; 
         $direcao;
         $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.lanceId = (SELECT MAX(lanceId)FROM lance WHERE loteId = '$id' ) ");
         $lanceAtual = mysqli_fetch_assoc($lanceAtual);
         $lanceAtual = ($lanceAtual == null ? $selectLote["valorInicial"] : $lanceAtual["valorLance"]);
+        $imagens = executeQuery("SELECT iv.imagem FROM imagemVeiculo iv WHERE iv.tipoImagem in(1,2, 3, 4, 5, 6,  7) and iv.veiculoId = '. $selectLote["veiculoId"]. ' ");
+        $imagens = mysqli_fetch_array($imagens, MYSQLI_NUM);
+ 
         switch($selectLote["tipoCombustivel"]){
             case 1 : 
                 $tipoCombustivel = "Álcool";
@@ -126,9 +130,12 @@
                             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                         </ol>
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                            <img  class=" d-block w-100 h-100" src="./../loteVeiculo/images/eclipse-direita.jpg"  >
-                            </div>
+                        'foreach ($imagens as $imagem) {
+                            echo '<div class="carousel-item active">
+                            <img  class=" d-block w-100 h-100" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '""  >
+                            </div>';
+                        }'
+                           
                             <div class="carousel-item">
                             <img  class=" d-block w-100 h-100" src="./../loteVeiculo/images/aaa.jpg"  >
                             </div>
