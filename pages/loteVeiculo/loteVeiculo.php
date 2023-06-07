@@ -30,12 +30,17 @@
             $valorLance = $lanceAtual + $valorIncremento;
             $loginId = $_SESSION['loginId'] ?? -1;
             $tipoUsuario = $_SESSION['tipoUsuario'] ?? -1;
-            echo '<script>console.log('.$tipoUsuario.')</script>';
+
+            $cadastroCompleto = executeQuery("SELECT * FROM pessoa WHERE loginId = $loginId");
+            $cadastroCompleto = mysqli_fetch_assoc($cadastroCompleto);
 
             if ($loginId == -1) {
                toastr('error', 'Você precisa estar logado para dar um lance.');
             } else if ($tipoUsuario != 1) {
                 toastr('error', 'Você precisa ser um usuário comum para dar um lance.');
+            } else if ($cadastroCompleto == null) {
+                toastr('error', 'Você precisa completar seu cadastro para dar um lance.');
+            }
             } else {
                 executeQuery("INSERT INTO lance( dataLance, leilaoId, valorLance, loteId, loginId) VALUES (CURRENT_TIMESTAMP() ,'$leilaoId','$valorLance','$loteId','$loginId')");
                 header("Location: http://localhost/picareta_leiloes/pages/loteVeiculo/loteVeiculo.php?id=$id");
@@ -43,8 +48,6 @@
     
 
         }
-
-    }
     ?>
 
     <div class="h-100">
