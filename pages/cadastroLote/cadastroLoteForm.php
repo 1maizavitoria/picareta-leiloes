@@ -32,10 +32,8 @@
             if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
                 toastr("error", "Formato de imagem inválido. Apenas JPG, JPEG e PNG são aceitos.");
             } else {
-                toastr("success", "pica.");
                 $imagemTemp = $_FILES['frontal']['tmp_name'];
                 $frontalBlob = addslashes(file_get_contents($imagemTemp));
-                toastr("success", $frontalBlob);
                 
             }
         }

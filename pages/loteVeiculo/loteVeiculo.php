@@ -77,8 +77,14 @@
         $lanceAtual = executeQuery("select la.valorLance from lance la where la.loteId = '$id' and la.lanceId = (SELECT MAX(lanceId)FROM lance WHERE loteId = '$id' ) ");
         $lanceAtual = mysqli_fetch_assoc($lanceAtual);
         $lanceAtual = ($lanceAtual == null ? $selectLote["valorInicial"] : $lanceAtual["valorLance"]);
-        $imagens = executeQuery("SELECT iv.imagem FROM imagemVeiculo iv WHERE iv.tipoImagem in(1,2, 3, 4, 5, 6,  7) and iv.veiculoId = '. $selectLote["veiculoId"]. ' ");
+        $imagenss = array();
+        $imagens = executeQuery("SELECT iv.imagem FROM imagemVeiculo iv WHERE iv.tipoImagem in(1,2, 3, 4, 5, 6,  7) and iv.veiculoId = 5 ");
         $imagens = mysqli_fetch_array($imagens, MYSQLI_NUM);
+
+        // while($row = mysqli_fetch_assoc($imagens)){
+        //     $imagenss[] = array($row['imagem']);
+        // }
+        echo '<script> console.log('. json_encode($imagenss). ') </script>';
  
         switch($selectLote["tipoCombustivel"]){
             case 1 : 
@@ -129,8 +135,8 @@
                             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                             <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                         </ol>
-                        <div class="carousel-inner">
-                        'foreach ($imagens as $imagem) {
+                        <div class="carousel-inner">';
+                        foreach ($imagens as $imagem) {
                             echo '<div class="carousel-item active">
                             <img  class=" d-block w-100 h-100" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '""  >
                             </div>';
