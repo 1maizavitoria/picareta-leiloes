@@ -136,12 +136,12 @@
 
                                 if(!$existeFoto){
                                     echo '<div class="carousel-item active">
-                                    <img  class="d-block rounded img-fluid" width="1000" height="1200" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '"  >
+                                    <img  class="d-block rounded img-fluid" style="max-width:800px;width:100%;max-height:1000px" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '"  >
                                     </div>';
                                     $existeFoto = true;
                                 }else{      
                                     echo '<div class="carousel-item ">
-                                    <img  class=" d-block rounded img-fluid" width="1000" height="1200" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '"  >
+                                    <img  class=" d-block rounded img-fluid" style="max-width:800px;width:100%;max-height:600px" src="data:image/gif;base64,' . base64_encode($imagem["imagem"]). '"  >
                                     </div>';
                                 }
 
