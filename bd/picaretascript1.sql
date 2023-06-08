@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Pessoa` (
   `telefone` VARCHAR(11) NULL DEFAULT NULL,
   `estadoCivil` SMALLINT NULL DEFAULT NULL,
   `sexo` SMALLINT NULL DEFAULT NULL,
-  `foto` BLOB NULL DEFAULT NULL,
+  `foto` MEDIUMBLOB NULL DEFAULT NULL,
   `loginId` INT NOT NULL,
   PRIMARY KEY (`loginId`),
   CONSTRAINT `fk_Pessoa_Login1`
@@ -209,31 +209,12 @@ CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`Endereco` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
--- -----------------------------------------------------
--- Table `PICARETALEILOES`.`ImagensLote`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ImagensLote` (
-  `loteId` SMALLINT NULL DEFAULT NULL,
-  `tipoImagem` SMALLINT NULL DEFAULT NULL,
-  `imagem` MEDIUMBLOB NULL DEFAULT NULL,
-  `leilaoId` INT NOT NULL,
-  UNIQUE INDEX (`tipoImagem` ASC) ,
-  PRIMARY KEY (`loteId`, `tipoImagem`, `leilaoId`),
-  INDEX `fk_ImagensLote_Lote1_idx` (`leilaoId` ASC) ,
-  CONSTRAINT `fk_ImagensLote_Lote1`
-    FOREIGN KEY (`leilaoId`)
-    REFERENCES `PICARETALEILOES`.`Lote` (`leilaoId`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-
-
 -- -----------------------------------------------------
 -- Table `PICARETALEILOES`.`ImagemVeiculo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PICARETALEILOES`.`ImagemVeiculo` (
   `veiculoId` INT NOT NULL,
-  `imagem` BLOB NULL,
+  `imagem` MEDIUMBLOB NULL,
   `tipoImagem` SMALLINT NOT NULL COMMENT '1 - frontal\n2 - traseira\n3 - lateral esquerda\n4 - lateral direita\n5 - interior \n6 - painel \n7 - motor',
   PRIMARY KEY (`veiculoId`, `tipoImagem`),
   INDEX `fk_ImagemVeiculo_Veiculo1_idx` (`veiculoId` ASC) ,
