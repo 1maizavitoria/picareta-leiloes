@@ -33,10 +33,10 @@
                     $titulos = array('Marca', 'Modelo do veículo', 'Cor', 'Ano do veículo', 'Valor do lance', 'Financeira Responsável', 'Data lance', 'Data resultado');
                 
                     $editavel = false;
-                    $urlClick = "https://www.google.com?id=";
+                    $urlClick = "http://localhost/picareta_leiloes/pages/loteVeiculo/loteVeiculo.php?id=";
 
                     $lances = array();
-                    $selectLances = executeQuery("SELECT ma.descricao AS dsMarca, mo.descricao AS dsModelo, co.descricao AS dsCor, CONCAT(ve.anoFabricacao,'/', mo.anoModelo) as anoModeloFabricacao, fn.descricaoFinanceira AS dsFinanceira, la.dataLance, la.valorLance, le.dataleilao AS dtResultado FROM veiculo ve 
+                    $selectLances = executeQuery("SELECT lo.loteId, ma.descricao AS dsMarca, mo.descricao AS dsModelo, co.descricao AS dsCor, CONCAT(ve.anoFabricacao,'/', mo.anoModelo) as anoModeloFabricacao, fn.descricaoFinanceira AS dsFinanceira, la.dataLance, la.valorLance, le.dataleilao AS dtResultado FROM veiculo ve 
                         INNER JOIN modeloCor mc ON ve.modeloCorId = mc.modeloCorId 
                         INNER JOIN modelo mo ON mc.modeloId = mo.modeloId 
                         INNER JOIN marca ma ON mo.marcaId = ma.marcaId 
@@ -44,10 +44,11 @@
                         INNER JOIN lote lo ON ve.veiculoId = lo.veiculoId
                         INNER JOIN financeira fn ON lo.financeiraId = fn.financeiraId
                         INNER JOIN lance la ON lo.loteId = la.loteId
-                        INNER JOIN leilao le ON lo.leilaoId = le.leilaoId where la.loginId = " . $_SESSION['loginId'] . "");
+                        INNER JOIN leilao le ON lo.leilaoId = le.leilaoId where la.loginId = " . $_SESSION['loginId'] . "
+                        ORDER BY la.dataLance DESC");
 
                     while($row = mysqli_fetch_assoc($selectLances)) {
-                        $lances[] = array(NULL, $row['dsMarca'], $row['dsModelo'], $row['dsCor'], $row['anoModeloFabricacao'],  'R$' . number_format($row['valorLance']), $row['dsFinanceira'], date('d/m/Y H:i:s', strtotime($row['dataLance'])), date('d/m/Y H:i:s', strtotime($row['dtResultado'])));
+                        $lances[] = array($row['loteId'], $row['dsMarca'], $row['dsModelo'], $row['dsCor'], $row['anoModeloFabricacao'],  'R$' . number_format($row['valorLance'], 2, ',', '.'), $row['dsFinanceira'], date('d/m/Y H:i:s', strtotime($row['dataLance'])), date('d/m/Y H:i:s', strtotime($row['dtResultado'])));
                     }
 
                     gerarGrid($titulos, $lances, 12, $editavel,  $urlClick);
