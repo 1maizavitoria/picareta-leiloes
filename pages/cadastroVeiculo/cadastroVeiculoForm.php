@@ -40,10 +40,10 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $modelIdAndYear = explode('[a.-]', $_GET['modelIdAndYear']);
+        $modelIdAndYear = explode('a', $_GET['modelIdAndYear']);
         $modelo = $modelIdAndYear[0] ?? NULL;
         $anoModelo = $modelIdAndYear[1] ?? NULL;
-        $corId = explode('[y.-]', $_GET['colorId']);
+        $corId = explode('y', $_GET['colorId']);
         $cor = $corId[0] ?? NULL;
         $marca = $_POST['brand'];
         $placa = $_POST['licensePlate'];
@@ -65,10 +65,9 @@
         $despesas = floatval(str_replace(",", ".", str_replace("R$", "", $_POST['expenses'])));
         $veiculoExistente = executeQuery("SELECT ve.veiculoId, ve.chassi, ve.placa FROM veiculo ve WHERE ve.chassi = '$chassi' OR ve.placa = '$placa'");
 
-        $modeloCorId = executeQuery("SELECT modeloCorId FROM modelocor WHERE modeloId = '$modelo[0]' AND corId = '$cor[0]'");
+        $modeloCorId = executeQuery("SELECT modeloCorId FROM modelocor WHERE modeloId = '$modelo' AND corId = '$cor'");
         $modeloCorId = mysqli_fetch_assoc($modeloCorId);
         $modeloCorId = implode($modeloCorId);
-        echo "<script>console.log(".json_encode($modeloCorId).");</script>";
 
         $veiculoExistente = mysqli_fetch_assoc($veiculoExistente);
         $redirect = true;
